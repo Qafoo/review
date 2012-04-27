@@ -9,18 +9,10 @@ namespace Qafoo\Review;
 use Qafoo\RMF;
 
 require __DIR__ . '/../main/Qafoo/Review/bootstrap.php';
+$dic = new DIC\Base();
+$dic->environment = 'development';
 
-$configuration = new Configuration(
-    __DIR__ . '/../config/config.ini',
-    'development'
-);
-
-$connection = new MySQLi(
-    $configuration->hostname,
-    $configuration->username,
-    $configuration->password,
-    $configuration->database
-);
+$dic->mysqli;
 
 $dispatcher = new RMF\Dispatcher\Simple(
     new RMF\Router\Regexp( array(
