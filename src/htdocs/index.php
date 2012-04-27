@@ -18,7 +18,6 @@ $dispatcher = new RMF\Dispatcher\Simple(
     new RMF\Router\Regexp( array(
         '(^/$)' => array(
             'GET'  => function() {
-                throw new \Exception( "Foo" );
                 return new Struct\Response( 'index.twig' );
             },
         ),
