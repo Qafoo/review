@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>qaReview</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="/styles/bootstrap.css" rel="stylesheet">
+    <link href="/styles/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/styles/app.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <div class="container">
+                            <a class="brand" href="/">qaReview</a>
+                            <div class="nav-collapse">
+                                <ul class="nav">
+                                    <li id="nav-tweet"><a href="/tweet"><i class="icon-pencil icon-white"></i> Tweet</a></li>
+                                    <li id="nav-home"><a href="/">Home</a></li>
+                                    <li id="nav-accounts"><a href="/accounts">Accounts</a></li>
+                                    <li id="nav-columns"><a href="/columns">Columns</a></li>
+                                </ul>
+                                <ul class="nav pull-right">
+                                    <form class="navbar-search pull-left" action="/search">
+                                        <input class="search-query span2" placeholder="Search" name="phrase" type="text">
+                                    </form>
+                                    <li><a href="/logout" id="logout"><i class="icon-off icon-white"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="content" class="row-fluid">
+            <div class="span12">
+                <div class="alert">
+                    <h1>Javascript required</h1>
+                    <p>This page requires JavaScript to work corrrectly. Please update your browser preferences accordingly.</p>
+                    <p>This might also occur in the seldom case an error happend somewhere &mdash; if this is the case we are very sorry for this.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/scripts/vendor/jquery/jquery-1.7.2.js"></script>
+    <!-- script type="text/javascript" src="/scripts/vendor/jquery/jquery-1.7.2.min.js"></script -->
+    <script type="text/javascript" src="/scripts/vendor/jquery/jquery.history.js"></script>
+
+    <script type="text/javascript" src="/scripts/vendor/bootstrap/bootstrap.js"></script>
+    <!-- script type="text/javascript" src="/scripts/vendor/bootstrap/bootstrap.min.js"></script -->
+</body>
+</html>
