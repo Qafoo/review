@@ -4,10 +4,28 @@
     "repositories": [ {
         "type": "vcs",
         "url":  "https://github.com/Qafoo/REST-Micro-Framework"
+    }, {
+        "type":    "package",
+        "package": {
+            "name":    "arbitracker/systemProcess",
+            "version": "0.1",
+            "source": {
+                "url": "https://github.com/Arbitracker/system-process.git",
+                "type": "git",
+                "reference": "origin/master"
+            }
+        }
+
     } ],
     "require":      {
         "Qafoo/RMF": "dev-master",
+        "arbitracker/systemProcess": "0.1",
         "twig/twig": "1.6.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "SystemProcess": ["src/library/arbitracker/systemProcess/src/main/php/"]
+        }
     },
     "config":       {
         "vendor-dir": "src/library"
