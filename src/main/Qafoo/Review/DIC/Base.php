@@ -15,10 +15,14 @@ use Qafoo\Review;
  *
  * @version $Revision$
  *
- * @property-read \Puppeteer\Commons\Configuration\Ini $configuration
+ * @property-read \Qafoo\Review\Configuration $configuration
  *                Main component configuration.
- * @property-read \Puppeteer\Commons\MySQLi $mysqli
+ * @property-read \Qafoo\Review\MySQLi $mysqli
  *                Used database handle.
+ * @property-read \Twig_Environment $twig
+ *                Twig environment (template engine)
+ * @property-read \Qafoo\Review\View\Twig $view
+ *                Twig base view
  */
 class Base extends DIC
 {
@@ -51,6 +55,21 @@ class Base extends DIC
                 $dic->srcDir . '/config/config.ini',
                 $dic->environment
             );
+        };
+
+        $this->twig = function ( $dic )
+        {
+            return new \Twig_Environment(
+                new \Twig_Loader_Filesystem( $dic->srcDir . '/templates' ),
+                array(
+//                    'cache' => $dic->srcDir . '/cache'
+                )
+            );
+        };
+
+        $this->view = function( $dic )
+        {
+            return new Review\View\Twig( $dic->twig );
         };
 
         $this->mysqli = function ( $dic )

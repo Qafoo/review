@@ -1,0 +1,12 @@
+{% extends "index.twig" %}
+
+{% block title %}Error -- {{parent()}}{% endblock %}
+
+{% block content %}
+    <div class="alert alert-error">
+        <h1 class="alert-heading">An error occured</h1>
+        <p>{{exception.message}}</p>
+    </div>
+
+    <pre>{{exception}}</pre>
+{% endblock %}

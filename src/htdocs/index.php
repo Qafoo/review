@@ -18,13 +18,12 @@ $dispatcher = new RMF\Dispatcher\Simple(
     new RMF\Router\Regexp( array(
         '(^/$)' => array(
             'GET'  => function() {
-                return "Hello world!";
+                throw new \Exception( "Foo" );
+                return new Struct\Response( 'index.twig' );
             },
         ),
     ) ),
-    new RMF\View\HtmlJson(
-        new RMF\View\Json()
-    )
+    $dic->view
 );
 
 $request = new RMF\Request\HTTP();
