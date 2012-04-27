@@ -21,7 +21,7 @@ class Annotation extends Struct
      *
      * @var int
      */
-    public $id
+    public $id;
 
     /**
      * Name of file
@@ -64,5 +64,26 @@ class Annotation extends Struct
      * @var string
      */
     public $message;
+
+    /**
+     * COnstruct
+     *
+     * @param string $file
+     * @param int $line
+     * @param int $character
+     * @param string $type
+     * @param string $class
+     * @param string $message
+     * @return void
+     */
+    public function __construct( $file, $line, $character, $type, $class, $message )
+    {
+        $this->file      = $file;
+        $this->line      = $line;
+        $this->character = $character;
+        $this->type      = $type;
+        $this->class     = $class;
+        $this->message   = $message;
+    }
 }
 
