@@ -49,6 +49,11 @@ class Base extends DIC
             return substr( __DIR__, 0, strpos( __DIR__, '/src/' ) + 4 );
         };
 
+        $this->resultDir = function ( $dic )
+        {
+            return $dic->srcDir . '/results';
+        };
+
         $this->configuration = function ( $dic )
         {
             return new Review\Configuration(
@@ -80,6 +85,20 @@ class Base extends DIC
                 $dic->configuration->password,
                 $dic->configuration->database
             );
+        };
+
+        $this->annotationGateway = function ( $dic )
+        {
+            return new Review\AnnotationGateway\Mysqli(
+                $dic->mysqli
+            );
+        };
+
+        $this->reviewController = function ( $dic )
+        {
+            return new Review\Controller\Review( array(
+                new Review\Analyzer\PDepend( $dic->resultDir, $dic->annotationGateway )
+            ) );
         };
     }
 }

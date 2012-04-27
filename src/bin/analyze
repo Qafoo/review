@@ -1,0 +1,24 @@
+#!/usr/bin/env php
+<?php
+/**
+ * This file is part of qaReview
+ *
+ * @version $Revision$
+ * @copyright Qafoo GmbH
+ */
+
+namespace Qafoo\Review;
+use Qafoo\RMF;
+
+require __DIR__ . '/../main/Qafoo/Review/bootstrap.php';
+$dic = new DIC\Base();
+$dic->environment = 'development';
+
+if ( !isset( $argv[1] ) )
+{
+    fwrite( STDERR, "Usage: {$argv[0]} <source>" . PHP_EOL );
+    exit( 1 );
+}
+
+$dic->reviewController->analyze( $argv[1] );
+
