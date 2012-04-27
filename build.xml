@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="qaReview" default="verify" basedir="./">
+    <!--
+        Import project specific settings.
+    -->
+    <property file="${basedir}/build.properties" />
+
+    <!--
+        Import the build-commons framework.
+    -->
+    <import file="setup/src/main/xml/base.xml" />
+
+</project>
