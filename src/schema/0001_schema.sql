@@ -31,52 +31,18 @@
 -- We recreate the DB entirely -- so that we do not care about violated constraints
 SET foreign_key_checks = 0;
 
--- Table: User (u)
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
-  `u_id` INT AUTO_INCREMENT NOT NULL,
-  `u_name` VARCHAR(64) NOT NULL,
-  `u_password` VARCHAR(64) NOT NULL,
-  `u_password_salt` VARCHAR(64) NOT NULL,
-  `u_password_method` VARCHAR(8) NOT NULL,
-  `changed` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`u_id`),
-  UNIQUE(`u_name`),
-  KEY(`u_name`, `u_password`)
-) ENGINE=InnoDB DEFAULT CHARSET=ascii;
-
--- Table: Account (a)
-DROP TABLE IF EXISTS `account`;
-CREATE TABLE `account` (
+-- Table: Annotation (a)
+DROP TABLE IF EXISTS `annotation`;
+CREATE TABLE `annotation` (
   `a_id` INT AUTO_INCREMENT NOT NULL,
-  `u_id` INT NOT NULL,
-  `a_name` VARCHAR(32) NOT NULL,
-  `a_type` VARCHAR(32) NOT NULL,
-  `a_data` BLOB NOT NULL,
+  `a_file` VARCHAR(255) NOT NULL,
+  `a_line` INT NOT NULL,
+  `a_character` INT NOT NULL,
+  `a_type` VARCHAR(16) NOT NULL,
+  `a_class` VARCHAR(16) NOT NULL,
+  `a_message` TEXT NOT NULL,
   `changed` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`a_id`),
-  FOREIGN KEY (`u_id`) REFERENCES `user`(`u_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=ascii;
-
--- Table: Column (c)
-DROP TABLE IF EXISTS `column`;
-CREATE TABLE `column` (
-  `c_id` INT AUTO_INCREMENT NOT NULL,
-  `u_id` INT NOT NULL,
-  `c_priority` INT NOT NULL,
-  `c_configuration` BLOB NOT NULL,
-  `changed` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`c_id`),
-  FOREIGN KEY (`u_id`) REFERENCES `user`(`u_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=ascii;
-
--- Table: Last Read (l)
-DROP TABLE IF EXISTS `last_read`;
-CREATE TABLE `last_read` (
-  `c_id` INT NOT NULL,
-  `l_last` BIGINT NOT NULL,
-  `changed` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`c_id`),
-  FOREIGN KEY (`c_id`) REFERENCES `column`(`c_id`)
+  KEY(`a_file`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
