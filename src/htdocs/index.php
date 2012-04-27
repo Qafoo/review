@@ -1,8 +1,9 @@
 <?php
 /**
- * This file is part of Titio
+ * This file is part of qaReview
  *
  * @version $Revision$
+ * @copyright Qafoo GmbH
  */
 
 namespace Qafoo\Review;
