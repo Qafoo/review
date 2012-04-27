@@ -1,0 +1,15 @@
+{
+    "name":         "qaReview",
+    "description":  "Simple extensible helper for code reviews",
+    "repositories": [ {
+        "type": "vcs",
+        "url":  "https://github.com/Qafoo/REST-Micro-Framework"
+    } ],
+    "require":      {
+        "Qafoo/RMF": "dev-master",
+        "twig/twig": "1.6.0"
+    },
+    "config":       {
+        "vendor-dir": "src/library"
+    }
+}

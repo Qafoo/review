@@ -1,0 +1,18 @@
+{
+    "hash": "a3917ca62dda8d28fb644d228297f401",
+    "packages": [
+        {
+            "package": "Qafoo/RMF",
+            "version": "dev-master",
+            "source-reference": "f5986d29512bfb2276ffde62921efd6776b79d70"
+        },
+        {
+            "package": "twig/twig",
+            "version": "1.6.0"
+        }
+    ],
+    "packages-dev": null,
+    "aliases": [
+
+    ]
+}
