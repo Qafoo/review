@@ -9,14 +9,14 @@
 {% block content %}
 <div class="row">
 {% for module in summaries %}
-    <div class="span3">
+    <div class="span4">
         <div class="well">
             <h2>{{module.title}}</h2>
             <p>{{module.text}}</p>
         </div>
     </div>
 
-    {% if loop.index is divisibleby( 4 ) %}
+    {% if loop.index is divisibleby( 3 ) %}
 </div>
 <div class="row">
     {% endif %}
