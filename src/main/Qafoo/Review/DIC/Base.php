@@ -103,7 +103,7 @@ class Base extends DIC
         $this->reviewController = function ( $dic )
         {
             return new Review\Controller\Review( array(
-                new Review\Analyzer\PDepend( $dic->resultDir, $dic->annotationGateway )
+                new Review\Analyzer\PDepend( $dic->resultDir, $dic->annotationGateway ),
             ) );
         };
     }
