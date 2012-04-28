@@ -306,7 +306,6 @@ class PDepend extends Analyzer implements Displayable
     {
         return new Struct\Summary(
             'PDepend',
-            'pdepend',
             'Displays class and method metrics as a tag cloud. This allows you to locate violations quickly.'
         );
     }
@@ -318,7 +317,7 @@ class PDepend extends Analyzer implements Displayable
      */
     public function getMenuEntry()
     {
-        return new Struct\MenuEntry( 'PDepend', 'pdepend' );
+        return new Struct\MenuEntry( 'PDepend' );
     }
 
     /**

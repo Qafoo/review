@@ -34,21 +34,22 @@ class Review
      */
     public function __construct( array $analyzers = array() )
     {
-        foreach ( $analyzers as $analyzer )
+        foreach ( $analyzers as $id => $analyzer )
         {
-            $this->addAnalyzer( $analyzer );
+            $this->addAnalyzer( $id, $analyzer );
         }
     }
 
     /**
      * Add anaylzer
      *
+     * @param string $id
      * @param Analyzer $analyzer
      * @return void
      */
-    public function addAnalyzer( Analyzer $analyzer )
+    public function addAnalyzer( $id, Analyzer $analyzer )
     {
-        $this->analyzers[] = $analyzer;
+        $this->analyzers[$id] = $analyzer;
     }
 
     /**
@@ -75,14 +76,16 @@ class Review
     {
         $analyzers = array();
         $summaries = array();
-        foreach ( $this->analyzers as $analyzer )
+        foreach ( $this->analyzers as $id => $analyzer )
         {
             if ( $analyzer instanceof Displayable )
             {
-                $analyzers[] = $analyzer->getMenuEntry();
+                $analyzers[] = $entry = $analyzer->getMenuEntry();
+                $entry->module = $id;
             }
 
-            $summaries[] = $analyzer->getSummary();
+            $summaries[] = $summary = $analyzer->getSummary();
+            $summary->module = $id;
         }
 
         return new Struct\Response(

@@ -27,13 +27,12 @@ class Summary extends MenuEntry
      * Construct
      *
      * @param string $title
-     * @param string $module
      * @param string $text
      * @return void
      */
-    public function __construct( $title, $module, $text )
+    public function __construct( $title, $text )
     {
-        parent::__construct( $title, $module );
+        parent::__construct( $title );
         $this->text = $text;
     }
 }

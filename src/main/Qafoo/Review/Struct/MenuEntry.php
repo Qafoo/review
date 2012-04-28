@@ -34,13 +34,11 @@ class MenuEntry extends Struct
      * Construct
      *
      * @param string $title
-     * @param string $module
      * @return void
      */
-    public function __construct( $title, $module )
+    public function __construct( $title )
     {
-        $this->title  = $title;
-        $this->module = $module;
+        $this->title = $title;
     }
 }
 
