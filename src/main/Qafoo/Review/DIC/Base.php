@@ -115,6 +115,7 @@ class Base extends DIC
                 $dic->sourceController,
                 array(
                     'pdepend' => new Review\Analyzer\PDepend( $dic->resultDir, $dic->annotationGateway ),
+                    'phpmd'   => new Review\Analyzer\Phpmd( $dic->resultDir, $dic->annotationGateway ),
                 )
             );
         };
