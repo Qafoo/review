@@ -1,7 +1,10 @@
 <ul class="dirlisting">
 {% for file in dir %}
     <li class="{{file.type}} {{file.type}}-{{file.state}}">
-        <a href="/source/{{file.path}}">
+        <a href="/source/{{file.path}}"
+            {% if file.type == "folder" %}
+                onClick="jQuery( this ).parent( 'li' ).toggleClass( 'folder-close' ); return false;"
+            {% endif %}>
             <i class="icon-{{file.type}}{%if file.type == "folder" %}-{{file.state}}{% endif %}"></i>
             {{file.name}}
         </a>

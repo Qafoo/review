@@ -14,15 +14,16 @@ ul.tagcloud li {
 }
 
 ul.dirlisting a {
-    color: #000000;
+    color: #666666;
 }
 
 .folder-close > ul.dirlisting {
     display: none;
 }
 
-.folder-open > a,
-.file-open > a {
+ul.dirlisting .folder-open > a,
+ul.dirlisting .file-open > a {
     font-weight: bold;
+    color: #333333;
 }
 
