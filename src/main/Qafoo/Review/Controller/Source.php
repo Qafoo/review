@@ -8,6 +8,7 @@
 
 namespace Qafoo\Review\Controller;
 use Qafoo\Review\AnnotationGateway;
+use Qafoo\Review\CodeProcessor;
 use Qafoo\Review\Struct;
 use Qafoo\RMF;
 
@@ -55,10 +56,22 @@ class Source
     {
         $path = $request->variables['path'] ?: '/';
 
+        $source = null;
+        if ( file_exists( $file = $this->source . '/' . $path ) &&
+             is_file( $file ) )
+        {
+            $processor = new CodeProcessor();
+            $processor->load( $file );
+            $processor->addAnnotations( array() );
+            $source = $processor->getHtml();
+        }
+
         return new Struct\Response(
             'source.twig',
             array(
-                'tree' => $this->getSourceTree( $path ),
+                'path'   => $path,
+                'tree'   => $this->getSourceTree( $path ),
+                'source' => $source,
             )
         );
     }

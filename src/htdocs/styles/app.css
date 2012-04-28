@@ -36,3 +36,45 @@ ul.dirlisting .file-open > a {
     color: #333333;
 }
 
+ol.source {
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    border: 1px solid rgba( 0, 0, 0, .15 );
+}
+
+ol.source li {
+    min-height: 18px;
+}
+
+ol.source li:hover {
+    background-color: #ffffff;
+}
+
+ol.source li pre {
+    border: none;
+    padding: 0px;
+    margin: 1px 5px;
+
+    background-color: transparent;
+}
+
+.source .code {
+}
+
+.source .comment {
+    color: #999999;
+}
+
+.source .keyword {
+    color: #C09853;
+    font-weight: bold;
+}
+
+.source .html {
+    color: #000000;
+}
+
+.source .string {
+    color: #468847;
+}
+

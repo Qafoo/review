@@ -8,7 +8,10 @@
     {% set dir = tree %}
     {% include "directory.twig" %}
     </div>
+
     <div class="span9">
+        <h2>{{path}}</h2>
+        <ol class="source">{% autoescape false %}{{source}}{% endautoescape %}</ol>
     </div>
 </div>
 {% endblock %}
