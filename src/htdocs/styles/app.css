@@ -13,6 +13,15 @@ ul.tagcloud li {
     line-height: 1.1em;
 }
 
+ul.dirlisting {
+    list-style-type: none;
+    margin-left: 0px;
+}
+
+ul.dirlisting li > ul {
+    margin-left: 18px;
+}
+
 ul.dirlisting a {
     color: #666666;
 }
