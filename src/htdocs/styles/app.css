@@ -71,10 +71,11 @@ ol.source li pre {
 
 ol.source li a.icon {
     display: block;
+    margin-right: 2px;
     float: right;
 }
 
-ol.source li .analyzer {
+.analyzer {
     color: #666666;
 }
 

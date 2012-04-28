@@ -56,7 +56,8 @@ class Source
     {
         $path = $request->variables['path'] ?: '/';
 
-        $source = array();
+        $source      = array();
+        $annotations = array();
         if ( file_exists( $file = $this->source . '/' . $path ) &&
              is_file( $file ) )
         {
