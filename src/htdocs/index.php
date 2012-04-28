@@ -17,10 +17,11 @@ $dic->mysqli;
 
 $dispatcher = new RMF\Dispatcher\Simple(
     new RMF\Router\Regexp( array(
-        '(^/$)' => array(
-            'GET'  => function() {
-                return new Struct\Response( 'index.twig' );
-            },
+        '(^/source)' => array(
+            'GET'  => array(),
+        ),
+        '(^/)' => array(
+            'GET'  => array( $dic->reviewController, 'showOverview' ),
         ),
     ) ),
     $dic->view

@@ -29,12 +29,5 @@ abstract class Analyzer
      * @return Struct\Summary
      */
     abstract public function getSummary();
-
-    /**
-     * Get menu entry
-     *
-     * @return Struct\MenuEntry
-     */
-    abstract public function getMenuEntry();
 }
 

@@ -1,0 +1,18 @@
+{% extends "index.twig" %}
+
+{% block navItems %}
+{% for entry in navigation %}
+    <li><a href="/show/{{entry.module}}">{{entry.title}}</a></li>
+{% endfor %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+{% for module in summaries %}
+    <div class="span3 well">
+        <h2>{{module.title}}</h2>
+        <p>{{module.text}}</p>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}

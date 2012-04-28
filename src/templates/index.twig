@@ -25,8 +25,9 @@
                             <a class="brand" href="/">Qafoo Review Tool</a>
                             <div class="nav-collapse">
                                 <ul class="nav">
-                                    <li><a href="/">Home</a></li>
-                                    <li><a href="/">Something</a></li>
+                                    <li><a href="/"><i class="icon-home icon-white"></i> Home</a></li>
+                                    {% block navItems %}{% endblock %}
+                                    <li><a href="/source"><i class="icon-file icon-white"></i> Source</a></li>
                                 </ul>
                             </div>
                         </div>

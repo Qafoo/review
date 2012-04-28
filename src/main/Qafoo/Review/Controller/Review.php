@@ -8,6 +8,9 @@
 
 namespace Qafoo\Review\Controller;
 use Qafoo\Review\Analyzer;
+use Qafoo\Review\Struct;
+use Qafoo\Review\Displayable;
+use Qafoo\RMF;
 
 /**
  * Main review controller
@@ -60,6 +63,35 @@ class Review
         {
             $analyzer->analyze( $path );
         }
+    }
+
+    /**
+     * Show project overview
+     *
+     * @param RMF\Request $request
+     * @return Struct\Response
+     */
+    public function showOverview( RMF\Request $request )
+    {
+        $analyzers = array();
+        $summaries = array();
+        foreach ( $this->analyzers as $analyzer )
+        {
+            if ( $analyzer instanceof Displayable )
+            {
+                $analyzers[] = $analyzer->getMenuEntry();
+            }
+
+            $summaries[] = $analyzer->getSummary();
+        }
+
+        return new Struct\Response(
+            'overview.twig',
+            array(
+                'navigation' => $analyzers,
+                'summaries'  => $summaries,
+            )
+        );
     }
 }
 

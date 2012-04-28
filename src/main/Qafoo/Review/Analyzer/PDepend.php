@@ -10,13 +10,15 @@ namespace Qafoo\Review\Analyzer;
 use Qafoo\Review\Analyzer;
 use Qafoo\Review\AnnotationGateway;
 use Qafoo\Review\Struct;
+use Qafoo\Review\Displayable;
+use Qafoo\RMF;
 
 /**
  * PDepend analyzer class
  *
  * @version $Revision$
  */
-class PDepend extends Analyzer
+class PDepend extends Analyzer implements Displayable
 {
     /**
      * List of class metrics provided by pdepend
@@ -302,7 +304,11 @@ class PDepend extends Analyzer
      */
     public function getSummary()
     {
-
+        return new Struct\Summary(
+            'PDepend',
+            'pdepend',
+            'Displays class and method metrics as a tag cloud. This allows you to locate violations quickly.'
+        );
     }
 
     /**
@@ -311,6 +317,17 @@ class PDepend extends Analyzer
      * @return Struct\MenuEntry
      */
     public function getMenuEntry()
+    {
+        return new Struct\MenuEntry( 'PDepend', 'pdepend' );
+    }
+
+    /**
+     * Render yourself
+     *
+     * @param RMF\Request $request
+     * @return Struct\Response
+     */
+    public function render( RMF\Request $request )
     {
 
     }
