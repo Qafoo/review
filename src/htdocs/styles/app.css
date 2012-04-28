@@ -50,6 +50,15 @@ ol.source li:hover {
     background-color: #ffffff;
 }
 
+ol.source li a {
+    display: block;
+    color: #000000;
+}
+
+ol.source li a:hover {
+    text-decoration: none;
+}
+
 ol.source li pre {
     border: none;
     padding: 0px;
@@ -62,7 +71,7 @@ ol.source li pre {
 }
 
 .source .comment {
-    color: #999999;
+    color: #666666;
 }
 
 .source .keyword {

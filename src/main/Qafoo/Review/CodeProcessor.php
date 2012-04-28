@@ -173,9 +173,18 @@ class CodeProcessor
      */
     public function getHtml()
     {
-        return '<li><pre>' .
-            implode( "</pre></li>\n<li><pre>", $this->content ) .
-            '</pre></li>';
+        $html = "";
+
+        foreach ( $this->content as $nr => $line )
+        {
+            $html .= sprintf( '<li id="line_%d"><pre><a href="#line_%d">%s</a></pre></li>' . "\n",
+                $nr + 1,
+                $nr + 1,
+                $line
+            );
+        }
+
+        return $html;
     }
 }
 
