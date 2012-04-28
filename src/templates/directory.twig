@@ -1,6 +1,6 @@
 <ul class="dirlisting">
 {% for file in dir %}
-    <li class="{{file.type}}">
+    <li class="{{file.type}} {{file.type}}-{{file.state}}">
         <a href="/source/{{file.path}}">
             <i class="icon-{{file.type}}{%if file.type == "folder" %}-{{file.state}}{% endif %}"></i>
             {{file.name}}

@@ -13,3 +13,16 @@ ul.tagcloud li {
     line-height: 1.1em;
 }
 
+ul.dirlisting a {
+    color: #000000;
+}
+
+.folder-close > ul.dirlisting {
+    display: none;
+}
+
+.folder-open > a,
+.file-open > a {
+    font-weight: bold;
+}
+
