@@ -79,10 +79,17 @@ class Source
             \FilesystemIterator::UNIX_PATHS
         );
 
-        return $this->toArray( $tree );
+        return $this->toArray( $tree, $path );
     }
 
-    protected function toArray( \RecursiveDirectoryIterator $tree )
+    /**
+     * Recursively convert RecursiveDirectoryIterator to array
+     *
+     * @param \RecursiveDirectoryIterator $tree
+     * @param string $path
+     * @return array
+     */
+    protected function toArray( \RecursiveDirectoryIterator $tree, $path )
     {
         $array = array();
         $types = array();
@@ -99,8 +106,9 @@ class Source
             $array[] = $entry = array(
                 'type'     => $file->isDir() ? 'folder' : 'file',
                 'name'     => $file->getFileName(),
-                'path'     => str_replace( $this->source, '', $file->getPath() . '/' . $file->getFileName() ),
-                'children' => $tree->hasChildren() ? $this->toArray( $tree->getChildren() ) : array(),
+                'path'     => $localPath = str_replace( $this->source, '', $file->getPath() . '/' . $file->getFileName() ),
+                'children' => $tree->hasChildren() ? $this->toArray( $tree->getChildren(), $path ) : array(),
+                'state'    => strpos( $path, $localPath ) === 0 ? 'open' : 'close',
             );
         }
 
