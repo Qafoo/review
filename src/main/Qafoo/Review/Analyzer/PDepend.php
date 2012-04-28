@@ -328,7 +328,11 @@ class PDepend extends Analyzer implements Displayable
      */
     public function render( RMF\Request $request )
     {
-
+        return new Struct\Response(
+            'pdepend.twig',
+            array(
+            )
+        );
     }
 }
 

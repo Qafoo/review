@@ -67,15 +67,13 @@ class Review
     }
 
     /**
-     * Show project overview
+     * Get menu entries
      *
-     * @param RMF\Request $request
-     * @return Struct\Response
+     * @return array
      */
-    public function showOverview( RMF\Request $request )
+    protected function getMenuEntries()
     {
         $analyzers = array();
-        $summaries = array();
         foreach ( $this->analyzers as $id => $analyzer )
         {
             if ( $analyzer instanceof Displayable )
@@ -83,7 +81,22 @@ class Review
                 $analyzers[] = $entry = $analyzer->getMenuEntry();
                 $entry->module = $id;
             }
+        }
 
+        return $analyzers;
+    }
+
+    /**
+     * Show project overview
+     *
+     * @param RMF\Request $request
+     * @return Struct\Response
+     */
+    public function showOverview( RMF\Request $request )
+    {
+        $summaries = array();
+        foreach ( $this->analyzers as $id => $analyzer )
+        {
             $summaries[] = $summary = $analyzer->getSummary();
             $summary->module = $id;
         }
@@ -91,10 +104,30 @@ class Review
         return new Struct\Response(
             'overview.twig',
             array(
-                'navigation' => $analyzers,
+                'navigation' => $this->getMenuEntries(),
                 'summaries'  => $summaries,
             )
         );
+    }
+
+    /**
+     * Show analyzer results
+     *
+     * @param RMF\Request $request
+     * @return Struct\Response
+     */
+    public function showAnalyzer( RMF\Request $request )
+    {
+        if ( !isset( $request->variables['analyzer'] ) ||
+             !isset( $this->analyzers[$request->variables['analyzer']] ) )
+        {
+            throw new \Exception( "Unknown / unspecified analyzer." );
+        }
+
+        $response = $this->analyzers[$request->variables['analyzer']]->render( $request );
+        $response->data['navigation'] = $this->getMenuEntries();
+
+        return $response;
     }
 }
 

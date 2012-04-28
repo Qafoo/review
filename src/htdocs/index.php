@@ -17,11 +17,14 @@ $dic->mysqli;
 
 $dispatcher = new RMF\Dispatcher\Simple(
     new RMF\Router\Regexp( array(
+        '(^/$)' => array(
+            'GET'  => array( $dic->reviewController, 'showOverview' ),
+        ),
+        '(^/show/(?P<analyzer>[A-Za-z_]+))' => array(
+            'GET'  => array( $dic->reviewController, 'showAnalyzer' ),
+        ),
         '(^/source)' => array(
             'GET'  => array(),
-        ),
-        '(^/)' => array(
-            'GET'  => array( $dic->reviewController, 'showOverview' ),
         ),
     ) ),
     $dic->view
