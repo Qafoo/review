@@ -24,7 +24,7 @@ $dispatcher = new RMF\Dispatcher\Simple(
             'GET'  => array( $dic->reviewController, 'showAnalyzer' ),
         ),
         '(^/source/?(?P<path>.*)$)' => array(
-            'GET'  => array( $dic->sourceController, 'show' ),
+            'GET'  => array( $dic->reviewController, 'showSource' ),
         ),
     ) ),
     $dic->view

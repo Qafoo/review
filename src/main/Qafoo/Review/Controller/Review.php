@@ -27,13 +27,22 @@ class Review
     protected $analyzers;
 
     /**
+     * Source controller
+     *
+     * @var Source
+     */
+    protected $sourceController;
+
+    /**
      * Construct from analyzers
      *
+     * @param Source $sourceController
      * @param Analyzer[] $analyzers
      * @return void
      */
-    public function __construct( array $analyzers = array() )
+    public function __construct( Source $sourceController, array $analyzers = array() )
     {
+        $this->sourceController = $sourceController;
         foreach ( $analyzers as $id => $analyzer )
         {
             $this->addAnalyzer( $id, $analyzer );
@@ -125,6 +134,20 @@ class Review
         }
 
         $response = $this->analyzers[$request->variables['analyzer']]->render( $request );
+        $response->data['navigation'] = $this->getMenuEntries();
+
+        return $response;
+    }
+
+    /**
+     * Show analyzer results
+     *
+     * @param RMF\Request $request
+     * @return Struct\Response
+     */
+    public function showSource( RMF\Request $request )
+    {
+        $response = $this->sourceController->show( $request );
         $response->data['navigation'] = $this->getMenuEntries();
 
         return $response;

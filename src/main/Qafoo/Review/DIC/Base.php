@@ -111,9 +111,12 @@ class Base extends DIC
 
         $this->reviewController = function ( $dic )
         {
-            return new Review\Controller\Review( array(
-                'pdepend' => new Review\Analyzer\PDepend( $dic->resultDir, $dic->annotationGateway ),
-            ) );
+            return new Review\Controller\Review(
+                $dic->sourceController,
+                array(
+                    'pdepend' => new Review\Analyzer\PDepend( $dic->resultDir, $dic->annotationGateway ),
+                )
+            );
         };
     }
 }
