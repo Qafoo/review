@@ -210,9 +210,9 @@ class PDepend extends Analyzer
             $metrics = $this->getClassMetrics( $classNode );
             foreach ( $metrics as $metric => $value )
             {
-                $type = 'warning';
+                $class = 'warning';
                 if ( ( $value > $this->classTresholds['warning'][$metric] ) ||
-                     ( $type = 'error' ) ||
+                     ( (int) ( $class = 'error' ) ) ||
                      ( $value > $this->classTresholds['error'][$metric] ) )
                 {
                     $this->gateway->create( new Struct\Annotation(
@@ -220,7 +220,7 @@ class PDepend extends Analyzer
                         (int) $classNode->getAttribute( 'startLine' ),
                         null,
                         'pdepend',
-                        $type,
+                        $class,
                         $this->classMetrics[$metric] . ': ' . $value
                     ) );
                 }
@@ -232,9 +232,9 @@ class PDepend extends Analyzer
 
                 foreach ( $metrics as $metric => $value )
                 {
-                    $type = 'warning';
+                    $class = 'warning';
                     if ( ( $value > $this->methodThresholds['warning'][$metric] ) ||
-                         ( $type = 'error' ) ||
+                         ( (int) ( $class = 'error' ) ) ||
                          ( $value > $this->methodThresholds['error'][$metric] ) )
                     {
                         $this->gateway->create( new Struct\Annotation(
@@ -242,7 +242,7 @@ class PDepend extends Analyzer
                             (int) $methodNode->getAttribute( 'startLine' ),
                             null,
                             'pdepend',
-                            $type,
+                            $class,
                             $this->methodMetrics[$metric] . ': ' . $value
                         ) );
                     }
