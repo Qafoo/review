@@ -1,0 +1,116 @@
+<?php
+/**
+ * This file is part of qaReview
+ *
+ * @version $Revision$
+ * @copyright Qafoo GmbH
+ */
+
+namespace Qafoo\Review\Controller;
+use Qafoo\Review\AnnotationGateway;
+use Qafoo\Review\Struct;
+use Qafoo\RMF;
+
+/**
+ * Main source controller
+ *
+ * @version $Revision$
+ */
+class Source
+{
+    /**
+     * Annotation gateway
+     *
+     * @var AnnotationGateway
+     */
+    protected $gateway;
+
+    /**
+     * Source dir
+     *
+     * @var string
+     */
+    protected $source;
+
+    /**
+     * Construct from analyzers
+     *
+     * @param string $source
+     * @param AnnotationGateway $gateway
+     * @return void
+     */
+    public function __construct( $source, AnnotationGateway $gateway )
+    {
+        $this->source  = file_get_contents( $source );
+        $this->gateway = $gateway;
+    }
+
+    /**
+     * Show project overview
+     *
+     * @param RMF\Request $request
+     * @return Struct\Response
+     */
+    public function show( RMF\Request $request )
+    {
+        $path = $request->variables['path'] ?: '/';
+
+        return new Struct\Response(
+            'source.twig',
+            array(
+                'tree' => $this->getSourceTree( $path ),
+            )
+        );
+    }
+
+    /**
+     * Get source tree
+     *
+     * @param string $path
+     * @return void
+     */
+    protected function getSourceTree( $path )
+    {
+        $tree = new \RecursiveDirectoryIterator(
+            $this->source,
+            \FilesystemIterator::CURRENT_AS_FILEINFO |
+            \FilesystemIterator::KEY_AS_PATHNAME |
+            \FilesystemIterator::SKIP_DOTS |
+            \FilesystemIterator::UNIX_PATHS
+        );
+
+        return $this->toArray( $tree );
+    }
+
+    protected function toArray( \RecursiveDirectoryIterator $tree )
+    {
+        $array = array();
+        $types = array();
+        $names = array();
+        foreach ( $tree as $file )
+        {
+            if ( strpos( $file->getFileName(), '.' ) === 0 )
+            {
+                continue;
+            }
+
+            $types[] = (int) $file->isDir();
+            $names[] = $file->getFileName();
+            $array[] = $entry = array(
+                'type'     => $file->isDir() ? 'folder' : 'file',
+                'name'     => $file->getFileName(),
+                'path'     => str_replace( $this->source, '', $file->getPath() . '/' . $file->getFileName() ),
+                'children' => $tree->hasChildren() ? $this->toArray( $tree->getChildren() ) : array(),
+            );
+        }
+
+        array_multisort(
+            $types, SORT_NUMERIC, SORT_DESC,
+            $names, SORT_STRING, SORT_ASC,
+            $array
+        );
+
+        return $array;
+    }
+}
+

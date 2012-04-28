@@ -40,6 +40,7 @@ class Base extends DIC
         'view'              => true,
         'twig'              => true,
         'annotationGateway' => true,
+        'sourceController'  => true,
         'reviewController'  => true,
     );
 
@@ -97,6 +98,14 @@ class Base extends DIC
         {
             return new Review\AnnotationGateway\Mysqli(
                 $dic->mysqli
+            );
+        };
+
+        $this->sourceController = function ( $dic )
+        {
+            return new Review\Controller\Source(
+                $dic->resultDir . '/source',
+                $dic->annotationGateway
             );
         };
 
