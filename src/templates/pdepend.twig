@@ -2,4 +2,20 @@
 
 {% block content %}
 <h1>PDepend</h1>
+
+<form class="well form-search" method="GET">
+    <select name="metric" class="input-large search-query">
+    {% for id, metric in metrics %}
+        <option {% if id == selected %}selected="selected"{% endif %} value="{{id}}">{{metric}}</option>
+    {% endfor %}
+    </select>
+    <button type="submit" class="btn">Show</button>
+</form>
+
+<ul class="tagcloud">
+{% for class, metrics in classes %}
+    <li style="font-size: {{( metrics[selected] / max[selected] * 70 ) + 30}}%;"><a href="/source/{{metrics.file}}" title="{{class}}: {{metrics[selected]}}">{{class}}</a></li>
+{% endfor %}
+</ul>
+
 {% endblock %}

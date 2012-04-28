@@ -328,9 +328,43 @@ class PDepend extends Analyzer implements Displayable
      */
     public function render( RMF\Request $request )
     {
+        $selected = isset( $request->variables['metric'] ) ? $request->variables['metric'] : 'wmc';
+
+        $doc = new \DOMDocument();
+        $doc->load( $this->resultDir . '/pdepend_summary.xml' );
+
+        $xpath   = new \DOMXPath( $doc );
+        $classes = array();
+        $max     = array();
+        foreach ( $xpath->query( '//class' ) as $element )
+        {
+            $files = $element->getElementsByTagName( 'file' );
+            if ( $files->length === 0 )
+            {
+                continue;
+            }
+
+            $classes[$class = $element->getAttribute( 'name' )] = $this->getClassMetrics( $element );
+
+            foreach ( $classes[$class] as $metric => $value )
+            {
+                if ( !isset( $max[$metric] ) ||
+                     ( $value > $max[$metric] ) )
+                {
+                    $max[$metric] = $value;
+                }
+            }
+
+            $classes[$class]['file'] = $files->item( 0 )->getAttribute( 'name' );
+        }
+
         return new Struct\Response(
             'pdepend.twig',
             array(
+                'metrics'  => $this->classMetrics,
+                'selected' => $selected,
+                'max'      => $max,
+                'classes'  => $classes,
             )
         );
     }
