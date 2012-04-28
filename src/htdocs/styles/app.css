@@ -60,11 +60,26 @@ ol.source li a:hover {
 }
 
 ol.source li pre {
+    display: inline;
+
     border: none;
     padding: 0px;
     margin: 1px 5px;
 
     background-color: transparent;
+}
+
+ol.source li a.icon {
+    display: block;
+    float: right;
+}
+
+ol.source li .analyzer {
+    color: #666666;
+}
+
+div.modal {
+    display: none;
 }
 
 .source .code {

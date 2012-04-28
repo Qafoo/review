@@ -23,6 +23,15 @@ class CodeProcessor
     protected $contents;
 
     /**
+     * Array containing all annotations.
+     *
+     * Array is maintained as an array array of annotations per line number.
+     *
+     * @var Struct\Annotation[][]
+     */
+    protected $annotations;
+
+    /**
      * Mapping of colors to semantic styles
      *
      * @var array
@@ -163,7 +172,10 @@ class CodeProcessor
      */
     public function addAnnotations( array $annotations )
     {
-        // @TODO: Implement
+        foreach ( $annotations as $annotation )
+        {
+            $this->annotations[$annotation->line - 1][] = $annotation;
+        }
     }
 
     /**
@@ -171,20 +183,18 @@ class CodeProcessor
      *
      * @return string
      */
-    public function getHtml()
+    public function getSourceData()
     {
-        $html = "";
-
+        $lines = array();
         foreach ( $this->content as $nr => $line )
         {
-            $html .= sprintf( '<li id="line_%d"><pre><a href="#line_%d">%s</a></pre></li>' . "\n",
-                $nr + 1,
-                $nr + 1,
-                $line
+            $lines[$nr + 1] = array(
+                'content' => $line,
+                'annotations' => isset( $this->annotations[$nr] ) ? $this->annotations[$nr] : array(),
             );
         }
 
-        return $html;
+        return $lines;
     }
 }
 

@@ -76,7 +76,7 @@ class Annotation extends Struct
      * @param string $message
      * @return void
      */
-    public function __construct( $file, $line, $character, $type, $class, $message )
+    public function __construct( $file = null, $line = null, $character = null, $type = null, $class = null, $message = null )
     {
         $this->file      = $file;
         $this->line      = $line;

@@ -56,22 +56,25 @@ class Source
     {
         $path = $request->variables['path'] ?: '/';
 
-        $source = null;
+        $source = array();
         if ( file_exists( $file = $this->source . '/' . $path ) &&
              is_file( $file ) )
         {
             $processor = new CodeProcessor();
             $processor->load( $file );
-            $processor->addAnnotations( array() );
-            $source = $processor->getHtml();
+            $processor->addAnnotations(
+                $annotations = $this->gateway->getAnnotationsForFile( $path )
+            );
+            $source = $processor->getSourceData();
         }
 
         return new Struct\Response(
             'source.twig',
             array(
-                'path'   => $path,
-                'tree'   => $this->getSourceTree( $path ),
-                'source' => $source,
+                'path'        => $path,
+                'tree'        => $this->getSourceTree( $path ),
+                'source'      => $source,
+                'annotations' => $annotations,
             )
         );
     }

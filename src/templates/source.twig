@@ -11,7 +11,37 @@
 
     <div class="span9">
         <h2>{{path}}</h2>
-        <ol class="source">{% autoescape false %}{{source}}{% endautoescape %}</ol>
+        <ol class="source">
+        {% for line in source %}
+            <li id="line_{{loop.index}}">
+                <a href="#line_{{loop.index}}">
+                    {% if line.annotations %}
+                    <div class="modal" id="annotation_{{loop.index}}">
+                        <div class="modal-header">
+                            <button class="close" data-dismiss="modal">×</button>
+                            <h3>Annotations</h3>
+                        </div>
+                        <div class="modal-body">
+                        {% for annotation in line.annotations %}
+                            <ul class="annotations unstyled">
+                                <li>
+                                    <i class="{% if annotation.class == "warning" %}icon-info-sign{% else %}icon-warning-sign{% endif %}"></i>
+                                    <span class="analyzer">[{{annotation.type}}]</span>
+                                    <span class="message">{{annotation.message}}</span>
+                                </li>
+                            </ul>
+                        {% endfor %}
+                        </div>
+                    </div>
+                    <a class="icon" data-toggle="modal" href="#annotation_{{loop.index}}">
+                        <span class="badge badge-error">{{line.annotations|length}}</span>
+                    </a>
+                    {% endif %}
+                    <pre>{% autoescape false %}{{line.content}}{% endautoescape %}</pre>
+                </a>
+            </li>
+        {% endfor %}
+        </ol>
     </div>
 </div>
 {% endblock %}
