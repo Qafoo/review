@@ -20,5 +20,6 @@ if ( !isset( $argv[1] ) )
     exit( 1 );
 }
 
+$dic->annotationGateway->truncate();
 $dic->reviewController->analyze( $argv[1] );
 

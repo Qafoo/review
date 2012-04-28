@@ -36,6 +36,18 @@ class Mysqli extends AnnotationGateway
     }
 
     /**
+     * Remove all existing annotations
+     *
+     * @return void
+     */
+    public function truncate()
+    {
+        $this->connection->query( sprintf( '
+            TRUNCATE `annotation`
+        ' ) );
+    }
+
+    /**
      * Get annotations for file
      *
      * @param string $file
