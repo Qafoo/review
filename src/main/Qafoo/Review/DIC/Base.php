@@ -33,8 +33,14 @@ class Base extends DIC
      * @var array(string)
      */
     protected $alwaysShared = array(
-        'configuration' => true,
-        'mysqli'        => true,
+        'srcDir'            => true,
+        'resultDir'         => true,
+        'configuration'     => true,
+        'mysqli'            => true,
+        'view'              => true,
+        'twig'              => true,
+        'annotationGateway' => true,
+        'reviewController'  => true,
     );
 
     /**
