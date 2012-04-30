@@ -70,22 +70,25 @@ class Diff extends Analyzer implements Displayable
         $process->execute();
         file_put_contents( $this->resultDir . '/diff.patch', $process->stdoutOutput );
 
-        $this->processAnnotations( $path, $this->resultDir . '/diff.patch' );
+        $this->parseDiff( $path, $this->resultDir . '/diff.patch' );
+        $this->processAnnotations();
     }
 
     /**
-     * Process annotations from summary XML file
+     * Parse diff into a sensible PHP array and store the parsed results
      *
      * @param string $path
      * @param string $diff
      * @return void
      */
-    protected function processAnnotations( $path, $diff )
+    protected function parseDiff( $path, $diff )
     {
+        $parsedDiff = array();
+
         $diffPartRegexp = '
-            (?P<start>\\d+(?:,\\d+)?)
+            (?P<lRemoved>\\d+(?:,\\d+)?)
             (?P<type>[acd])
-            (?P<end>\\d+(?:,\\d+)?)\\n
+            (?P<lAdded>\\d+(?:,\\d+)?)\\n
             (?P<removed>(?:<\\s.*\\n)+)?
             (?:---\\n)?
             (?P<added>(?:>\\s.*\\n)+)?
@@ -106,26 +109,50 @@ class Diff extends Analyzer implements Displayable
 
             while ( preg_match( '(\\A' . $diffPartRegexp . ')x', $fileDiff, $match ) )
             {
-                $range = explode( ',', $match['end'] );
-                $range = count( $range ) > 1 ? range( $range[0], $range[1] ) : $range;
+                $removeRange = explode( ',', $match['lRemoved'] );
+                $removeRange = count( $removeRange ) > 1 ? range( $removeRange[0], $removeRange[1] ) : $removeRange;
 
-                switch ( $match['type'] )
+                $addedRange = explode( ',', $match['lAdded'] );
+                $addedRange = count( $addedRange ) > 1 ? range( $addedRange[0], $addedRange[1] ) : $addedRange;
+
+                $parsedDiff[$file][] = array(
+                    'type'    => $match['type'],
+                    'removed' => $removeRange,
+                    'added'   => $addedRange,
+                );
+
+                $fileDiff = substr( $fileDiff, strlen( $match[0] ) );
+            }
+        }
+
+        file_put_contents( $this->resultDir . '/diff.php', "<?php\n\nreturn " . var_export( $parsedDiff, true ) . ";\n\n" );
+    }
+
+    /**
+     * Process annotations from summary XML file
+     *
+     * @param string $path
+     * @param string $diff
+     * @return void
+     */
+    protected function processAnnotations()
+    {
+        $diff = include $this->resultDir . '/diff.php';
+
+        foreach ( $diff as $file => $fileDiff )
+        {
+            foreach ( $fileDiff as $diffPart )
+            {
+                switch ( $diffPart['type'] )
                 {
                     case 'a':
-                        foreach ( $range as $line )
-                        {
-                            $this->gateway->create( new Struct\Annotation( $file, $line, null, 'diff', 'added' ) );
-                        }
-                        break;
                     case 'c':
-                        foreach ( $range as $line )
+                        foreach ( $diffPart['added'] as $line )
                         {
                             $this->gateway->create( new Struct\Annotation( $file, $line, null, 'diff', 'added' ) );
                         }
                         break;
                 }
-
-                $fileDiff = substr( $fileDiff, strlen( $match[0] ) );
             }
         }
     }
