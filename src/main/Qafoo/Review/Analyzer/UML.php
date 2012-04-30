@@ -165,9 +165,11 @@ class UML extends Analyzer implements Displayable
      */
     protected function getClassLabel( $name, array $data )
     {
+        $bgColor = $data['interface'] || $data['abstract'] ? '#d9edf7' : '#f9f9f9f';
+
         $html = '<TABLE
                 COLOR="#DDDDDD"
-                BGCOLOR="#F9F9F9"
+                BGCOLOR="' . $bgColor . '"
                 BORDER="1"
                 CELLSPACING="0"
                 CELLPADDING="2"
