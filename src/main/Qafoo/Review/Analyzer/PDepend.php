@@ -369,9 +369,10 @@ class PDepend extends Analyzer implements Displayable
      * Get method metric tag cloud data
      *
      * @param string $selected
+     * @param int $count
      * @return void
      */
-    protected function getMethodMetricTagCloud( $selected )
+    protected function getMethodMetricTagCloud( $selected, $count = 100 )
     {
         $doc = new \DOMDocument();
         $doc->load( $this->resultDir . '/pdepend_summary.xml' );
@@ -406,6 +407,17 @@ class PDepend extends Analyzer implements Displayable
                 $methods[$method]['line'] = $methodElement->getAttribute( 'startLine' );
             }
         }
+
+        // Limit to $count metrics
+        uasort(
+            $methods,
+            function( $a, $b ) use ( $selected )
+            {
+                return $b[$selected] - $a[$selected];
+            }
+        );
+        $methods = array_slice( $methods, 0, $count );
+        ksort( $methods );
 
         return array(
             'metrics'  => $this->methodMetrics,
