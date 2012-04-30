@@ -372,7 +372,7 @@ class PDepend extends Analyzer implements Displayable
      * @param int $count
      * @return void
      */
-    protected function getMethodMetricTagCloud( $selected, $count = 100 )
+    protected function getMethodMetricTagCloud( $selected, $count = 50 )
     {
         $doc = new \DOMDocument();
         $doc->load( $this->resultDir . '/pdepend_summary.xml' );
