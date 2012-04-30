@@ -10,7 +10,7 @@
         {% include "directory.twig" %}
         <h2>Annotations</h2>
         <ul class="annotations unstyled">
-        {% for annotation in annotations %}
+        {% for annotation in messages if annotation.message %}
             <li>
                 <a href="#line_{{annotation.line}}">
                     <i class="{% if annotation.class == "warning" %}icon-info-sign{% else %}icon-warning-sign{% endif %}"></i>
@@ -26,9 +26,13 @@
         <h2>{{path}}</h2>
         <ol class="source">
         {% for line in source %}
-            <li id="line_{{loop.index}}">
+            <li id="line_{{loop.index}}" class="
+                {%- for annotation in line.annotations -%}
+                    {{annotation.type}}-{{annotation.class}}{{" "}}
+                {%- endfor -%}
+            ">
                 <a href="#line_{{loop.index}}">
-                    {% if line.annotations %}
+                    {% if line.messages %}
                     <div class="modal" id="annotation_{{loop.index}}">
                         <div class="modal-header">
                             <button class="close" data-dismiss="modal">×</button>
@@ -36,7 +40,7 @@
                         </div>
                         <div class="modal-body">
                             <ul class="annotations unstyled">
-                            {% for annotation in line.annotations %}
+                            {% for annotation in line.messages if annotation.message %}
                                 <li>
                                     <i class="{% if annotation.class == "warning" %}icon-info-sign{% else %}icon-warning-sign{% endif %}"></i>
                                     <span class="analyzer">[{{annotation.type}}]</span>
@@ -47,7 +51,7 @@
                         </div>
                     </div>
                     <a class="icon" data-toggle="modal" href="#annotation_{{loop.index}}">
-                        <span class="badge badge-error">{{line.annotations|length}}</span>
+                        <span class="badge badge-error">{{line.messages|length}}</span>
                     </a>
                     {% endif %}
                     <pre>{% autoescape false %}{{line.content}}{% endautoescape %}</pre>

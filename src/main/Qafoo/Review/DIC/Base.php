@@ -116,6 +116,7 @@ class Base extends DIC
                 array(
                     'pdepend' => new Review\Analyzer\PDepend( $dic->resultDir, $dic->annotationGateway ),
                     'phpmd'   => new Review\Analyzer\Phpmd( $dic->resultDir, $dic->annotationGateway ),
+                    'diff'    => new Review\Analyzer\Diff( $dic->resultDir, $dic->annotationGateway ),
                 )
             );
         };

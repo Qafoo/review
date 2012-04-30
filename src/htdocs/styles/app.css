@@ -46,6 +46,10 @@ ol.source li {
     min-height: 18px;
 }
 
+ol.source li.diff-added {
+   background-color: #dff0d8;
+}
+
 ol.source li:hover {
     background-color: #ffffff;
 }

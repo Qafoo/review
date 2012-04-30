@@ -65,13 +65,14 @@ class Review
      * Analyze src dir
      *
      * @param string $path
+     * @param string $oldPath
      * @return void
      */
-    public function analyze( $path )
+    public function analyze( $path, $oldPath = null )
     {
         foreach ( $this->analyzers as $analyzer )
         {
-            $analyzer->analyze( $path );
+            $analyzer->analyze( $path, $oldPath );
         }
     }
 
