@@ -3,6 +3,7 @@
 {% block content %}
 <h1>PDepend</h1>
 
+<form method="GET">
 <h2>Classes</h2>
 {% set cloud = class %}
 {% set name = "class" %}
@@ -12,5 +13,6 @@
 {% set cloud = method %}
 {% set name = "method" %}
 {% include 'pdepend_tagcloud.twig' %}
+</form>
 
 {% endblock %}

@@ -1,12 +1,11 @@
-{{cloud.selected}}
-<form class="well form-search" method="GET">
-    <select name="{{name}}" class="input-large search-query">
+<div class="well form-search">
+    <select name="{{name}}" class="search-query" style="width: 50%">
     {% for id, metric in cloud.metrics %}
         <option {% if id == cloud.selected %}selected="selected"{% endif %} value="{{id}}">{{metric}}</option>
     {% endfor %}
     </select>
     <button type="submit" class="btn">Show</button>
-</form>
+</div>
 
 <ul class="tagcloud">
 {% for item, metrics in cloud.items %}
