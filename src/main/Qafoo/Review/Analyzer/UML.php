@@ -144,7 +144,7 @@ class UML extends Analyzer implements Displayable
             $dotInput .= sprintf( '    "%s" [shape=%s, label="%s"]' . PHP_EOL,
                 addslashes( $className ),
                 ( $data['interface'] ? 'oval' : ( $data['abstract'] ? 'hexagon' : 'box' ) ),
-                substr( strrchr( $className, '\\' ), 1 )
+                addslashes( strlen( $className ) > 30 ? '…' . substr( $className, -29 ) : $className )
             );
 
             foreach ( $data['extends'] as $parent )
