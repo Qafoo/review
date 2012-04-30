@@ -70,9 +70,11 @@ class Review
      */
     public function analyze( $path, $oldPath = null )
     {
-        foreach ( $this->analyzers as $analyzer )
+        foreach ( $this->analyzers as $name => $analyzer )
         {
+            echo " - Analyze with $name …";
             $analyzer->analyze( $path, $oldPath );
+            echo " Done", PHP_EOL;
         }
     }
 
