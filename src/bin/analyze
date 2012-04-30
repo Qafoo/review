@@ -22,8 +22,13 @@ if ( !isset( $argv[1] ) )
 $path    = $argv[1];
 $oldPath = isset( $argv[2] ) ? $argv[2] : null;
 
-$dic->annotationGateway->truncate();
-$dic->reviewController->analyze( $path, $oldPath );
+foreach ( glob( $dic->resultDir . '/*' ) as $result )
+{
+    unlink( $result );
+}
 
 file_put_contents( $dic->resultDir . '/source', $path );
+
+$dic->annotationGateway->truncate();
+$dic->reviewController->analyze( $path, $oldPath );
 
