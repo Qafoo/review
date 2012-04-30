@@ -3,6 +3,25 @@
 {% block content %}
 <h1>Class diagram</h1>
 
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr><th colspace="3">Legend</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="width: 33%;">
+                <div style="padding: 2px; border: 1px solid #333333; background-color: #f9f9f9f;">Class</div>
+            </td>
+            <td style="width: 33%;">
+                <div style="padding: 2px; border: 1px solid #333333; background-color: #d9edf7;">Abstract class</div>
+            </td>
+            <td style="width: 33%;">
+                <div style="padding: 2px; border: 1px solid #333333; background-color: #fcf8e3;">Interface</div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 {% autoescape false %}{{diagram}}{% endautoescape %}
 
 {% endblock %}
