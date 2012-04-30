@@ -67,7 +67,9 @@ class Mysqli extends AnnotationGateway
             FROM
                 `annotation`
             WHERE
-                `a_file` = "%s"',
+                `a_file` = "%s"
+            ORDER BY
+                `a_line` ASC',
             $this->connection->escape_string( $file )
         ) );
 
