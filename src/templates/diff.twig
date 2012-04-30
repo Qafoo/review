@@ -3,5 +3,34 @@
 {% block content %}
 <h1>Diff</h1>
 
-
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th style="width: 50%">File</th>
+            <th style="width: 25%">Removed</th>
+            <th style="width: 25%">Added</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for file, change in changes %}
+        <tr>
+            <td><a href="/source/{{file}}">{{file}}</a></td>
+            <td class="removed">
+                <div class="progress progress-danger">
+                    <div class="bar" style="width: {{change.removed / max * 100}}%">
+                        {{change.removed}}
+                    </div>
+                </div>
+            </td>
+            <td class="added">
+                <div class="progress progress-success">
+                    <div class="bar" style="width: {{change.added / max * 100}}%">
+                        {{change.added}}
+                    </div>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

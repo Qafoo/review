@@ -188,10 +188,37 @@ class Diff extends Analyzer implements Displayable
      */
     public function render( RMF\Request $request )
     {
+        $diff        = include $this->resultDir . '/diff.php';
+        $fileChanges = array();
+        $maxChanges  = 0;
+
+        foreach ( $diff as $file => $fileDiff )
+        {
+            if ( preg_match( '(^\\.|/\\.)', $file ) )
+            {
+                // Ingore all dot files
+                continue;
+            }
+
+            $fileChanges[$file] = array(
+                'removed' => 0,
+                'added'   => 0,
+            );
+
+            foreach ( $fileDiff as $diffPart )
+            {
+                $fileChanges[$file]['removed'] += count( $diffPart['removed'] );
+                $fileChanges[$file]['added']   += count( $diffPart['added'] );
+            }
+
+            $maxChanges = max( $maxChanges, $fileChanges[$file]['removed'], $fileChanges[$file]['added'] );
+        }
 
         return new Struct\Response(
             'diff.twig',
             array(
+                'changes' => $fileChanges,
+                'max'     => $maxChanges,
             )
         );
     }

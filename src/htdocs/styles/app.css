@@ -107,3 +107,11 @@ div.modal {
     color: #468847;
 }
 
+td .progress {
+    margin-bottom: 0px;
+}
+
+td.removed .progress .bar {
+    margin: 0px 0px 0px auto;
+}
+
