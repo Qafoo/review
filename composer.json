@@ -15,16 +15,28 @@
                 "reference": "origin/master"
             }
         }
-
+    }, {
+        "type":    "package",
+        "package": {
+            "name":    "pdepend/staticReflection",
+            "version": "0.1",
+            "source": {
+                "url": "https://github.com/manuelpichler/staticReflection.git",
+                "type": "git",
+                "reference": "origin/master"
+            }
+        }
     } ],
     "require":      {
         "Qafoo/RMF": "dev-master",
         "arbitracker/systemProcess": "0.1",
+        "pdepend/staticReflection": "0.1",
         "twig/twig": "1.6.0"
     },
     "autoload": {
         "psr-0": {
-            "SystemProcess": ["src/library/arbitracker/systemProcess/src/main/php/"]
+            "SystemProcess": ["src/library/arbitracker/systemProcess/src/main/php/"],
+            "pdepend\\reflection": ["src/library/pdepend/staticReflection/src/main/php/"]
         }
     },
     "config":       {

@@ -1,5 +1,5 @@
 {
-    "hash": "9e06807c882e6cf5d330cc972db0d7b2",
+    "hash": "cbb938726bc2a6953bbca8e7d216968c",
     "packages": [
         {
             "package": "Qafoo/RMF",
@@ -8,6 +8,10 @@
         },
         {
             "package": "arbitracker/systemProcess",
+            "version": "0.1"
+        },
+        {
+            "package": "pdepend/staticReflection",
             "version": "0.1"
         },
         {
