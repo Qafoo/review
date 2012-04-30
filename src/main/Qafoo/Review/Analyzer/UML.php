@@ -85,20 +85,34 @@ class UML extends Analyzer implements Displayable
 
             $fullName = $class->getNamespaceName() . '\\' . $class->getName();
 
-            $parent = $class->getParentClass();
             $classSpec = array(
                 'file'      => str_replace( $path, '', $class->getFileName() ),
-                'extends'   => $parent ? array( $parent->getNamespaceName() . '\\' .$parent->getName() ) : array(),
                 'abstract'  => $class->isAbstract(),
                 'interface' => $class->isInterface(),
+                'extends'   => array(),
+                'uses'      => array(),
             );
+
+            if ( $parent = $class->getParentClass() )
+            {
+                $classSpec['extends'][] = $parent->getNamespaceName() . '\\' . $parent->getName();
+            }
 
             foreach ( $class->getInterfaces() as $interface )
             {
                 $classSpec['extends'][] = $interface->getNamespaceName() . '\\' . $interface->getName();
             }
 
-            // @TODO: Iterate over methods to find usage connections
+            foreach ( $class->getMethods() as $method )
+            {
+                foreach ( $method->getParameters() as $parameter )
+                {
+                    if ( $usedClass = $parameter->getClass() )
+                    {
+                        $classSpec['uses'][] = $usedClass->getNamespaceName() . '\\' . $usedClass->getName();
+                    }
+                }
+            }
 
             $classes[$fullName] = $classSpec;
         }
@@ -122,15 +136,16 @@ class UML extends Analyzer implements Displayable
                 fontsize  = 10,
             ];
 
-            mindist = 0.1;
-            rankdir = LR;
-            splines = true;
-            overlap = false;
+            mindist  = 0.1;
+            rankdir  = LR;
+            splines  = true;
+            overlap  = false;
+            penwidth = .5;
         ';
 
         foreach ( $classes as $className => $data )
         {
-            $dotInput .= sprintf( '    "%s" [shape=plaintext, label=<%s>]' . PHP_EOL,
+            $dotInput .= sprintf( '    "%s" [%s]' . PHP_EOL,
                 addslashes( $className ),
                 $this->getClassLabel( $className, $data )
             );
@@ -138,6 +153,14 @@ class UML extends Analyzer implements Displayable
             foreach ( $data['extends'] as $parent )
             {
                 $dotInput .= sprintf( '    "%s" -> "%s" [arrowhead="onorman"]' . PHP_EOL,
+                    addslashes( $className ),
+                    addslashes( $parent )
+                );
+            }
+
+            foreach ( $data['uses'] as $parent )
+            {
+                $dotInput .= sprintf( '    "%s" -> "%s" [constraint=false, arrowhead="none", color="#dddddd"]' . PHP_EOL,
                     addslashes( $className ),
                     addslashes( $parent )
                 );
@@ -165,37 +188,25 @@ class UML extends Analyzer implements Displayable
      */
     protected function getClassLabel( $name, array $data )
     {
-        $bgColor = $data['interface'] || $data['abstract'] ? '#d9edf7' : '#f9f9f9f';
-
-        $html = '<TABLE
-                COLOR="#DDDDDD"
-                BGCOLOR="' . $bgColor . '"
-                BORDER="1"
-                CELLSPACING="0"
-                CELLPADDING="2"
-                CELLBORDER="0"
-                HREF="' . htmlentities( '/source/' . $data['file'] ) . '">
-            <TR>
-                <TD
-                    ALIGN="CENTER">';
-
-        $displayName = strlen( $name ) > 30 ? '…' . substr( $name, -29 ) : $name;
+        $bgColor = '#f9f9f9';
+        $color   = '#333333';
 
         if ( $data['interface'] )
         {
-            $html .= '&lt;&lt;interface&gt;&gt;<BR/><B>' . $displayName . '</B>';
-        }
-        elseif( $data['abstract'] )
+            $bgColor = '#fcf8e3';
+        } elseif ( $data['abstract'] )
         {
-            $html .= '<B><I>' . $displayName . '</I></B>';
-        }
-        else
-        {
-            $html .= '<B>' . $displayName . '</B>';
+            $bgColor = '#d9edf7';
         }
 
-        $html .= '</TD></TR></TABLE>';
-        return $html;
+
+        return sprintf(
+            'shape="rect", label="%s", style="filled", color="%s", fillcolor="%s", href="%s"',
+            addslashes( strlen( $name ) > 30 ? '…' . substr( $name, -29 ) : $name ),
+            $color,
+            $bgColor,
+            addslashes( '/source/' . $data['file'] )
+        );
     }
 
     /**
