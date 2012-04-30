@@ -3,6 +3,6 @@
 {% block content %}
 <h1>Class diagram</h1>
 
-<object data="/images/uml.svg" type="image/svg+xml"></object> 
+{% autoescape false %}{{diagram}}{% endautoescape %}
 
 {% endblock %}

@@ -32,13 +32,6 @@ class UML extends Analyzer implements Displayable
     protected $resultDir;
 
     /**
-     * HTDocs dir
-     *
-     * @var string
-     */
-    protected $htdocsDir;
-
-    /**
      * Annotation gateway
      *
      * @var AnnotationGateway
@@ -52,10 +45,9 @@ class UML extends Analyzer implements Displayable
      * @param AnnotationGateway $gateway
      * @return void
      */
-    public function __construct( $resultDir, $htdocsDir, AnnotationGateway $gateway )
+    public function __construct( $resultDir, AnnotationGateway $gateway )
     {
         $this->resultDir = $resultDir;
-        $this->htdocsDir = $htdocsDir;
         $this->gateway   = $gateway;
     }
 
@@ -95,6 +87,7 @@ class UML extends Analyzer implements Displayable
 
             $parent = $class->getParentClass();
             $classSpec = array(
+                'file'      => str_replace( $path, '', $class->getFileName() ),
                 'extends'   => $parent ? array( $parent->getNamespaceName() . '\\' .$parent->getName() ) : array(),
                 'abstract'  => $class->isAbstract(),
                 'interface' => $class->isInterface(),
@@ -127,13 +120,9 @@ class UML extends Analyzer implements Displayable
                 fontname  = Arial,
                 fontcolor = "#2e3436",
                 fontsize  = 10,
-
-                style     = filled,
-                color     = "#2e3436",
-                fillcolor = "#eeeeef"
             ];
 
-            mindist = 0.4;
+            mindist = 0.1;
             rankdir = LR;
             splines = true;
             overlap = false;
@@ -141,15 +130,14 @@ class UML extends Analyzer implements Displayable
 
         foreach ( $classes as $className => $data )
         {
-            $dotInput .= sprintf( '    "%s" [shape=%s, label="%s"]' . PHP_EOL,
+            $dotInput .= sprintf( '    "%s" [shape=plaintext, label=<%s>]' . PHP_EOL,
                 addslashes( $className ),
-                ( $data['interface'] ? 'oval' : ( $data['abstract'] ? 'hexagon' : 'box' ) ),
-                addslashes( strlen( $className ) > 30 ? '…' . substr( $className, -29 ) : $className )
+                $this->getClassLabel( $className, $data )
             );
 
             foreach ( $data['extends'] as $parent )
             {
-                $dotInput .= sprintf( '    "%s" -> "%s"' . PHP_EOL,
+                $dotInput .= sprintf( '    "%s" -> "%s" [arrowhead="onorman"]' . PHP_EOL,
                     addslashes( $className ),
                     addslashes( $parent )
                 );
@@ -163,9 +151,49 @@ class UML extends Analyzer implements Displayable
         $process = new \SystemProcess\SystemProcess( 'dot' );
         $process
             ->argument( '-Tsvg' )
-            ->argument( '-o' . $this->htdocsDir . '/images/uml.svg' )
+            ->argument( '-o' . $this->resultDir . '/uml.svg' )
             ->argument( $dotFile );
         $process->execute();
+    }
+
+    /**
+     * Get label for a class node
+     *
+     * @param string $name
+     * @param array $data
+     * @return string
+     */
+    protected function getClassLabel( $name, array $data )
+    {
+        $html = '<TABLE
+                COLOR="#DDDDDD"
+                BGCOLOR="#F9F9F9"
+                BORDER="1"
+                CELLSPACING="0"
+                CELLPADDING="2"
+                CELLBORDER="0"
+                HREF="' . htmlentities( '/source/' . $data['file'] ) . '">
+            <TR>
+                <TD
+                    ALIGN="CENTER">';
+
+        $displayName = strlen( $name ) > 30 ? '…' . substr( $name, -29 ) : $name;
+
+        if ( $data['interface'] )
+        {
+            $html .= '&lt;&lt;interface&gt;&gt;<BR/><B>' . $displayName . '</B>';
+        }
+        elseif( $data['abstract'] )
+        {
+            $html .= '<B><I>' . $displayName . '</I></B>';
+        }
+        else
+        {
+            $html .= '<B>' . $displayName . '</B>';
+        }
+
+        $html .= '</TD></TR></TABLE>';
+        return $html;
     }
 
     /**
@@ -202,6 +230,7 @@ class UML extends Analyzer implements Displayable
         return new Struct\Response(
             'uml.twig',
             array(
+                'diagram' => file_get_contents( $this->resultDir . '/uml.svg' )
             )
         );
     }
