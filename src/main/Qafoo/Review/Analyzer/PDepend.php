@@ -321,15 +321,13 @@ class PDepend extends Analyzer implements Displayable
     }
 
     /**
-     * Render yourself
+     * Get class metric tag cloud data
      *
-     * @param RMF\Request $request
-     * @return Struct\Response
+     * @param string $selected
+     * @return void
      */
-    public function render( RMF\Request $request )
+    protected function getClassMetricTagCloud( $selected )
     {
-        $selected = isset( $request->variables['metric'] ) ? $request->variables['metric'] : 'wmc';
-
         $doc = new \DOMDocument();
         $doc->load( $this->resultDir . '/pdepend_summary.xml' );
 
@@ -356,15 +354,83 @@ class PDepend extends Analyzer implements Displayable
             }
 
             $classes[$class]['file'] = $files->item( 0 )->getAttribute( 'name' );
+            $classes[$class]['line'] = $element->getAttribute( 'startLine' );
         }
+
+        return array(
+            'metrics'  => $this->classMetrics,
+            'selected' => $selected,
+            'max'      => $max,
+            'items'    => $classes,
+        );
+    }
+
+    /**
+     * Get method metric tag cloud data
+     *
+     * @param string $selected
+     * @return void
+     */
+    protected function getMethodMetricTagCloud( $selected )
+    {
+        $doc = new \DOMDocument();
+        $doc->load( $this->resultDir . '/pdepend_summary.xml' );
+
+        $xpath   = new \DOMXPath( $doc );
+        $classes = array();
+        $max     = array();
+        foreach ( $xpath->query( '//class' ) as $element )
+        {
+            $className = $element->getAttribute( 'name' );
+            $files     = $element->getElementsByTagName( 'file' );
+            if ( $files->length === 0 )
+            {
+                continue;
+            }
+
+            foreach ( $element->getElementsByTagName( 'method' ) as $methodElement )
+            {
+                $method = $className . '::' . $methodElement->getAttribute( 'name' );
+                $methods[$method] = $this->getMethodMetrics( $methodElement );
+
+                foreach ( $methods[$method] as $metric => $value )
+                {
+                    if ( !isset( $max[$metric] ) ||
+                         ( $value > $max[$metric] ) )
+                    {
+                        $max[$metric] = $value;
+                    }
+                }
+
+                $methods[$method]['file'] = $files->item( 0 )->getAttribute( 'name' );
+                $methods[$method]['line'] = $methodElement->getAttribute( 'startLine' );
+            }
+        }
+
+        return array(
+            'metrics'  => $this->methodMetrics,
+            'selected' => $selected,
+            'max'      => $max,
+            'items'    => $methods,
+        );
+    }
+
+    /**
+     * Render yourself
+     *
+     * @param RMF\Request $request
+     * @return Struct\Response
+     */
+    public function render( RMF\Request $request )
+    {
+        $classMetric  = isset( $request->variables['class'] ) ? $request->variables['class'] : 'wmc';
+        $methodMetric = isset( $request->variables['method'] ) ? $request->variables['method'] : 'npath';
 
         return new Struct\Response(
             'pdepend.twig',
             array(
-                'metrics'  => $this->classMetrics,
-                'selected' => $selected,
-                'max'      => $max,
-                'classes'  => $classes,
+                'class'  => $this->getClassMetricTagCloud( $classMetric ),
+                'method' => $this->getMethodMetricTagCloud( $methodMetric ),
             )
         );
     }

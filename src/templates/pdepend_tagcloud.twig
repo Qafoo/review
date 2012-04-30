@@ -1,0 +1,15 @@
+{{cloud.selected}}
+<form class="well form-search" method="GET">
+    <select name="{{name}}" class="input-large search-query">
+    {% for id, metric in cloud.metrics %}
+        <option {% if id == cloud.selected %}selected="selected"{% endif %} value="{{id}}">{{metric}}</option>
+    {% endfor %}
+    </select>
+    <button type="submit" class="btn">Show</button>
+</form>
+
+<ul class="tagcloud">
+{% for item, metrics in cloud.items %}
+    <li style="font-size: {{( metrics[cloud.selected] / cloud.max[cloud.selected] * 70 ) + 30}}%;"><a href="/source/{{metrics.file}}#line_{{metrics.line}}" title="{{item}}: {{metrics[cloud.selected]}}">{{item}}</a></li>
+{% endfor %}
+</ul>
