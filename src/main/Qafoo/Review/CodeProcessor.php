@@ -188,9 +188,17 @@ class CodeProcessor
         $lines = array();
         foreach ( $this->content as $nr => $line )
         {
+            $annotations    = isset( $this->annotations[$nr] ) ? $this->annotations[$nr] : array();
             $lines[$nr + 1] = array(
                 'content' => $line,
-                'annotations' => isset( $this->annotations[$nr] ) ? $this->annotations[$nr] : array(),
+                'annotations' => $annotations,
+                'messages'    => array_filter(
+                    $annotations,
+                    function ( $annotation )
+                    {
+                        return strlen( $annotation->message );
+                    }
+                ),
             );
         }
 

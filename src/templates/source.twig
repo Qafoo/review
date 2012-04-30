@@ -10,7 +10,7 @@
         {% include "directory.twig" %}
         <h2>Annotations</h2>
         <ul class="annotations unstyled">
-        {% for annotation in messages if annotation.message %}
+        {% for annotation in annotations if annotation.message %}
             <li>
                 <a href="#line_{{annotation.line}}">
                     <i class="{% if annotation.class == "warning" %}icon-info-sign{% else %}icon-warning-sign{% endif %}"></i>

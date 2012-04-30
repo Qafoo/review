@@ -76,13 +76,6 @@ class Source
                 'tree'        => $this->getSourceTree( $path ),
                 'source'      => $source,
                 'annotations' => $annotations,
-                'messages'    => array_filter(
-                    $annotations,
-                    function ( $annotation )
-                    {
-                        return strlen( $annotation->message );
-                    }
-                ),
             )
         );
     }
