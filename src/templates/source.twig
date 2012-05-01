@@ -24,6 +24,41 @@
 
     <div class="span9">
         <h2>{{path}}</h2>
+
+        {% if dependencies %}
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 25%">Extends</th>
+                    <th style="width: 25%">Extended by</th>
+                    <th style="width: 25%">Uses</th>
+                    <th style="width: 25%">Used by</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        {% set classes = dependencies.extends %}
+                        {% include "source_classlist.twig" %}
+                    </td>
+                    <td>
+                        {% set classes = dependencies.extendedBy %}
+                        {% include "source_classlist.twig" %}
+                    </td>
+                    <td>
+                        {% set classes = dependencies.uses %}
+                        {% include "source_classlist.twig" %}
+                    </td>
+                    <td>
+                        {% set classes = dependencies.usedBy %}
+                        {% include "source_classlist.twig" %}
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        {% endif %}
+
         <ol class="source">
         {% for line in source %}
             <li id="line_{{loop.index}}" class="

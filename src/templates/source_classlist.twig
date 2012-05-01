@@ -1,0 +1,10 @@
+<ul class="unstyled classList">
+{% for class, file in classes %}
+    {% set displayname = ( class|length() > 20 ) ? "…" ~ class|slice( -19, 19 ) : class %}
+    {% if file %}
+        <li><a title="{{class}}" href="/source/{{file}}">{{displayname}}</a></li>
+    {% else %}
+        <li>{{displayname}}</li>
+    {% endif %}
+{% endfor %}
+</ul>

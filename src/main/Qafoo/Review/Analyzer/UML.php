@@ -114,6 +114,7 @@ class UML extends Analyzer implements Displayable
                 }
             }
 
+            $classSpec['uses']  = array_unique( $classSpec['uses'] );
             $classes[$fullName] = $classSpec;
         }
 

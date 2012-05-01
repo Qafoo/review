@@ -42,8 +42,66 @@ class Source
      */
     public function __construct( $source, AnnotationGateway $gateway )
     {
-        $this->source  = file_get_contents( $source );
-        $this->gateway = $gateway;
+        $this->resultDir = dirname( $source );
+        $this->source    = file_get_contents( $source );
+        $this->gateway   = $gateway;
+    }
+
+    /**
+     * Get class meta information
+     *
+     * Returns class meta information, if is has been made available by the UML 
+     * analyzer. Can be used to display class dependencies / relations.
+     *
+     * @param string $path
+     * @return array
+     */
+    protected function getClassMetainformation( $path )
+    {
+        $classes = include $this->resultDir . '/classes.php';
+
+        foreach ( $classes as $class => $data )
+        {
+            $data['extends'] = array_flip( $data['extends'] );
+            foreach ( $data['extends'] as $extended => $null )
+            {
+                if ( isset( $classes[$extended] ) )
+                {
+                    $classes[$extended]['extendedBy'][$class] = $classes[$class]['file'];
+                    $data['extends'][$extended] = $classes[$extended]['file'];
+                }
+                else
+                {
+                    $data['extends'][$extended] = false;
+                }
+            }
+
+            $data['uses'] = array_flip( $data['uses'] );
+            foreach ( $data['uses'] as $used => $null )
+            {
+                if ( isset( $classes[$used] ) )
+                {
+                    $classes[$used]['usedBy'][$class] = $classes[$class]['file'];
+                    $data['uses'][$used] = $classes[$used]['file'];
+                }
+                else
+                {
+                    $data['uses'][$used] = false;
+                }
+            }
+
+            $classes[$class] = $data;
+        }
+
+        foreach ( $classes as $class => $data )
+        {
+            if ( $data['file'] === $path )
+            {
+                return $data;
+            }
+        }
+
+        return array();
     }
 
     /**
@@ -72,10 +130,11 @@ class Source
         return new Struct\Response(
             'source.twig',
             array(
-                'path'        => $path,
-                'tree'        => $this->getSourceTree( $path ),
-                'source'      => $source,
-                'annotations' => $annotations,
+                'path'         => $path,
+                'tree'         => $this->getSourceTree( $path ),
+                'source'       => $source,
+                'annotations'  => $annotations,
+                'dependencies' => $this->getClassMetainformation( $path ),
             )
         );
     }
