@@ -58,8 +58,12 @@ class Source
      */
     protected function getClassMetainformation( $path )
     {
-        $classes = include $this->resultDir . '/classes.php';
+        if ( !is_file( $this->resultDir . '/classes.php' ) )
+        {
+            return array();
+        }
 
+        $classes = include $this->resultDir . '/classes.php';
         foreach ( $classes as $class => $data )
         {
             $data['extends'] = array_flip( $data['extends'] );
