@@ -441,8 +441,10 @@ class PDepend extends Analyzer implements Displayable
         return new Struct\Response(
             'pdepend.twig',
             array(
-                'class'  => $this->getClassMetricTagCloud( $classMetric ),
-                'method' => $this->getMethodMetricTagCloud( $methodMetric ),
+                'class'   => $this->getClassMetricTagCloud( $classMetric ),
+                'method'  => $this->getMethodMetricTagCloud( $methodMetric ),
+                'pyramid' => file_get_contents( $this->resultDir . '/pdepend_pyramid.svg' ),
+                'jdepend' => file_get_contents( $this->resultDir . '/pdepend_jdepend.svg' ),
             )
         );
     }

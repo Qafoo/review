@@ -15,4 +15,17 @@
 {% include 'pdepend_tagcloud.twig' %}
 </form>
 
+<div class="row">
+    <div class="span6">
+        <div class="well">
+            {% autoescape false %}{{pyramid}}{% endautoescape %}
+        </div>
+    </div>
+    <div class="span6">
+        <div class="well">
+            {% autoescape false %}{{jdepend}}{% endautoescape %}
+        </div>
+    </div>
+</div>
+
 {% endblock %}
