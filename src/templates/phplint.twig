@@ -1,0 +1,24 @@
+{% extends "overview.twig" %}
+
+{% block content %}
+<h1>PHPLint</h1>
+
+<ul class="unstyled">
+{% for file, fileAnnotations in annotations %}
+    <li>
+        <a href="/source/{{file}}"><i class="icon-file"></i> {{file}}</a>
+        <ul class="annotations">
+        {% for annotation in fileAnnotations %}
+            <li>
+                <a href="/source/{{file}}#line_{{annotation.line}}">
+                    <span class="analyzer">[{{annotation.type}}]</span>
+                    <span class="message">{{annotation.message}}</span>
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}
