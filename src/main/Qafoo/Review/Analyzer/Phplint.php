@@ -89,15 +89,15 @@ class Phplint extends Analyzer implements Displayable
         // Find all metrics and emit signals for warnings and errors
         foreach ( $xpath->query( '//file' ) as $fileNode )
         {
-            foreach ( $fileNode->getElementsByTagName( 'violation' ) as $violation )
+            foreach ( $fileNode->getElementsByTagName( 'error' ) as $violation )
             {
                 $this->gateway->create( new Struct\Annotation(
                     $fileNode->getAttribute( 'name' ),
-                    (int) $violation->getAttribute( 'beginline' ),
+                    (int) $violation->getAttribute( 'line' ),
                     null,
                     'phplint',
                     $violation->getAttribute( 'severity' ),
-                    $violation->textContent
+                    $violation->getAttribute( 'message' )
                 ) );
             }
         }
