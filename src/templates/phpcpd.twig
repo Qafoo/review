@@ -1,0 +1,21 @@
+{% extends "overview.twig" %}
+
+{% block content %}
+<h1>PHP Copy &amp; Paste Detector</h1>
+
+<ul>
+{% for duplication in duplications %}
+    <li>
+        <ul class="unstyled">
+        {% for file in duplication.files %}
+            <li>
+                <a href="/source/{{file.path}}#line_{{file.line}}"><i class="icon-file"></i> {{file.path}} in line {{file.line}}</a>
+            </li>
+        {% endfor %}
+        </ul>
+        <pre>{{duplication.source}}</pre>
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

@@ -114,11 +114,12 @@ class Base extends DIC
             return new Review\Controller\Review(
                 $dic->sourceController,
                 array(
-                    'phplint' => new Review\Analyzer\Phplint( $dic->resultDir, $dic->annotationGateway ),
                     'pdepend' => new Review\Analyzer\PDepend( $dic->resultDir, $dic->annotationGateway ),
                     'phpmd'   => new Review\Analyzer\Phpmd( $dic->resultDir, $dic->annotationGateway ),
                     'diff'    => new Review\Analyzer\Diff( $dic->resultDir, $dic->annotationGateway ),
                     'uml'     => new Review\Analyzer\UML( $dic->resultDir, $dic->annotationGateway ),
+                    'phplint' => new Review\Analyzer\Phplint( $dic->resultDir, $dic->annotationGateway ),
+                    'phpcpd'  => new Review\Analyzer\Phpcpd( $dic->resultDir, $dic->annotationGateway ),
                 )
             );
         };
