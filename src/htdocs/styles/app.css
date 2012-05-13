@@ -107,6 +107,10 @@ div.modal {
     color: #468847;
 }
 
+td.number {
+    text-align: right;
+}
+
 td .progress {
     margin-bottom: 0px;
 }
