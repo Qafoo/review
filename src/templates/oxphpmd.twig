@@ -1,0 +1,51 @@
+{% extends "overview.twig" %}
+
+{% block content %}
+<h1>Oxid PHPMD</h1>
+
+{% if   ( metrics.NPathComplexity > 500 ) or
+        ( metrics.CyclomaticComplexity > 8 ) or
+        ( metrics.Coverage < 90 ) %}
+<div class="alert alert-error">
+    <p>Module won't be certified because of metric results</p>
+</div>
+{% endif %}
+
+<table class="table table-striped table-bordered">
+    <tr>
+        <th>CyclomaticComplexity</th>
+        <td>{{metrics.CyclomaticComplexity}}</td>
+    </tr>
+    <tr>
+        <th>Coverage</th>
+        <td>{{metrics.Coverage}}</td>
+    </tr>
+    <tr>
+        <th>CrapIndex</th>
+        <td>{{metrics.CrapIndex}}</td>
+    </tr>
+    <tr>
+        <th>NPathComplexity</th>
+        <td>{{metrics.NPathComplexity}}</td>
+    </tr>
+</table>
+
+<ul class="unstyled">
+{% for file, fileAnnotations in annotations %}
+    <li>
+        <a href="/source/{{file}}"><i class="icon-file"></i> {{file}}</a>
+        <ul class="annotations">
+        {% for annotation in fileAnnotations %}
+            <li>
+                <a href="/source/{{file}}#line_{{annotation.line}}">
+                    <span class="analyzer">[{{annotation.type}}]</span>
+                    <span class="message">{{annotation.message}}</span>
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}
