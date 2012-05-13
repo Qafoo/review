@@ -14,13 +14,117 @@ require __DIR__ . '/../main/Qafoo/Review/bootstrap.php';
 $dic = new DIC\Base();
 $dic->environment = 'development';
 
-if ( !isset( $argv[1] ) )
+// Handle CLI arguments
+$options = array(
+    'help'       => 'h',
+    'version'    => 'V',
+    'analyzers:' => 'a:',
+    'list'       => 'l',
+);
+
+$defaults = array(
+    'help'      => false,
+    'version'   => false,
+    'analyzers' => null,
+    'list'      => false,
+);
+
+$arguments = getopt(
+    implode( '', array_filter( $options ) ),
+    array_keys( $options )
+);
+
+foreach ( $options as $long => $short )
 {
-    fwrite( STDERR, "Usage: {$argv[0]} <source>" . PHP_EOL );
+    $short = rtrim( $short, ':' );
+    $long  = rtrim( $long, ':' );
+
+    if ( isset( $arguments[$short] ) )
+    {
+        $arguments[$long] = $arguments[$short] ?: true;
+        unset( $arguments[$short] );
+    }
+
+    if ( isset( $arguments[$long] ) )
+    {
+        $arguments[$long] = $arguments[$long] ?: true;
+    }
+}
+$arguments += $defaults;
+
+// Display help message, if requested
+if ( count( $argv ) < 2 || $arguments['help'] )
+{
+    echo <<<EOHELP
+Qafoo Core Review Tool 0.0.1 -- Tool supporting code reviews
+
+Usage: {$argv[0]} [<options>] <srcDir> [<oldSrcDir>]
+
+General:
+-h / --help         Display this help message and exit
+-v / --version      Display version and exit
+
+Analyzer configuration:
+-a / --analyzers    Comma seperated list of active analyzers
+-l / --list         List available analyzers
+
+EOHELP;
+    exit( 0 );
+}
+
+// Display version, if requested
+if ( $arguments['version'] )
+{
+    echo "Qafoo CRT v0.0.1", PHP_EOL;
+    exit( 0 );
+}
+
+// Display available analyzers, if requested
+if ( $arguments['list'] )
+{
+    echo "Qafoo CRT available analyzers:", PHP_EOL, PHP_EOL;
+    foreach ( $dic->analyzers as $name => $analyzer )
+    {
+        printf( "* [% -10s] %s" . PHP_EOL,
+            $name,
+            $analyzer->getSummary()->text
+        );
+    }
+    exit( 0 );
+}
+
+// Use custom analyzer configuration
+if ( $arguments['analyzers'] !== null )
+{
+    $analyzers = array_filter( array_map( 'trim', explode( ',', $arguments['analyzers'] ) ) );
+    $used      = $dic->analyzers;
+    foreach ( $used as $name => $analyzer )
+    {
+        if ( !in_array( $name, $analyzers, true ) )
+        {
+            unset( $used[$name] );
+        }
+    }
+
+    $dic->analyzers = $used;
+}
+
+// Check for source dir to analyze
+if ( is_dir( $argv[count( $argv ) - 2] ) )
+{
+    $path    = $argv[count( $argv ) - 2];
+    $oldPath = $argv[count( $argv ) - 1];
+}
+elseif ( is_dir( $argv[count( $argv ) - 1] ) )
+{
+    $path    = $argv[count( $argv ) - 1];
+    $oldPath = null;
+}
+else
+{
+    echo "Please provide a valid path to a source directory as an argument.", PHP_EOL;
     exit( 1 );
 }
-$path    = $argv[1];
-$oldPath = isset( $argv[2] ) ? $argv[2] : null;
 
 foreach ( glob( $dic->resultDir . '/*' ) as $result )
 {
