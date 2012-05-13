@@ -112,12 +112,12 @@ if ( $arguments['analyzers'] !== null )
 // Check for source dir to analyze
 if ( is_dir( $argv[count( $argv ) - 2] ) )
 {
-    $path    = $argv[count( $argv ) - 2];
-    $oldPath = $argv[count( $argv ) - 1];
+    $path    = realpath( $argv[count( $argv ) - 2] );
+    $oldPath = realpath( $argv[count( $argv ) - 1] );
 }
 elseif ( is_dir( $argv[count( $argv ) - 1] ) )
 {
-    $path    = $argv[count( $argv ) - 1];
+    $path    = realpath( $argv[count( $argv ) - 1] );
     $oldPath = null;
 }
 else
