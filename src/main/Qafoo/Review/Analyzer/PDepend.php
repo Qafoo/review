@@ -445,8 +445,8 @@ class PDepend extends Analyzer implements Displayable
             );
         }
 
-        $classMetric  = isset( $request->variables['class'] ) ? $request->variables['class'] : 'wmc';
-        $methodMetric = isset( $request->variables['method'] ) ? $request->variables['method'] : 'npath';
+        $classMetric  = isset( $request->variables['class'] ) ? $request->variables['class'] : 'cr';
+        $methodMetric = isset( $request->variables['method'] ) ? $request->variables['method'] : 'ccn';
 
         return new Struct\Response(
             'pdepend.twig',
