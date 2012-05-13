@@ -435,6 +435,16 @@ class PDepend extends Analyzer implements Displayable
      */
     public function render( RMF\Request $request )
     {
+        if ( !is_file( $this->resultDir . '/pdepend_summary.xml' ) )
+        {
+            return new Struct\Response(
+                'not_available.twig',
+                array(
+                    'summary'  => $this->getSummary(),
+                )
+            );
+        }
+
         $classMetric  = isset( $request->variables['class'] ) ? $request->variables['class'] : 'wmc';
         $methodMetric = isset( $request->variables['method'] ) ? $request->variables['method'] : 'npath';
 

@@ -136,6 +136,16 @@ class Phpmd extends Analyzer implements Displayable
      */
     public function render( RMF\Request $request )
     {
+        if ( !is_file( $this->resultDir . '/phpmd.xml' ) )
+        {
+            return new Struct\Response(
+                'not_available.twig',
+                array(
+                    'summary'  => $this->getSummary(),
+                )
+            );
+        }
+
         $doc = new \DOMDocument();
         $doc->load( $this->resultDir . '/phpmd.xml' );
         $xpath = new \DOMXPath( $doc );

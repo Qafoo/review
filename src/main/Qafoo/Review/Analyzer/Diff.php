@@ -188,34 +188,40 @@ class Diff extends Analyzer implements Displayable
      */
     public function render( RMF\Request $request )
     {
+        if ( !is_file( $this->resultDir . '/diff.php' ) )
+        {
+            return new Struct\Response(
+                'not_available.twig',
+                array(
+                    'summary'  => $this->getSummary(),
+                )
+            );
+        }
 
         $fileChanges = array();
         $maxChanges  = 0;
 
-        if ( is_file( $path = ( $this->resultDir . '/diff.php' ) ) )
+        $diff = include $this->resultDir . '/diff.php';
+        foreach ( $diff as $file => $fileDiff )
         {
-            $diff = include $path;
-            foreach ( $diff as $file => $fileDiff )
+            if ( preg_match( '(^\\.|/\\.)', $file ) )
             {
-                if ( preg_match( '(^\\.|/\\.)', $file ) )
-                {
-                    // Ingore all dot files
-                    continue;
-                }
-
-                $fileChanges[$file] = array(
-                    'removed' => 0,
-                    'added'   => 0,
-                );
-
-                foreach ( $fileDiff as $diffPart )
-                {
-                    $fileChanges[$file]['removed'] += count( $diffPart['removed'] );
-                    $fileChanges[$file]['added']   += count( $diffPart['added'] );
-                }
-
-                $maxChanges = max( $maxChanges, $fileChanges[$file]['removed'], $fileChanges[$file]['added'] );
+                // Ingore all dot files
+                continue;
             }
+
+            $fileChanges[$file] = array(
+                'removed' => 0,
+                'added'   => 0,
+            );
+
+            foreach ( $fileDiff as $diffPart )
+            {
+                $fileChanges[$file]['removed'] += count( $diffPart['removed'] );
+                $fileChanges[$file]['added']   += count( $diffPart['added'] );
+            }
+
+            $maxChanges = max( $maxChanges, $fileChanges[$file]['removed'], $fileChanges[$file]['added'] );
         }
 
         return new Struct\Response(

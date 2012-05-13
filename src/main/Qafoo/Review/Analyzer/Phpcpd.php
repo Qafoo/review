@@ -110,6 +110,16 @@ class Phpcpd extends Analyzer implements Displayable
      */
     public function render( RMF\Request $request )
     {
+        if ( !is_file( $this->resultDir . '/phpcpd.xml' ) )
+        {
+            return new Struct\Response(
+                'not_available.twig',
+                array(
+                    'summary'  => $this->getSummary(),
+                )
+            );
+        }
+
         $doc = new \DOMDocument();
         $doc->load( $this->resultDir . '/phpcpd.xml' );
         $xpath = new \DOMXPath( $doc );

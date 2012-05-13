@@ -241,6 +241,16 @@ class UML extends Analyzer implements Displayable
      */
     public function render( RMF\Request $request )
     {
+        if ( !is_file( $this->resultDir . '/uml.svg' ) )
+        {
+            return new Struct\Response(
+                'not_available.twig',
+                array(
+                    'summary'  => $this->getSummary(),
+                )
+            );
+        }
+
         return new Struct\Response(
             'uml.twig',
             array(
