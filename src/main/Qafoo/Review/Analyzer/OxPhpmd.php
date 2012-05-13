@@ -50,7 +50,7 @@ class OxPhpmd extends Phpmd implements Displayable
     {
         return new Struct\Summary(
             'Oxid PHPMD',
-            'Oxid PHPMD takes a given PHP source code base and looks for violations of the Oxid module cetification standards.'
+            'Oxid PHPMD takes a given PHP source code base and looks for violations of the Oxid module certification standards.'
         );
     }
 
