@@ -378,7 +378,7 @@ class PDepend extends Analyzer implements Displayable
         $doc->load( $this->resultDir . '/pdepend_summary.xml' );
 
         $xpath   = new \DOMXPath( $doc );
-        $classes = array();
+        $methods = array();
         $max     = array();
         foreach ( $xpath->query( '//class' ) as $element )
         {
