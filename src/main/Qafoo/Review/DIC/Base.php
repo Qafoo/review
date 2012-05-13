@@ -41,6 +41,7 @@ class Base extends DIC
         'twig'              => true,
         'annotationGateway' => true,
         'sourceController'  => true,
+        'analyzers'         => true,
         'reviewController'  => true,
     );
 
@@ -109,18 +110,23 @@ class Base extends DIC
             );
         };
 
+        $this->analyzers = function ( $dic )
+        {
+            return array(
+                'pdepend' => new Review\Analyzer\PDepend( $dic->resultDir, $dic->annotationGateway ),
+                'phpmd'   => new Review\Analyzer\Phpmd( $dic->resultDir, $dic->annotationGateway ),
+                'diff'    => new Review\Analyzer\Diff( $dic->resultDir, $dic->annotationGateway ),
+                'uml'     => new Review\Analyzer\UML( $dic->resultDir, $dic->annotationGateway ),
+                'phplint' => new Review\Analyzer\Phplint( $dic->resultDir, $dic->annotationGateway ),
+                'phpcpd'  => new Review\Analyzer\Phpcpd( $dic->resultDir, $dic->annotationGateway ),
+            );
+        };
+
         $this->reviewController = function ( $dic )
         {
             return new Review\Controller\Review(
                 $dic->sourceController,
-                array(
-                    'pdepend' => new Review\Analyzer\PDepend( $dic->resultDir, $dic->annotationGateway ),
-                    'phpmd'   => new Review\Analyzer\Phpmd( $dic->resultDir, $dic->annotationGateway ),
-                    'diff'    => new Review\Analyzer\Diff( $dic->resultDir, $dic->annotationGateway ),
-                    'uml'     => new Review\Analyzer\UML( $dic->resultDir, $dic->annotationGateway ),
-                    'phplint' => new Review\Analyzer\Phplint( $dic->resultDir, $dic->annotationGateway ),
-                    'phpcpd'  => new Review\Analyzer\Phpcpd( $dic->resultDir, $dic->annotationGateway ),
-                )
+                $this->analyzers
             );
         };
     }
