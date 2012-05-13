@@ -117,6 +117,16 @@ class Phplint extends Analyzer implements Displayable
     }
 
     /**
+     * Check if menu should be show at all
+     *
+     * @return bool
+     */
+    public function displayable()
+    {
+        return is_file( $this->resultDir . '/phplint.xml' );
+    }
+
+    /**
      * Get menu entry
      *
      * @return Struct\MenuEntry

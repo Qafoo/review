@@ -55,6 +55,16 @@ class OxPhpmd extends Phpmd implements Displayable
     }
 
     /**
+     * Check if menu should be show at all
+     *
+     * @return bool
+     */
+    public function displayable()
+    {
+        return is_file( $this->resultDir . '/oxphpmd.xml' );
+    }
+
+    /**
      * Get menu entry
      *
      * @return Struct\MenuEntry

@@ -16,6 +16,12 @@ use Qafoo\RMF;
  */
 interface Displayable
 {
+    /**
+     * Check if menu should be show at all
+     *
+     * @return bool
+     */
+    public function displayable();
 
     /**
      * Get menu entry

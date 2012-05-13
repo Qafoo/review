@@ -88,7 +88,8 @@ class Review
         $analyzers = array();
         foreach ( $this->analyzers as $id => $analyzer )
         {
-            if ( $analyzer instanceof Displayable )
+            if ( ( $analyzer instanceof Displayable ) &&
+                 ( $analyzer->displayable() ) )
             {
                 $analyzers[] = $entry = $analyzer->getMenuEntry();
                 $entry->module = $id;
