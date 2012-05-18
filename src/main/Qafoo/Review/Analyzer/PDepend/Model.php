@@ -1,0 +1,388 @@
+<?php
+/**
+ * This file is part of qaReview
+ *
+ * @version $Revision$
+ * @copyright Qafoo GmbH
+ */
+
+namespace Qafoo\Review\Analyzer\PDepend;
+use Qafoo\Review\Struct;
+
+/**
+ * PDepend analyzer class
+ *
+ * @version $Revision$
+ */
+class Model
+{
+    /**
+     * List of class metrics provided by pdepend
+     *
+     * @var array
+     */
+    protected $classMetrics = array(
+        'cis'    => 'Class interface size',
+        'cloc'   => 'Comment lines of code',
+        'cr'     => 'Code rank',
+        'csz'    => 'Class size',
+        'dit'    => 'Depth of inheritence tree',
+        'eloc'   => 'Executable lines of code',
+        'impl'   => 'Number of implemented interfaces',
+        'loc'    => 'Lines of code',
+        'ncloc'  => 'Non-comment lines of code',
+        'nom'    => 'Number of methods',
+        'rcr'    => 'Reverse code rank',
+        'vars'   => 'Number of defined class properties',
+        'varsi'  => 'Number of own and inherited class properties',
+        'varsnp' => 'Number of public class properties',
+        'wmc'    => 'Weighted Method per Class (Sum of method Cyclomatic Complexity)',
+        'wmci'   => 'Weighted Method per Class + inherited WMC',
+        'wmcnp'  => 'Weighted Method per Class for all public class methods',
+    );
+
+    /**
+     * List of method metrics provided by pdepend
+     *
+     * @var array
+     */
+    protected $methodMetrics = array(
+        'ccn'   => 'Cyclomatic Complexity',
+        'ccn2'  => 'Extended Cyclomatic Complexity',
+        'cloc'  => 'Comment Lines Of Code',
+        'eloc'  => 'Executable Lines Of Code',
+        'loc'   => 'Lines Of Code',
+        'ncloc' => 'Non Comment Lines Of Code',
+        'npath' => 'NPath Complexity',
+    );
+
+    /**
+     * Thresholds for class metric values
+     *
+     * @var array
+     */
+    protected $classTresholds = array(
+        'warning' => array(
+            'cis'    => 10,
+            'cloc'   => 1000,
+            'cr'     => 5,
+            'csz'    => 50,
+            'dit'    => 5,
+            'eloc'   => 250,
+            'impl'   => 5,
+            'loc'    => 1250,
+            'ncloc'  => 500,
+            'nom'    => 10,
+            'rcr'    => 5,
+            'vars'   => 10,
+            'varsi'  => 15,
+            'varsnp' => 10,
+            'wmc'    => 50,
+            'wmci'   => 50,
+            'wmcnp'  => 50,
+        ),
+        'error' => array(
+            'cis'    => 25,
+            'cloc'   => 5000,
+            'cr'     => 8,
+            'csz'    => 100,
+            'dit'    => 10,
+            'eloc'   => 500,
+            'impl'   => 8,
+            'loc'    => 1500,
+            'ncloc'  => 1000,
+            'nom'    => 25,
+            'rcr'    => 8,
+            'vars'   => 25,
+            'varsi'  => 35,
+            'varsnp' => 25,
+            'wmc'    => 80,
+            'wmci'   => 80,
+            'wmcnp'  => 80,
+        ),
+    );
+
+    /**
+     * Thresholds for class metric values
+     *
+     * @var array
+     */
+    protected $methodThresholds = array(
+        'warning' => array(
+            'ccn'   => 10,
+            'ccn2'  => 10,
+            'cloc'  => 100,
+            'eloc'  => 20,
+            'loc'   => 100,
+            'ncloc' => 20,
+            'npath' => 100,
+        ),
+        'error' => array(
+            'ccn'   => 25,
+            'ccn2'  => 25,
+            'cloc'  => 500,
+            'eloc'  => 50,
+            'loc'   => 100,
+            'ncloc' => 50,
+            'npath' => 200,
+        ),
+    );
+
+    /**
+     * Path to PDepend XML file
+     *
+     * @var string
+     */
+    protected $path;
+
+    /**
+     * Construct from path to PDepend XML file
+     *
+     * @param string $path
+     * @return void
+     */
+    public function __construct( $path )
+    {
+        $this->path = $path;
+    }
+
+    /**
+     * Get annotations
+     *
+     * @return array
+     */
+    public function getAnnotations()
+    {
+        $doc = new \DOMDocument();
+        $doc->load( $this->path );
+        $xpath = new \DOMXPath( $doc );
+
+        $annotations = array();
+        foreach ( $xpath->query( '//class' ) as $classNode )
+        {
+            $files = $classNode->getElementsByTagName( 'file' );
+            if ( $files->length === 0 )
+            {
+                continue;
+            }
+
+            $metrics = $this->getClassMetrics( $classNode );
+            foreach ( $metrics as $metric => $value )
+            {
+                $class = 'warning';
+                if ( ( $value > $this->classTresholds['warning'][$metric] ) ||
+                     ( (int) ( $class = 'error' ) ) ||
+                     ( $value > $this->classTresholds['error'][$metric] ) )
+                {
+                    $annotations[] = new Struct\Annotation(
+                        $files->item( 0 )->getAttribute( 'name' ),
+                        (int) $classNode->getAttribute( 'startLine' ),
+                        null,
+                        'pdepend',
+                        $class,
+                        $this->classMetrics[$metric] . ': ' . $value
+                    );
+                }
+            }
+
+            foreach ( $classNode->getElementsByTagName( 'method' ) as $methodNode )
+            {
+                $metrics = $this->getMethodMetrics( $methodNode );
+
+                foreach ( $metrics as $metric => $value )
+                {
+                    $class = 'warning';
+                    if ( ( $value > $this->methodThresholds['warning'][$metric] ) ||
+                         ( (int) ( $class = 'error' ) ) ||
+                         ( $value > $this->methodThresholds['error'][$metric] ) )
+                    {
+                        $annotations[] = new Struct\Annotation(
+                            $files->item( 0 )->getAttribute( 'name' ),
+                            (int) $methodNode->getAttribute( 'startLine' ),
+                            null,
+                            'pdepend',
+                            $class,
+                            $this->methodMetrics[$metric] . ': ' . $value
+                        );
+                    }
+                }
+            }
+        }
+
+        return $annotations;
+    }
+
+    /**
+     * Get class metrics
+     *
+     * Return an array with the class metric values from a DOMElement from the
+     * summary XML file.
+     *
+     * @param \DOMElement $element
+     * @return array
+     */
+    protected function getClassMetrics( \DOMElement $element )
+    {
+        foreach ( array_keys( $this->classMetrics ) as $metric )
+        {
+            if ( $element->hasAttribute( $metric ) )
+            {
+                $metrics[$metric] = (float) $element->getAttribute( $metric );
+            }
+        }
+
+        return $metrics;
+    }
+
+    /**
+     * Get method metrics
+     *
+     * Return an array with the method metric values from a DOMElement from the
+     * summary XML file.
+     *
+     * @param \DOMElement $element
+     * @return array
+     */
+    protected function getMethodMetrics( \DOMElement $element )
+    {
+        foreach ( array_keys( $this->methodMetrics ) as $metric )
+        {
+            if ( $element->hasAttribute( $metric ) )
+            {
+                $metrics[$metric] = (float) $element->getAttribute( $metric );
+            }
+        }
+
+        return $metrics;
+    }
+
+    /**
+     * Get class metric tag cloud data
+     *
+     * @param string $selected
+     * @return void
+     */
+    public function getClassesMetric( $selected, $count = 50 )
+    {
+        $doc = new \DOMDocument();
+        $doc->load( $this->path );
+
+        $xpath   = new \DOMXPath( $doc );
+        $classes = array();
+        $max     = 0;
+        foreach ( $xpath->query( '//class' ) as $element )
+        {
+            $files = $element->getElementsByTagName( 'file' );
+            if ( $files->length === 0 )
+            {
+                continue;
+            }
+
+            $class   = $element->getAttribute( 'name' );
+            $metrics = $this->getClassMetrics( $element );
+            $classes[$class]['value'] = $metrics[$selected];
+            $classes[$class]['file']  = $files->item( 0 )->getAttribute( 'name' );
+            $classes[$class]['line']  = $element->getAttribute( 'startLine' );
+
+            $max = max( $max, $metrics[$selected] );
+        }
+
+        $classes = $this->limitItemList( $classes, $count );
+        ksort( $classes );
+
+        return array(
+            'name'     => $this->classMetrics[$selected],
+            'selected' => $selected,
+            'max'      => $max,
+            'items'    => $classes,
+        );
+    }
+
+    /**
+     * Get list of available class metrics
+     *
+     * @return array
+     */
+    public function getClassMetricList()
+    {
+        return $this->classMetrics;
+    }
+
+    /**
+     * Get method metric tag cloud data
+     *
+     * @param string $selected
+     * @param int $count
+     * @return void
+     */
+    public function getMethodsMetric( $selected, $count = 50 )
+    {
+        $doc = new \DOMDocument();
+        $doc->load( $this->path );
+
+        $xpath   = new \DOMXPath( $doc );
+        $methods = array();
+        $max     = 0;
+        foreach ( $xpath->query( '//class' ) as $element )
+        {
+            $className = $element->getAttribute( 'name' );
+            $files     = $element->getElementsByTagName( 'file' );
+            if ( $files->length === 0 )
+            {
+                continue;
+            }
+
+            foreach ( $element->getElementsByTagName( 'method' ) as $methodElement )
+            {
+                $method  = $className . '::' . $methodElement->getAttribute( 'name' );
+                $metrics = $this->getMethodMetrics( $methodElement );
+                $methods[$method]['value'] = $metrics[$selected];
+                $methods[$method]['file']  = $files->item( 0 )->getAttribute( 'name' );
+                $methods[$method]['line']  = $methodElement->getAttribute( 'startLine' );
+
+                $max = max( $max, $metrics[$selected] );
+            }
+        }
+
+        $methods = $this->limitItemList( $methods, $count );
+        ksort( $methods );
+
+        return array(
+            'name'     => $this->methodMetrics[$selected],
+            'selected' => $selected,
+            'max'      => $max,
+            'items'    => $methods,
+        );
+    }
+
+    /**
+     * Get list of available method metrics
+     *
+     * @return array
+     */
+    public function getMethodMetricList()
+    {
+        return $this->methodMetrics;
+    }
+
+    /**
+     * Limit item list
+     *
+     * @param array $items
+     * @param int $count
+     * @return array
+     */
+    public function limitItemList( array $items, $count )
+    {
+        uasort(
+            $items,
+            function ( $a, $b )
+            {
+                return $b['value'] - $a['value'];
+            }
+        );
+
+        return array_slice( $items, 0, $count );
+    }
+}
+
