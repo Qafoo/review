@@ -32,7 +32,7 @@
             </tr>
             {% for item, metric in top %}
             <tr>
-                <td><a href="/source/{{metrics.file}}#line_{{metrics.line}}" title="{{item}}: {{metrics[cloud.selected]}}">{{item}}</a></td>
+                <td><a href="/source/{{metric.file}}#line_{{metric.line}}" title="{{item}}: {{metric.value}}">{{item}}</a></td>
                 <td class="number">{{metric.value}}</td>
             </tr>
             {% endfor %}
