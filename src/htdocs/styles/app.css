@@ -124,3 +124,8 @@ td.removed .progress .bar {
     margin: 0px 0px 0px auto;
 }
 
+.footer {
+    font-size: .9em;
+    margin-bottom: 1em;
+}
+
