@@ -1,14 +1,14 @@
 #!/bin/bash
 
 BUILDDIR="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/twitter/bootstrap/"
-TARGET="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../htdocs/"
+TARGET="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../"
 
 cd $BUILDDIR
-make bootstrap
 
-sed -i -e 's#/img/#/images/#g' bootstrap/css/*.css
-cp ${BUILDDIR}bootstrap/css/*.css "${TARGET}styles"
+cp "${TARGET}config/bootstrap.less" "${BUILDDIR}less/variables.less"
 
-cp ${BUILDDIR}bootstrap/img/*.png "${TARGET}images/"
-cp ${BUILDDIR}bootstrap/js/*.js "${TARGET}scripts/vendor/bootstrap/"
+make -B build bootstrap
 
+cp ${BUILDDIR}bootstrap/css/*.css "${TARGET}htdocs/styles"
+cp ${BUILDDIR}bootstrap/img/*.png "${TARGET}htdocs/images/"
+cp ${BUILDDIR}bootstrap/js/*.js "${TARGET}htdocs/scripts/vendor/bootstrap/"
