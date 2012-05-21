@@ -44,11 +44,11 @@ ol.source {
     background-color: #fdf6e3;
     border-radius: 4px;
     border: 1px solid rgba( 0, 0, 0, .15 );
+    margin-left: 3em;
 }
 
 ol.source li {
     min-height: 18px;
-    margin-left: 3em;
 }
 
 ol.source li.diff-added {
