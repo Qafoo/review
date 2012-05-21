@@ -7,6 +7,17 @@
     }, {
         "type":    "package",
         "package": {
+            "name":    "twitter/bootstrap",
+            "version": "0.1",
+            "source": {
+                "url": "https://github.com/twitter/bootstrap/",
+                "type": "git",
+                "reference": "origin/master"
+            }
+        }
+    }, {
+        "type":    "package",
+        "package": {
             "name":    "arbitracker/systemProcess",
             "version": "0.1",
             "source": {
@@ -29,6 +40,7 @@
     } ],
     "require":      {
         "Qafoo/RMF": "dev-master",
+        "twitter/bootstrap": "0.1",
         "arbitracker/systemProcess": "0.1",
         "pdepend/staticReflection": "0.1",
         "twig/twig": "1.6.0"
