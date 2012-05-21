@@ -378,7 +378,18 @@ class Model
             $items,
             function ( $a, $b )
             {
-                return $b['value'] - $a['value'];
+                $diff = $b['value'] - $a['value'];
+
+                if ( $diff < 0 )
+                {
+                    return -1;
+                }
+                elseif ( $diff > 0 )
+                {
+                    return 1;
+                }
+
+                return 0;
             }
         );
 
