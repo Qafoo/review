@@ -33,7 +33,7 @@
             {% for item, metric in top %}
             <tr>
                 <td><a href="/source/{{metric.file}}#line_{{metric.line}}" title="{{item}}: {{metric.value}}">{{item}}</a></td>
-                <td class="number">{{metric.value}}</td>
+                <td class="number">{{metric.value|number_format(2)}}</td>
             </tr>
             {% endfor %}
         </table>
