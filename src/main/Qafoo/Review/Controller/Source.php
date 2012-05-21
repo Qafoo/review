@@ -120,6 +120,7 @@ class Source
 
         $source      = array();
         $annotations = array();
+        $index       = array();
         if ( file_exists( $file = $this->source . '/' . $path ) &&
              is_file( $file ) )
         {
@@ -129,6 +130,7 @@ class Source
                 $annotations = $this->gateway->getAnnotationsForFile( $path )
             );
             $source = $processor->getSourceData();
+            $index  = $processor->getIndex();
         }
 
         return new Struct\Response(
@@ -137,6 +139,7 @@ class Source
                 'path'         => $path,
                 'tree'         => $this->getSourceTree( $path ),
                 'source'       => $source,
+                'index'        => $index,
                 'annotations'  => $annotations,
                 'dependencies' => $this->getClassMetainformation( $path ),
             )

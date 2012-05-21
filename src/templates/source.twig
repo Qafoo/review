@@ -8,6 +8,18 @@
         <h2>Tree</h2>
         {% set dir = tree %}
         {% include "directory.twig" %}
+
+        <h2>Index</h2>
+        <ul class="index">
+        {% for item in index %}
+            <li>
+                <span class="type">{{item.type}}</span>
+                <a href="#line_{{item.line}}">
+                    <span class="name">{{item.name}}</span>
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
     </div>
 
     <div class="span9">

@@ -204,5 +204,47 @@ class CodeProcessor
 
         return $lines;
     }
+
+    /**
+     * Get index for for file
+     *
+     * @return void
+     */
+    public function getIndex()
+    {
+        $index = array();
+
+        foreach ( $this->content as $nr => $line )
+        {
+            switch ( true )
+            {
+                case preg_match( '(function\\s+(?P<name>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*))', strip_tags( $line ), $match ):
+                    $index[] = array(
+                        'type' => 'function',
+                        'line' => $nr + 1,
+                        'name' => $match['name'],
+                    );
+                    break;
+
+                case preg_match( '(class\\s+(?P<name>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*))', strip_tags( $line ), $match ):
+                    $index[] = array(
+                        'type' => 'class',
+                        'line' => $nr + 1,
+                        'name' => $match['name'],
+                    );
+                    break;
+
+                case preg_match( '(interface\\s+(?P<name>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*))', strip_tags( $line ), $match ):
+                    $index[] = array(
+                        'type' => 'interface',
+                        'line' => $nr + 1,
+                        'name' => $match['name'],
+                    );
+                    break;
+            }
+        }
+
+        return $index;
+    }
 }
 
