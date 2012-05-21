@@ -1,3 +1,7 @@
+html {
+    overflow-y: scroll;
+}
+
 ul.tagcloud {
     list-style-type: none;
     margin: 1em auto;
