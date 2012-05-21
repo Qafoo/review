@@ -2,6 +2,10 @@ html {
     overflow-y: scroll;
 }
 
+a, a:hover, a:active, a:focus {
+    outline: none;
+}
+
 ul.tagcloud {
     list-style-type: none;
     margin: 1em auto;
