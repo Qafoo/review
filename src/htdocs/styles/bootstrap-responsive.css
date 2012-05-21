@@ -740,7 +740,7 @@
   }
   .nav-collapse .nav > li > a:hover,
   .nav-collapse .dropdown-menu a:hover {
-    background-color: #ffffff;
+    background-color: #f3f8e4;
   }
   .nav-collapse.in .btn-group {
     padding: 0;
@@ -776,8 +776,8 @@
     float: none;
     padding: 8.5px 15px;
     margin: 8.5px 0;
-    border-top: 1px solid #ffffff;
-    border-bottom: 1px solid #ffffff;
+    border-top: 1px solid #f3f8e4;
+    border-bottom: 1px solid #f3f8e4;
     -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
        -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
