@@ -93,7 +93,7 @@
   }
   .page-header h1 small {
     display: block;
-    line-height: 18px;
+    line-height: 17px;
   }
   input[type="checkbox"],
   input[type="radio"] {
@@ -685,7 +685,7 @@
   }
   .navbar-fixed-top {
     position: static;
-    margin-bottom: 18px;
+    margin-bottom: 17px;
   }
   .navbar-fixed-top .navbar-inner {
     padding: 5px;
@@ -704,7 +704,7 @@
   }
   .nav-collapse .nav {
     float: none;
-    margin: 0 0 9px;
+    margin: 0 0 8.5px;
   }
   .nav-collapse .nav > li {
     float: none;
@@ -716,14 +716,14 @@
     display: none;
   }
   .nav-collapse .nav .nav-header {
-    color: #999999;
+    color: #333333;
     text-shadow: none;
   }
   .nav-collapse .nav > li > a,
   .nav-collapse .dropdown-menu a {
     padding: 6px 15px;
     font-weight: bold;
-    color: #999999;
+    color: #222222;
     -webkit-border-radius: 3px;
        -moz-border-radius: 3px;
             border-radius: 3px;
@@ -740,7 +740,7 @@
   }
   .nav-collapse .nav > li > a:hover,
   .nav-collapse .dropdown-menu a:hover {
-    background-color: #222222;
+    background-color: #ffffff;
   }
   .nav-collapse.in .btn-group {
     padding: 0;
@@ -774,10 +774,10 @@
   .nav-collapse .navbar-form,
   .nav-collapse .navbar-search {
     float: none;
-    padding: 9px 15px;
-    margin: 9px 0;
-    border-top: 1px solid #222222;
-    border-bottom: 1px solid #222222;
+    padding: 8.5px 15px;
+    margin: 8.5px 0;
+    border-top: 1px solid #ffffff;
+    border-bottom: 1px solid #ffffff;
     -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
        -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
