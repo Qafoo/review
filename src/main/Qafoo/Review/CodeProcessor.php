@@ -226,7 +226,7 @@ class CodeProcessor
                     );
                     break;
 
-                case preg_match( '(^\\s*class\\s+(?P<name>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*))', strip_tags( $line ), $match ):
+                case preg_match( '(^\\s*(?:abstract\\s+)?class\\s+(?P<name>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*))', strip_tags( $line ), $match ):
                     $index[] = array(
                         'type' => 'class',
                         'line' => $nr + 1,
