@@ -14,7 +14,7 @@
         {% for item in index %}
             <li>
                 <span class="type">{{item.type}}</span>
-                <a href="#line_{{item.line}}">
+                <a onClick="$('#tabs a:first').tab('show');" href="#line_{{item.line}}">
                     <span class="name">{{item.name}}</span>
                 </a>
             </li>
@@ -23,7 +23,7 @@
     </div>
 
     <div class="span9">
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs" id="tabs">
             <li class="active"><a href="#source" data-toggle="tab">Source</a></li>
             <li><a href="#annotations" data-toggle="tab">Annotations</a></li>
             <li><a href="#dependencies" data-toggle="tab">Dependencies</a></li>
@@ -74,7 +74,7 @@
                 <ul class="annotations unstyled">
                 {% for annotation in annotations if annotation.message %}
                     <li>
-                        <a href="#line_{{annotation.line}}">
+                        <a onClick="$('#tabs a:first').tab('show');" href="#line_{{annotation.line}}">
                             <i class="{% if annotation.class == "warning" %}icon-info-sign{% else %}icon-warning-sign{% endif %}"></i>
                             <span class="analyzer">[{{annotation.type}}]</span>
                             <span class="message">{{annotation.message}}</span>
