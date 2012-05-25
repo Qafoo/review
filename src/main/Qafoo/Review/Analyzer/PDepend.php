@@ -88,7 +88,7 @@ class PDepend extends Analyzer implements Displayable
         }
         $doc->save( $summaryXml );
 
-        $model = PDepend\Model( $summaryXml );
+        $model = new PDepend\Model( $summaryXml );
         foreach ( $model->getAnnotations() as $annotation )
         {
             $this->gateway->create( $annotation );
