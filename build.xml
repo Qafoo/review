@@ -28,7 +28,7 @@
         </copy>
 
         <copy todir="${basedir}/src/htdocs/images">
-            <fileset dir="${basedir}/src/library/twitter/bootstrap/bootstrap/css">
+            <fileset dir="${basedir}/src/library/twitter/bootstrap/bootstrap/img">
                 <include name="*.png" />
             </fileset>
         </copy>
