@@ -10,4 +10,34 @@
     -->
     <import file="setup/src/main/xml/base.xml" />
 
+    <target name="style">
+        <copy
+            file="${basedir}/src/config/bootstrap.less"
+            tofile="${basedir}/src/library/twitter/bootstrap/less/variables.less" />
+
+        <exec executable="make" dir="${basedir}/src/library/twitter/bootstrap/">
+            <arg value="-B" />
+            <arg value="build" />
+            <arg value="bootstrap" />
+        </exec>
+
+        <copy todir="${basedir}/src/htdocs/styles">
+            <fileset dir="${basedir}/src/library/twitter/bootstrap/bootstrap/css">
+                <include name="*.css" />
+            </fileset>
+        </copy>
+
+        <copy todir="${basedir}/src/htdocs/images">
+            <fileset dir="${basedir}/src/library/twitter/bootstrap/bootstrap/css">
+                <include name="*.png" />
+            </fileset>
+        </copy>
+
+        <copy todir="${basedir}/src/htdocs/scripts/vendor/bootstrap/">
+            <fileset dir="${basedir}/src/library/twitter/bootstrap/bootstrap/js">
+                <include name="*.js" />
+            </fileset>
+        </copy>
+    </target>
+
 </project>
