@@ -23,6 +23,9 @@ $dispatcher = new RMF\Dispatcher\Simple(
         '(^/show/(?P<analyzer>[A-Za-z_]+))' => array(
             'GET'  => array( $dic->reviewController, 'showAnalyzer' ),
         ),
+        '(^/source/annotate$)' => array(
+            'POST'  => array( $dic->sourceController, 'annotate' ),
+        ),
         '(^/source/?(?P<path>.*)$)' => array(
             'GET'  => array( $dic->reviewController, 'showSource' ),
         ),

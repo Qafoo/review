@@ -7,6 +7,7 @@
  */
 
 namespace Qafoo\Review\View;
+use Qafoo\Review\Struct;
 use Qafoo\RMF\Request;
 
 /**
@@ -51,6 +52,12 @@ class Twig extends \Qafoo\RMF\View
                     'exception' => $result,
                 )
             );
+            return;
+        }
+
+        if ( !$result instanceof Struct\Response )
+        {
+            echo json_encode( $result );
             return;
         }
 

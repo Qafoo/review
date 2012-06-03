@@ -17,9 +17,9 @@
         <ul class="tagcloud">
         {% for item, metric in cloud.items %}
             <li style="font-size: {{( metric.value / cloud.max * 70 ) + 30}}%;">
-                <a href="/source/{{metric.file}}#line_{{metric.line}}" title="{{item}}: {{metric.value}}">
-                    {{item}}
-                </a>
+                <a class="{{name}}" href="/source/{{metric.file}}#line_{{metric.line}}" title="{{item}}: {{metric.value}}"
+                    >{{item}}</a
+                ><a class="annotate" data-file="{{metric.file}}" data-line="{{metric.line}}" data-reason="{{cloud.name}}" href="#">+</a>
             </li>
         {% endfor %}
         </ul>
@@ -32,7 +32,10 @@
             </tr>
             {% for item, metric in top %}
             <tr>
-                <td><a href="/source/{{metric.file}}#line_{{metric.line}}" title="{{item}}: {{metric.value}}">{{item}}</a></td>
+                <td>
+                    <a class="{{name}}" href="/source/{{metric.file}}#line_{{metric.line}}" title="{{item}}: {{metric.value}}" data-file="{{metric.file}}">{{item}}</a
+                    ><a class="annotate" data-file="{{metric.file}}" data-line="{{metric.line}}" data-reason="{{cloud.name}}" href="#">+</a>
+                </td>
                 <td class="number">{{metric.value|number_format(2)}}</td>
             </tr>
             {% endfor %}

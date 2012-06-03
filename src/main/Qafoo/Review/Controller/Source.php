@@ -109,6 +109,38 @@ class Source
     }
 
     /**
+     * Annotate source file
+     *
+     * @param RMF\Request $request
+     * @return Struct\Response
+     */
+    public function annotate( RMF\Request $request )
+    {
+        $default = array(
+            'file'      => null,
+            'line'      => null,
+            'character' => null,
+            'type'      => 'user',
+            'class'     => 'annotate',
+            'message'   => null,
+        );
+
+        $data = array_merge( $default, $request->body );
+        $this->gateway->create(
+            new Struct\Annotation(
+                $data['file'],
+                $data['line'],
+                $data['character'],
+                $data['type'],
+                $data['class'],
+                $data['message']
+            )
+        );
+
+        return false;
+    }
+
+    /**
      * Show project overview
      *
      * @param RMF\Request $request

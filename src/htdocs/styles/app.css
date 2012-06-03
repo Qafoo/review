@@ -48,6 +48,12 @@ ul.dirlisting .file-open > a {
     color: #333333;
 }
 
+a.annotate {
+    vertical-align: super;
+    font-size: 90%;
+    color: #000;
+}
+
 ol.source {
     background-color: #fdf6e3;
     border-radius: 4px;
