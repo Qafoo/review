@@ -17,4 +17,7 @@ jQuery().ready(function() {
         e.stopPropagation( true );
         return false;
     } );
+
+    jQuery( ".modal form" ).ajaxForm( function() {
+    } );
 } );
