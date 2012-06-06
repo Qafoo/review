@@ -19,5 +19,6 @@ jQuery().ready(function() {
     } );
 
     jQuery( ".modal form" ).ajaxForm( function() {
+        document.location.href = document.location.href;
     } );
 } );
