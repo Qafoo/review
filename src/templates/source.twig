@@ -63,7 +63,7 @@
                                 <span class="badge badge-error">{{line.messages|length}}</span>
                             </a>
                             {% endif %}
-                            <a class="icon comment" data-toggle="modal" href="#comment">
+                            <a  onclick="jQuery( '#comment input[name=line]' ).val( '{{loop.index}}' );" class="icon comment" data-toggle="modal" href="#comment">
                                 <i class="icon-comment"></i>
                             </a>
                             <pre>{% autoescape false %}{{line.content}}{% endautoescape %}</pre>
