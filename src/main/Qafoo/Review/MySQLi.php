@@ -45,7 +45,7 @@ class MySQLi extends \MySQLi
             throw new \RuntimeException( "Could not connect to database: " . $this->connect_error );
         }
 
-        \mysqli_report( \MYSQLI_REPORT_STRICT | \MYSQLI_REPORT_INDEX );
+        \mysqli_report( \MYSQLI_REPORT_STRICT /* | \MYSQLI_REPORT_INDEX */ );
         $this->set_charset( "utf8" );
     }
 
