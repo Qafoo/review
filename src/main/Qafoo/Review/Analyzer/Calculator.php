@@ -109,7 +109,7 @@ class Calculator extends Analyzer implements Displayable
             );
         }
 
-        $formula = isset( $request->variables['formula'] ) ? $request->variables['formula'] : '$ca / ( $ca + $ce )';
+        $formula = isset( $request->variables['formula'] ) ? $request->variables['formula'] : '$ce / ( $ca + $ce )';
         $model       = new Calculator\Model( $this->resultDir . '/pdepend_summary.xml' );
         $classes     = $model->calculateTop( $formula, 25 );
 
