@@ -22,6 +22,8 @@ class Model
      * @var array
      */
     protected $classMetrics = array(
+        'ce'     => 'Efferent Coupling',
+        'ca'     => 'Afferent Coupling',
         'cis'    => 'Class interface size',
         'cloc'   => 'Comment lines of code',
         'cr'     => 'Code rank',
