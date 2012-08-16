@@ -1,0 +1,40 @@
+{% extends "overview.twig" %}
+
+{% block content %}
+<h1>Calculator</h1>
+
+<form method="GET">
+<h2>Classes</h2>
+{% set metrics = classMetrics %}
+{% set top     = classTop %}
+{% set cloud   = class %}
+{% set name    = "class" %}
+
+<dl>
+    {% for id, metric in metrics %}
+    <dt>${{id}}</dt><dd>{{metric}}</dd>
+    {% endfor %}
+</dl>
+
+<div class="well form-search">
+    <input type="text" name="formula" class="input-xlarge" value="{{formula}}" />
+    <button type="submit" class="btn">Show</button>
+</div>
+
+<table class="table table-striped table-bordered table-condensed">
+    <tr>
+        <th>Class</th>
+        <th>{{formula}}</th>
+    </tr>
+    {% for item, metric in classes %}
+    <tr>
+        <td>
+            <a class="class" href="/source/{{metric.file}}#line_{{metric.line}}" title="{{item}}: {{metric.value}}" data-file="{{metric.file}}">{{item}}</a
+            ><a class="annotate" data-file="{{metric.file}}" data-line="{{metric.line}}" data-reason="{{cloud.name}}" href="#">+</a>
+        </td>
+        <td class="number">{{metric.value|number_format(2)}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
