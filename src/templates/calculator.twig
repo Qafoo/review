@@ -17,6 +17,10 @@
 </dl>
 
 <div class="well form-search">
+    <select size="1" onChange="$( 'input[name=formula]' ).val( $( this ).val() );">
+        <option value="$ce / ( $ca + $ce )">Instability</option>
+        <option value="( $ca / ( $ca + $ce ) ) * $wmc">Important Testable Class</option>
+    </select>
     <input type="text" name="formula" class="input-xlarge" value="{{formula}}" />
     <button type="submit" class="btn">Show</button>
 </div>
