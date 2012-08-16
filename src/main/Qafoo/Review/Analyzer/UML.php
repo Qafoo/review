@@ -74,7 +74,8 @@ class UML extends Analyzer implements Displayable
         $session = ReflectionSession::createDefaultSession(
             new PearNamingResolver( array( $path ) )
         );
-        $query   = $session->createDirectoryQuery();
+        $query = $session->createDirectoryQuery();
+        $query->exclude( '((?<!\.php|\.inc|\.class)$)i' );
         $classes = array();
         foreach ( $query->find( $path ) as $class )
         {
