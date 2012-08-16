@@ -17,9 +17,13 @@
 </dl>
 
 <div class="well form-search">
+    <div class="alert alert-error">
+        <strong>Evil:</strong> We are using <code>eval()</code> to evaluate this formula. Be careful. Exploiting this does not count as hacking.
+    </div>
     <select size="1" onChange="$( 'input[name=formula]' ).val( $( this ).val() );">
         <option value="$ce / ( $ca + $ce )">Instability</option>
         <option value="( $ca / ( $ca + $ce ) ) * $wmc">Important Testable Class</option>
+        <option value="floor( 1 / ( $ce + 1 ) ) * $wmc">Easy test Subjects</option>
     </select>
     <input type="text" name="formula" class="input-xlarge" value="{{formula}}" />
     <button type="submit" class="btn">Show</button>
