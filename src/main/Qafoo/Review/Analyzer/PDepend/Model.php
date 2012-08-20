@@ -65,6 +65,8 @@ class Model
      */
     protected $classTresholds = array(
         'warning' => array(
+            'ca'     => 500,
+            'ce'     => 3,
             'cis'    => 10,
             'cloc'   => 1000,
             'cr'     => 5,
@@ -84,6 +86,8 @@ class Model
             'wmcnp'  => 50,
         ),
         'error' => array(
+            'ca'     => 500,
+            'ce'     => 5,
             'cis'    => 25,
             'cloc'   => 5000,
             'cr'     => 8,
