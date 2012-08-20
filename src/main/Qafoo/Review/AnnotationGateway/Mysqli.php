@@ -158,6 +158,22 @@ class Mysqli extends AnnotationGateway
             }
         }
 
+        foreach ( $stats as &$values )
+        {
+            if ( $values['details'] === false )
+            {
+                continue;
+            }
+
+            uasort(
+                $values['details'],
+                function ( $a, $b )
+                {
+                    return count( $b ) - count( $a );
+                }
+            );
+        }
+
         return $stats;
     }
 
