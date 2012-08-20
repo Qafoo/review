@@ -11,6 +11,9 @@ jQuery().ready(function() {
                 file:    jQuery( e.target ).data( "file" ),
                 line:    jQuery( e.target ).data( "line" ),
                 message: jQuery( e.target ).data( "reason" )
+            },
+            success: function( data ) {
+                alert( "Annotation added." );
             }
         } );
 
