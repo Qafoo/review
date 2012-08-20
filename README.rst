@@ -50,7 +50,12 @@ Lighttpd can be found in ``doc/lighttpd.conf``.
 Usage
 -----
 
-./src/bin/analyze <path> [<oldPath>]
+To analyze source code, run::
+
+    ./src/bin/analyze <path> [<oldPath>]
+
+**Warning:** This throws away all current results and user annotations. You
+might want to backup the database and the ``results/`` folder.
 
 Wait and watch the results in the Web UI.
 
