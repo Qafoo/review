@@ -7,6 +7,7 @@
  */
 
 namespace Qafoo\Review\Controller;
+use Qafoo\Review\AnnotationGateway;
 use Qafoo\Review\Analyzer;
 use Qafoo\Review\Struct;
 use Qafoo\Review\Displayable;
@@ -34,15 +35,24 @@ class Review
     protected $sourceController;
 
     /**
+     * Annotation gateway
+     *
+     * @var AnnotationGateway
+     */
+    protected $gateway;
+
+    /**
      * Construct from analyzers
      *
      * @param Source $sourceController
      * @param Analyzer[] $analyzers
+     * @param AnnotationGateway $gateway
      * @return void
      */
-    public function __construct( Source $sourceController, array $analyzers = array() )
+    public function __construct( Source $sourceController, array $analyzers = array(), AnnotationGateway $gateway )
     {
         $this->sourceController = $sourceController;
+        $this->gateway          = $gateway;
         foreach ( $analyzers as $id => $analyzer )
         {
             $this->addAnalyzer( $id, $analyzer );
@@ -117,8 +127,9 @@ class Review
         return new Struct\Response(
             'overview.twig',
             array(
-                'navigation' => $this->getMenuEntries(),
-                'summaries'  => $summaries,
+                'navigation'  => $this->getMenuEntries(),
+                'summaries'   => $summaries,
+                'annotations' => $this->gateway->getAnnotationsStats( array( 'user' ) ),
             )
         );
     }

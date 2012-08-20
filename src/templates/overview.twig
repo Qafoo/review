@@ -8,19 +8,46 @@
 
 {% block content %}
 <div class="row">
-{% for module in summaries %}
-    <div class="span4">
-        <div class="well">
-            <h2>{{module.title}}</h2>
-            <p>{{module.text}}</p>
-        </div>
+    <div class="span6">
+        <h2>Analyzers</h2>
+        <ul class="summaries">
+        {% for module in summaries %}
+            <li>
+                <h3>
+                    <a href="/show/{{module.module}}">{{module.title}}</a>
+                </h3>
+                <p>{{module.text}}</p>
+            </li>
+        {% endfor %}
     </div>
-
-    {% if loop.index is divisibleby( 3 ) %}
-</div>
-<div class="row">
-    {% endif %}
-
-{% endfor %}
+    <div class="span6">
+        <h2>Annotations</h2>
+        <ul class="annotation-groups">
+        {% for type, stats in annotations %}
+            <li>
+                <h3>{{type}} ({{stats.count}})</h3>
+                {% if stats.details %}
+                    <ul class="files">
+                    {% for file, fileAnnotations in stats.details %}
+                        <li>
+                            {{file}}
+                            <ul class="annotations">
+                            {% for annotation in fileAnnotations %}
+                                <li>
+                                    <a href="/source/{{file}}#line_{{annotation.line}}">
+                                        <span class="analyzer">[{{annotation.type}}]</span>
+                                        <span class="message">{{annotation.message}}</span>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
 </div>
 {% endblock %}

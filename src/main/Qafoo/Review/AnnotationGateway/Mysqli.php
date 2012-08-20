@@ -90,6 +90,78 @@ class Mysqli extends AnnotationGateway
     }
 
     /**
+     * Get annotation statistics
+     *
+     * Optionally get detailed annotation statistics for a set of provided
+     * annotation types.
+     *
+     * @param array $detailed
+     * @return array
+     */
+    public function getAnnotationsStats( array $detailed = array() )
+    {
+        $result = $this->connection->query( '
+            SELECT
+               `a_type`,
+               COUNT( * ) count
+            FROM
+                `annotation`
+            GROUP BY
+                `a_type`
+            ORDER BY
+                `a_type` ASC'
+        );
+
+        $stats = array();
+        while ( $row = $result->fetch_assoc() )
+        {
+            $stats[$row['a_type']] = array(
+                'count'   => $row['count'],
+                'details' => false,
+            );
+        }
+
+        if ( count( $detailed ) )
+        {
+            $result = $this->connection->query( sprintf( '
+                SELECT
+                   `a_id`,
+                   `a_file`,
+                   `a_line`,
+                   `a_character`,
+                   `a_type`,
+                   `a_class`,
+                   `a_message`
+                FROM
+                    `annotation`
+                WHERE
+                    `a_type` IN ( %s )',
+                implode( ', ', array_map(
+                    function( $type )
+                    {
+                        return "'" . $this->connection->escape_string( $type ) . "'";
+                    },
+                    $detailed
+                ) )
+            ) );
+
+            while ( $row = $result->fetch_assoc() )
+            {
+                $stats[$row['a_type']]['details'][$row['a_file']][] = $annotation = new Struct\Annotation();
+                $annotation->id        = $row['a_id'];
+                $annotation->file      = $row['a_file'];
+                $annotation->line      = $row['a_line'];
+                $annotation->character = $row['a_character'];
+                $annotation->type      = $row['a_type'];
+                $annotation->class     = $row['a_class'];
+                $annotation->message   = $row['a_message'];
+            }
+        }
+
+        return $stats;
+    }
+
+    /**
      * Create a new annotation
      *
      * @param Struct\Annotation $annotation

@@ -128,7 +128,8 @@ class Base extends DIC
         {
             return new Review\Controller\Review(
                 $dic->sourceController,
-                $this->analyzers
+                $this->analyzers,
+                $dic->annotationGateway
             );
         };
     }
