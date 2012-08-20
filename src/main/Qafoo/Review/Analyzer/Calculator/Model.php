@@ -47,6 +47,12 @@ class Model extends PDepend\Model
         // Oh yeah, this is pure EVIL! (but simple :)
         extract( $values );
         @eval( "\$result = $formula;" );
+
+        if ( !isset( $result ) )
+        {
+            throw new \RuntimeException( "Could not interprete formula: $formula" );
+        }
+
         return $result;
     }
 }
