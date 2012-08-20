@@ -30,8 +30,13 @@
                     <ul class="files">
                     {% for file, fileAnnotations in stats.details %}
                         <li>
-                            {{file}}
-                            <ul class="annotations">
+                            <a href="/source/{{file}}">{{file}}</a>
+                            <a href="#" onClick="$( '#file-{{hash(file)}}' ).toggle()">
+                                <span class="badge badge-error">
+                                    {{fileAnnotations|length}}
+                                </span>
+                            </a>
+                            <ul class="annotations" style="display: none;" id="file-{{hash(file)}}">
                             {% for annotation in fileAnnotations %}
                                 <li>
                                     <a href="/source/{{file}}#line_{{annotation.line}}">
