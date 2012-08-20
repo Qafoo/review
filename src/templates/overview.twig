@@ -10,7 +10,7 @@
 <div class="row">
     <div class="span6">
         <h2>Analyzers</h2>
-        <ul class="summaries">
+        <ul class="summaries unstyled">
         {% for module in summaries %}
             <li>
                 <h3>
@@ -22,7 +22,7 @@
     </div>
     <div class="span6">
         <h2>Annotations</h2>
-        <ul class="annotation-groups">
+        <ul class="annotation-groups unstyled">
         {% for type, stats in annotations %}
             <li>
                 <h3>{{type}} ({{stats.count}})</h3>
