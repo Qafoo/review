@@ -72,12 +72,16 @@ class Base extends DIC
 
         $this->twig = function ( $dic )
         {
-            return new \Twig_Environment(
+            $twig = new \Twig_Environment(
                 new \Twig_Loader_Filesystem( $dic->srcDir . '/templates' ),
                 array(
 //                    'cache' => $dic->srcDir . '/cache'
                 )
             );
+
+            $twig->addExtension( new Review\View\Twig\Extension() );
+
+            return $twig;
         };
 
         $this->view = function( $dic )
