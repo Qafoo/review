@@ -21,7 +21,10 @@ jQuery().ready(function() {
         return false;
     } );
 
-    jQuery( ".modal form" ).ajaxForm( function() {
-        document.location.href = document.location.href;
+    jQuery( ".modal form" ).ajaxForm( {
+        success: function() {
+            jQuery( ".modal form" ).hide();
+            document.location.reload();
+        }
     } );
 } );
