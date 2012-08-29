@@ -1,10 +1,11 @@
 {
-    "hash": "1fc9b3d5ad4ca261f4b82a20d14b935d",
+    "hash": "1b638dbda7d7a4136bbcdc5a113ca8c0",
     "packages": [
         {
             "package": "Qafoo/RMF",
             "version": "dev-master",
-            "source-reference": "f5986d29512bfb2276ffde62921efd6776b79d70"
+            "source-reference": "852d993d45952dbc86e2bfd78addad540bd85998",
+            "commit-date": "1342375436"
         },
         {
             "package": "arbitracker/systemProcess",
@@ -21,10 +22,22 @@
         {
             "package": "twitter/bootstrap",
             "version": "0.1"
+        },
+        {
+            "package": "zetacomponents/base",
+            "version": "1.8"
+        },
+        {
+            "package": "zetacomponents/graph",
+            "version": "1.5"
         }
     ],
     "packages-dev": null,
     "aliases": [
 
-    ]
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "qafoo/rmf": 20
+    }
 }

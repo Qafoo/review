@@ -43,6 +43,8 @@
         "twitter/bootstrap": "0.1",
         "arbitracker/systemProcess": "0.1",
         "pdepend/staticReflection": "0.1",
+        "zetacomponents/base": "*",
+        "zetacomponents/graph": "*",
         "twig/twig": "1.6.0"
     },
     "autoload": {
