@@ -11,6 +11,7 @@ use Qafoo\Review\Analyzer;
 use Qafoo\Review\AnnotationGateway;
 use Qafoo\Review\Struct;
 use Qafoo\Review\Displayable;
+use Qafoo\Review\Chart;
 use Qafoo\RMF;
 
 /**
@@ -146,6 +147,11 @@ class PDepend extends Analyzer implements Displayable
             );
         }
 
+        if ( isset( $request->variables['chart'] ) )
+        {
+            return $this->renderChart( $request );
+        }
+
         $classMetric  = isset( $request->variables['class'] ) ? $request->variables['class'] : 'cr';
         $methodMetric = isset( $request->variables['method'] ) ? $request->variables['method'] : 'ccn';
 
@@ -170,6 +176,36 @@ class PDepend extends Analyzer implements Displayable
                 'jdepend'       => file_get_contents( $this->resultDir . '/pdepend_jdepend.svg' ),
             )
         );
+    }
+
+    /**
+     * renderChart
+     *
+     * @param RMF\Request $request
+     * @return void
+     */
+    public function renderChart( RMF\Request $request )
+    {
+        $model = new PDepend\Model( $this->resultDir . '/pdepend_summary.xml' );
+        $method  = $request->variables['chart'] === 'class' ? 'getClassesMetric' : 'getMethodsMetric';
+        $metrics = $model->$method( $request->variables['metric'], pow( 2, 31 ) );
+
+        $graph = new Chart\LineChart( $metrics['name'] );
+        $graph->options->lineThickness = 0;
+
+        $graph->xAxis = new \ezcGraphChartElementNumericAxis();
+
+        $graph->data[$metrics['name']] = new \ezcGraphArrayDataSet( array_count_values( array_map(
+            function( $item ) {
+                return (int) $item['value'];
+            },
+            $metrics['items']
+        ) ) );
+        $graph->data[$metrics['name']]->symbol = \ezcGraph::BULLET;
+
+        header( 'Content-Type: image/svg+xml' );
+        $graph->renderToOutput( 600, 350 );
+        exit( 0 );
     }
 }
 

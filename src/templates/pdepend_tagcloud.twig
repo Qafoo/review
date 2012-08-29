@@ -10,6 +10,7 @@
 <ul class="nav nav-tabs" id="{{name}}-tabs">
     <li class="active"><a href="#{{name}}-tagcloud" data-toggle="tab">Tag cloud</a></li>
     <li><a href="#{{name}}-table" data-toggle="tab">Table</a></li>
+    <li><a href="#{{name}}-chart" data-toggle="tab">Chart</a></li>
 </ul>
      
 <div class="tab-content">
@@ -40,6 +41,11 @@
             </tr>
             {% endfor %}
         </table>
+    </div>
+    <div class="tab-pane" id="{{name}}-chart">
+        <object class="graph" type="image/svg+xml" data="/show/pdepend?chart={{name}}&amp;metric={{cloud.selected}}" width="600" height="350">
+            You need an SVG enabled browser to see this.
+        </object>
     </div>
 </div>
 

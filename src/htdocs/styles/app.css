@@ -38,6 +38,11 @@ ul.tagcloud li {
     line-height: 1.1em;
 }
 
+.graph {
+    display: block;
+    margin: 1em auto;
+}
+
 ul.dirlisting {
     list-style-type: none;
     margin-left: 0px;
