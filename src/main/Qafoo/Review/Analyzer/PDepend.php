@@ -194,6 +194,8 @@ class PDepend extends Analyzer implements Displayable
         $graph->options->lineThickness = 0;
 
         $graph->xAxis = new \ezcGraphChartElementNumericAxis();
+        $graph->xAxis->label = $request->variables['metric'];
+        $graph->yAxis->label = '#';
 
         $graph->data[$metrics['name']] = new \ezcGraphArrayDataSet( array_count_values( array_map(
             function( $item ) {
