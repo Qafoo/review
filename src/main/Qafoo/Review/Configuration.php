@@ -37,6 +37,24 @@ class Configuration
      */
     public function __construct( $iniFile, $environment )
     {
+        if ( !is_file( $iniFile ) &&
+             is_file( $iniFile . '.dist' ) )
+        {
+            $iniFile = $iniFile . '.dist';
+        }
+
+        $this->parseIniFile( $iniFile, $environment );
+    }
+
+    /**
+     * Parse ini file
+     *
+     * @param string $iniFile
+     * @param string $environment
+     * @return void
+     */
+    public function parseIniFile( $iniFile, $environment )
+    {
         $configuration = parse_ini_file( $iniFile, true );
 
         if ( false === isset( $configuration[$environment] ) )
@@ -45,13 +63,45 @@ class Configuration
         }
 
         $this->configuration = $configuration[$environment];
+        $this->applyInheritance( $configuration, $environment );
+        foreach ( $this->configuration as $key => $value )
+        {
+            if ( strpos( $key, '.' ) === false )
+            {
+                continue;
+            }
 
+            $path = array_filter( explode( '.', $key ) );
+            unset( $this->configuration[$key] );
+            $current = &$this->configuration;
+            foreach ( $path as $element )
+            {
+                if ( !isset( $current[$element] ) )
+                {
+                    $current[$element] = array();
+                }
+
+                $current = &$current[$element];
+            }
+            $current = $value;
+        }
+    }
+
+    /**
+     * Inherit configuration options from upper level environments
+     *
+     * @param array $configuration
+     * @param string $environment
+     * @return void
+     */
+    protected function applyInheritance( array $configuration, $environment )
+    {
         $parent = $environment;
         while ( isset( $this->inheritance[$parent] ) )
         {
             $parent = $this->inheritance[$parent];
 
-            if ( isset( $configuration[$parent ] ) )
+            if ( isset( $configuration[$parent] ) )
             {
                 $this->configuration = array_merge(
                     $configuration[$parent],
@@ -74,7 +124,7 @@ class Configuration
             return $this->configuration[$key];
         }
 
-        throw new \InvalidArgumentException( $key );
+        throw new \OutOfBoundsException( "No configuration option $key available." );
     }
 }
 
