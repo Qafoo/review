@@ -3,6 +3,7 @@
     <!--
         Import project specific settings.
     -->
+    <property file="${basedir}/build.properties.local" />
     <property file="${basedir}/build.properties" />
 
     <!--
