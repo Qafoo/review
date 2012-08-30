@@ -3,6 +3,7 @@
  * This file is part of qaReview
  *
  * @version $Revision$
+ * @license APGLv3
  * @copyright Qafoo GmbH
  */
 
@@ -12,6 +13,7 @@ namespace Qafoo\Review\Chart;
  * Chart palette in Qafoo style
  *
  * @version $Revision$
+ * @license APGLv3
  */
 class ChartPalette extends \ezcGraphPalette
 {

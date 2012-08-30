@@ -3,6 +3,7 @@
  * This file is part of qaReview
  *
  * @version $Revision$
+ * @license APGLv3
  * @copyright Qafoo GmbH
  */
 
@@ -12,6 +13,7 @@ namespace Qafoo\Review\View\Twig;
  * Custom twig extension
  *
  * @version $Revision$
+ * @license APGLv3
  */
 class Extension extends \Twig_Extension
 {

@@ -3,6 +3,7 @@
  * This file is part of qaReview
  *
  * @version $Revision$
+ * @license APGLv3
  * @copyright Qafoo GmbH
  */
 
@@ -16,6 +17,7 @@ use Qafoo\RMF;
  * Main source controller
  *
  * @version $Revision$
+ * @license APGLv3
  */
 class Source
 {

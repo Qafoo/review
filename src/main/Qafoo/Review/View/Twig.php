@@ -3,6 +3,7 @@
  * This file is part of qaReview
  *
  * @version $Revision$
+ * @license APGLv3
  * @copyright Qafoo GmbH
  */
 
@@ -14,6 +15,7 @@ use Qafoo\RMF\Request;
  * Base MySQLi connection class
  *
  * @version $Revision$
+ * @license APGLv3
  */
 class Twig extends \Qafoo\RMF\View
 {

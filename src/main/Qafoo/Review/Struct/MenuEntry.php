@@ -3,6 +3,7 @@
  * This file is part of qaReview
  *
  * @version $Revision$
+ * @license APGLv3
  * @copyright Qafoo GmbH
  */
 
@@ -13,6 +14,7 @@ use Qafoo\Review\Struct;
  * Menu entry struct class
  *
  * @version $Revision$
+ * @license APGLv3
  */
 class MenuEntry extends Struct
 {

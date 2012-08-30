@@ -3,6 +3,7 @@
  * This file is part of qaReview
  *
  * @version $Revision$
+ * @license APGLv3
  * @copyright Qafoo GmbH
  */
 
@@ -21,6 +22,7 @@ use pdepend\reflection\resolvers\PearNamingResolver;
  * UML analyzer class
  *
  * @version $Revision$
+ * @license APGLv3
  */
 class UML extends Analyzer implements Displayable
 {

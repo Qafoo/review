@@ -3,6 +3,7 @@
  * This file is part of qaReview
  *
  * @version $Revision$
+ * @license APGLv3
  * @copyright Qafoo GmbH
  */
 
@@ -17,6 +18,7 @@ use Qafoo\RMF;
  * PDepend analyzer class
  *
  * @version $Revision$
+ * @license APGLv3
  */
 class Calculator extends Analyzer implements Displayable
 {

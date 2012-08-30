@@ -3,6 +3,7 @@
  * This file is part of qaReview
  *
  * @version $Revision$
+ * @license APGLv3
  * @copyright Qafoo GmbH
  */
 
@@ -14,6 +15,7 @@ use Qafoo\Review\Struct;
  * Base class for annotation gateways
  *
  * @version $Revision$
+ * @license APGLv3
  */
 class Mysqli extends AnnotationGateway
 {

@@ -3,6 +3,7 @@
  * This file is part of qaReview
  *
  * @version $Revision$
+ * @license APGLv3
  * @copyright Qafoo GmbH
  */
 
@@ -12,6 +13,7 @@ namespace Qafoo\Review;
  * Base class for an *.ini based configuration implementation.
  *
  * @version $Revision$
+ * @license APGLv3
  */
 class Configuration
 {
