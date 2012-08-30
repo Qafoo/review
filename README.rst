@@ -1,3 +1,4 @@
+========
 qaReview
 ========
 
@@ -18,37 +19,65 @@ Add more analyzers, if required. For those extend the ``Analyzer`` base class
 or take a look at one of the example analyzers -- ``Analyzer\\Phpmd`` might be
 a good starting point.
 
-Disclaimer
-----------
+Requirements
+============
 
-This software might change any time. We provide no guarantee that it still will
-do the same things tomorrow. It has been developed as an internal tool and we
-will continue to develop it likewise. It has been published, so that our
-customer can use a snapshot of this tool to validate results of code reviews.
-
-License
--------
-
-This tool is under copyright of Qafoo GmbH. There is no license. This tool is
-**not Open Source**.
-
-The reason for this simply is, that we currently do not have the resources to
-maintain such a tool in a way that the general public is able to use it
-sensibly. Everything else would not line up with our own requirements for
-quality.
-
-We probably will not complain if you play around with it. Please keep the
-copyright notices intact, though.
+- Ant >= 1.8.0
+- PHP >= 5.3
+- MySql >= 5.1
+- Composer
 
 Installation
-------------
+============
 
-Configure the database connection in ``src/config/config.ini``. Configure your
-webserver, so that the Web UI is accessible. An example configuration for
-Lighttpd can be found in ``doc/lighttpd.conf``.
+To install qaReview, clone the repository and run the following commands::
+
+    git submodule init
+    git submodule update
+    composer.phar install
+    ant -Dcommons.env=testing install
+    ant install
+
+After that configure your webserver properly, and you should done. You might
+need to adapt the database connection settings -- see `Configuration`_ for
+details.
+
+Lighttpd Example
+----------------
+
+Example configuration for the lighttpd webserver::
+
+    $HTTP["host"] =~ "review$" {
+        server.document-root = "/path/to/review/htdocs"
+        server.error-handler-404 = "/index.php"
+        url.rewrite-once = (
+            "^(\/templates\/|\/styles\/|\/images\/|\/scripts\/).*" => "$0",
+            "(?:\?(.*))?$" => "/index.php?$1"
+        )
+    }
+
+Configuration
+-------------
+
+To configure your qaReview instance copy the ``src/config/config.ini.dist`` to
+``src/config/config.ini`` and edit the settings there. If you change the
+database connection settings you might also want to do this in your
+``build.properties.local`` -- see `Development`_ for details.
+
+Development
+===========
+
+To set the application to development mode create a file
+``build.properties.local`` containing ``commons.env = development`` in the
+project root (just beside the ``build.properties`` file). You can set other
+local build environment variables there, too.
+
+To run the tests for qaReview just execute ``ant`` in the project root (where
+the ``build.xml`` file resides). The first run may take a while, but subsequent
+runs will be a lot faster.
 
 Usage
------
+=====
 
 To analyze source code, run::
 
@@ -57,7 +86,21 @@ To analyze source code, run::
 **Warning:** This throws away all current results and user annotations. You
 might want to backup the database and the ``results/`` folder.
 
-Wait and watch the results in the Web UI.
+Wait until the command has finished and watch the results in the Web UI.
+
+Disclaimer
+==========
+
+This software might change any time. We provide no guarantee that it still will
+do the same things tomorrow. It has been developed as an internal tool and we
+will continue to develop it likewise. It has been published, so that our
+customer can use a snapshot of this tool to validate results of code reviews.
+
+License
+=======
+
+This tool is under copyright of Qafoo GmbH. It has been licensed under AGPL v3.
+See the LICENSE file distributed with qaReview for details.
 
 
 ..
