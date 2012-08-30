@@ -38,9 +38,9 @@ To install qaReview, clone the repository and run the following commands::
     ant -Dcommons.env=testing install
     ant install
 
-After that configure your webserver properly, and you should done. You might
-need to adapt the database connection settings -- see `Configuration`_ for
-details.
+After that configure your webserver properly, and you should be done. You might
+want to adapt the database connection settings first, though -- see
+`Configuration`_ for details.
 
 Lighttpd Example
 ----------------
