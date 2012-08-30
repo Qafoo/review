@@ -11,7 +11,6 @@ use Qafoo\RMF;
 
 require __DIR__ . '/../main/Qafoo/Review/bootstrap.php';
 $dic = new DIC\Base();
-$dic->environment = 'development';
 
 $dic->mysqli;
 
