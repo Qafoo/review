@@ -100,7 +100,7 @@ License
 =======
 
 This tool is under copyright of Qafoo GmbH. It has been licensed under AGPL v3.
-See the LICENSE file distributed with qaReview for details.
+See the ``src/LICENSE`` file distributed with qaReview for details.
 
 
 ..
