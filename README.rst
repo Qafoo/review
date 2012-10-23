@@ -2,8 +2,8 @@
 qaReview
 ========
 
-Helper tool to do code reviews. This software is *just a hack* to visualizing
-some metrics.
+This software is a tool to visualize metrics and metrics and source code. We
+use this software for Code Reviews together with out customers.
 
 Currently supports:
 
@@ -25,7 +25,6 @@ Requirements
 - Ant >= 1.8.0
 - PHP >= 5.3
 - MySql >= 5.1
-- Composer
 
 Installation
 ============
@@ -34,7 +33,6 @@ To install qaReview, clone the repository and run the following commands::
 
     git submodule init
     git submodule update
-    composer.phar install
     ant -Dcommons.env=testing install
     ant install
 
@@ -86,7 +84,9 @@ To analyze source code, run::
 **Warning:** This throws away all current results and user annotations. You
 might want to backup the database and the ``results/`` folder.
 
-Wait until the command has finished and watch the results in the Web UI.
+Wait until the command has finished and watch the results in the Web UI. It is
+fairly common that some of the used tools cause errors for strange source code.
+Fix them. :)
 
 Disclaimer
 ==========
