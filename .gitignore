@@ -2,3 +2,4 @@
 .pear
 build
 build.properties.local
+composer.phar
