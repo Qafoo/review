@@ -8,6 +8,7 @@ use this software for Code Reviews together with out customers.
 Currently supports:
 
 - PDepend
+  - Calc (Metric calculator based on PDepend metrics)
 - PHPMD
 - oxPHPMD (private tool)
 - PHPLint (private tool)
