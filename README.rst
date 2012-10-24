@@ -3,7 +3,7 @@ qaReview
 ========
 
 This software is a tool to visualize metrics and metrics and source code. We
-use this software for Code Reviews together with out customers.
+use this software for Code Reviews together with our customers.
 
 Currently supports:
 
