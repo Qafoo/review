@@ -25,6 +25,8 @@ Requirements
 
 - Ant >= 1.8.0
 - PHP >= 5.3
+  - mysqli
+  - dom
 - MySql >= 5.1
 
 Installation
