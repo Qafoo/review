@@ -57,6 +57,29 @@ Example configuration for the lighttpd webserver::
         )
     }
 
+Nginx Example
+-------------
+
+Example configuration for the nginx webserver::
+
+server {
+    server_name _;
+    listen 80;
+
+    root /path/to/review/htdocs/;
+
+    location ~ ^\/(templates|styles|images|scripts) {
+    }
+
+    location / {
+        # fastcgi_pass 127.0.0.1:9000;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+    }
+}
+
 Configuration
 -------------
 
