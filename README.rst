@@ -1,6 +1,6 @@
-========
-qaReview
-========
+============================
+Qafoo Code Review Tool (CRT)
+============================
 
 This software is a tool to visualize metrics and metrics and source code. We
 use this software for Code Reviews together with our customers.
@@ -14,7 +14,7 @@ Currently supports:
 - PHPLint (private tool)
 - PHPCPD
 - UML
-- Diff (if a path to an old version is provided)
+- Diff (if a path to an old source version is provided)
 
 Add more analyzers, if required. For those extend the ``Analyzer`` base class
 or take a look at one of the example analyzers -- ``Analyzer\\Phpmd`` might be
@@ -26,16 +26,16 @@ Requirements
 - Ant >= 1.8.0
 - PHP >= 5.3
   - mysqli
-  - dom
 - MySql >= 5.1
 
 Installation
 ============
 
-To install qaReview, clone the repository and run the following commands::
+To install Qafoo CRT, clone the repository and run the following commands::
 
     git submodule init
     git submodule update
+    edit build.properties # For correct database settings
     ant -Dcommons.env=testing install
     ant install
 
@@ -86,7 +86,7 @@ Example configuration for the nginx webserver::
 Configuration
 -------------
 
-To configure your qaReview instance copy the ``src/config/config.ini.dist`` to
+To configure your Qafoo CRT instance copy the ``src/config/config.ini.dist`` to
 ``src/config/config.ini`` and edit the settings there. If you change the
 database connection settings you might also want to do this in your
 ``build.properties.local`` -- see `Development`_ for details.
@@ -99,7 +99,7 @@ To set the application to development mode create a file
 project root (just beside the ``build.properties`` file). You can set other
 local build environment variables there, too.
 
-To run the tests for qaReview just execute ``ant`` in the project root (where
+To run the tests for Qafoo CRT just execute ``ant`` in the project root (where
 the ``build.xml`` file resides). The first run may take a while, but subsequent
 runs will be a lot faster.
 
@@ -129,7 +129,7 @@ License
 =======
 
 This tool is under copyright of Qafoo GmbH. It has been licensed under AGPL v3.
-See the ``src/LICENSE`` file distributed with qaReview for details.
+See the ``src/LICENSE`` file distributed with Qafoo CRT for details.
 
 TODO
 ====
