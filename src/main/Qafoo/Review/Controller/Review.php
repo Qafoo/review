@@ -85,7 +85,29 @@ class Review
         foreach ( $this->analyzers as $name => $analyzer )
         {
             echo " - Analyze with $name …";
-            $analyzer->analyze( $path, $oldPath );
+            try
+            {
+                $analyzer->analyze( $path, $oldPath );
+            }
+            catch ( \SystemProcess\NonZeroExitCodeException $e )
+            {
+                $logFile = date( 'Ymd-His-' ) . $name . '.log';
+                file_put_contents(
+                    $logFile,
+                    "Command {$e->command} failed with exit code {$e->exitCode}.\n" .
+                    "\nSTDOUT:\n{$e->stdoutOutput}\n" .
+                    "\nSTDERR:\n{$e->stderrOutput}\n"
+                );
+
+                echo " Fail, see $logFile for details.", PHP_EOL;
+
+                continue;
+            }
+            catch ( \Exception $e )
+            {
+                echo " Fail: ", $e->getMessage(), PHP_EOL;
+                continue;
+            }
             echo " Done", PHP_EOL;
         }
     }
