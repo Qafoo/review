@@ -46,6 +46,13 @@ class PDepend extends Analyzer implements Displayable
     protected $model;
 
     /**
+     * Code processor factory
+     *
+     * @var CodeProcessorFactory
+     */
+    protected $factory;
+
+    /**
      * Create from annotation gateway
      *
      * @param string $resultDir
@@ -53,11 +60,12 @@ class PDepend extends Analyzer implements Displayable
      * @param PDepend\Model $model
      * @return void
      */
-    public function __construct( $resultDir, AnnotationGateway $gateway, PDepend\Model $model )
+    public function __construct( $resultDir, AnnotationGateway $gateway, PDepend\Model $model, CodeProcessorFactory $factory )
     {
         $this->resultDir = $resultDir;
         $this->gateway   = $gateway;
         $this->model     = $model;
+        $this->factory   = $factory;
     }
 
     /**
@@ -94,11 +102,37 @@ class PDepend extends Analyzer implements Displayable
         $doc->load( $summaryXml );
         $xpath = new \DOMXPath( $doc );
 
+        // Add line numbers to all entities
+        foreach ( $xpath->query( '//class' ) as $classNode )
+        {
+            $files = $classNode->getElementsByTagName( 'file' );
+            if ( $files->length === 0 )
+            {
+                continue;
+            }
+            $file      = $files->item( 0 )->getAttribute( 'name' );
+            $processor = $this->factory->factory( $file );
+
+            $classNode->setAttribute(
+                'line',
+                $processor->getLineForEntity( $classNode->getAttribute( 'name' ), 'class' )
+            );
+
+            foreach ( $classNode->getElementsByTagName( 'method' ) as $methodNode )
+            {
+                $methodNode->setAttribute(
+                    'line',
+                    $processor->getLineForEntity( $methodNode->getAttribute( 'name' ), 'function' )
+                );
+            }
+        }
+
         // Replace all pathes in summary.xml with relative pathes
         foreach ( $xpath->query( '//file' ) as $fileNode )
         {
             $fileNode->setAttribute( 'name', str_replace( $path, '', $fileNode->getAttribute( 'name' ) ) );
         }
+
         $doc->save( $summaryXml );
 
         $this->model->load( $summaryXml );
