@@ -19,6 +19,15 @@ use Qafoo\Review\Struct;
  */
 class Model extends PDepend\Model
 {
+    /**
+     * Calculate top results
+     *
+     * Calculate the top results, based on the provided formula
+     *
+     * @param string $formula
+     * @param int $count
+     * @return array
+     */
     public function calculateTop( $formula, $count )
     {
         $xpath   = new \DOMXPath( $this->document );
@@ -41,6 +50,17 @@ class Model extends PDepend\Model
         return $this->limitItemList( $classes, $count );
     }
 
+    /**
+     * Evaluate given formula
+     *
+     * @TODO: This could use a full stack formula interpreter, written in PHP.
+     * For now it uses eval(), which works, but may have serious security
+     * implications.
+     *
+     * @param string $formula
+     * @param array $values
+     * @return mixed
+     */
     protected function evaluate( $formula, array $values )
     {
         // Oh yeah, this is pure EVIL! (but simple :)
