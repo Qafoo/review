@@ -9,7 +9,7 @@
 
 namespace Qafoo\Review\Controller;
 use Qafoo\Review\AnnotationGateway;
-use Qafoo\Review\CodeProcessor;
+use Qafoo\Review\CodeProcessorFactory;
 use Qafoo\Review\Struct;
 use Qafoo\RMF;
 
@@ -150,6 +150,7 @@ class Source
      */
     public function show( RMF\Request $request )
     {
+        $factory = new CodeProcessorFactory();
         $path = $request->variables['path'] ?: '/';
 
         $source      = array();
@@ -158,8 +159,7 @@ class Source
         if ( file_exists( $file = $this->source . '/' . $path ) &&
              is_file( $file ) )
         {
-            $processor = new CodeProcessor();
-            $processor->load( $file );
+            $processor = $factory->factory( $file );
             $processor->addAnnotations(
                 $annotations = $this->gateway->getAnnotationsForFile( $path )
             );
