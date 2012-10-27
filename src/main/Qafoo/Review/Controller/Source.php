@@ -36,17 +36,25 @@ class Source
     protected $source;
 
     /**
+     * Code processor factory
+     *
+     * @var CodeProcessorFactory
+     */
+    protected $factory;
+
+    /**
      * Construct from analyzers
      *
      * @param string $source
      * @param AnnotationGateway $gateway
      * @return void
      */
-    public function __construct( $source, AnnotationGateway $gateway )
+    public function __construct( $source, AnnotationGateway $gateway, CodeProcessorFactory $factory )
     {
         $this->resultDir = dirname( $source );
         $this->source    = file_get_contents( $source );
         $this->gateway   = $gateway;
+        $this->factory   = $factory;
     }
 
     /**
@@ -150,7 +158,6 @@ class Source
      */
     public function show( RMF\Request $request )
     {
-        $factory = new CodeProcessorFactory();
         $path = $request->variables['path'] ?: '/';
 
         $source      = array();
@@ -159,7 +166,7 @@ class Source
         if ( file_exists( $file = $this->source . '/' . $path ) &&
              is_file( $file ) )
         {
-            $processor = $factory->factory( $file );
+            $processor = $this->factory->factory( $file );
             $processor->addAnnotations(
                 $annotations = $this->gateway->getAnnotationsForFile( $path )
             );

@@ -132,11 +132,17 @@ class Base extends DIC
             );
         };
 
+        $this->codeProcessorFactory = function ( $dic )
+        {
+            return new Review\CodeProcessorFactory();
+        };
+
         $this->sourceController = function ( $dic )
         {
             return new Review\Controller\Source(
                 $dic->resultDir . '/source',
-                $dic->annotationGateway
+                $dic->annotationGateway,
+                $dic->codeProcessorFactory
             );
         };
 
