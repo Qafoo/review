@@ -154,18 +154,12 @@ class Base extends DIC
 
         $this->pdependModel = function ( $dic )
         {
-            return new Review\Analyzer\PDepend\Model(
-                $dic->source,
-                $dic->codeProcessorFactory
-            );
+            return new Review\Analyzer\PDepend\Model();
         };
 
         $this->calculatorModel = function ( $dic )
         {
-            return new Review\Analyzer\Calculator\Model(
-                $dic->source,
-                $dic->codeProcessorFactory
-            );
+            return new Review\Analyzer\Calculator\Model();
         };
 
         $this->analyzers = function ( $dic )

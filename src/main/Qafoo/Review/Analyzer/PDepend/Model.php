@@ -139,37 +139,11 @@ class Model
     );
 
     /**
-     * Path to source code
-     *
-     * @var string
-     */
-    protected $source;
-
-    /**
-     * Code processor factory
-     *
-     * @var CodeProcessorFactory
-     */
-    protected $factory;
-
-    /**
      * DOMDocument representing pdepend XML file
      *
      * @var DOMDocument
      */
     protected $document;
-
-    /**
-     * Construct from path to PDepend XML file
-     *
-     * @param string $path
-     * @return void
-     */
-    public function __construct( $source, CodeProcessorFactory $factory )
-    {
-        $this->source  = file_get_contents( $source );
-        $this->factory = $factory;
-    }
 
     /**
      * Load summary.xml file
@@ -201,7 +175,6 @@ class Model
                 continue;
             }
             $file      = $files->item( 0 )->getAttribute( 'name' );
-            $processor = $this->factory->factory( $this->source . $file );
 
             $metrics = $this->getClassMetrics( $classNode );
             foreach ( $metrics as $metric => $value )
@@ -213,7 +186,7 @@ class Model
                 {
                     $annotations[] = new Struct\Annotation(
                         $file,
-                        $processor->getLineForEntity( $classNode->getAttribute( 'name' ), 'class' ),
+                        $classNode->getAttribute( 'line' ),
                         null,
                         'pdepend',
                         $class,
@@ -235,7 +208,7 @@ class Model
                     {
                         $annotations[] = new Struct\Annotation(
                             $file,
-                            $processor->getLineForEntity( $methodNode->getAttribute( 'name' ), 'class' ),
+                            $methodNode->getAttribute( 'line' ),
                             null,
                             'pdepend',
                             $class,
@@ -312,13 +285,12 @@ class Model
                 continue;
             }
             $file      = $files->item( 0 )->getAttribute( 'name' );
-            $processor = $this->factory->factory( $this->source . $file );
 
             $class   = $element->getAttribute( 'name' );
             $metrics = $this->getClassMetrics( $element );
             $classes[$class]['value'] = $metrics[$selected];
             $classes[$class]['file']  = $file;
-            $classes[$class]['line']  = $processor->getLineForEntity( $class, 'class' );
+            $classes[$class]['line']  = $element->getAttribute( 'line' );
 
             $max = max( $max, $metrics[$selected] );
         }
@@ -365,7 +337,6 @@ class Model
                 continue;
             }
             $file      = $files->item( 0 )->getAttribute( 'name' );
-            $processor = $this->factory->factory( $this->source . $file );
 
             foreach ( $element->getElementsByTagName( 'method' ) as $methodElement )
             {
@@ -373,7 +344,7 @@ class Model
                 $metrics = $this->getMethodMetrics( $methodElement );
                 $methods[$method]['value'] = $metrics[$selected];
                 $methods[$method]['file']  = $file;
-                $methods[$method]['line']  = $processor->getLineForEntity( $methodElement->getAttribute( 'name' ), 'function' );
+                $methods[$method]['line']  = $methodElement->getAttribute( 'line' );
 
                 $max = max( $max, $metrics[$selected] );
             }

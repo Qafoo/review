@@ -35,7 +35,7 @@ class Model extends PDepend\Model
             $metrics = $this->getClassMetrics( $element );
             $classes[$class]['value'] = $value = $this->evaluate( $formula, $metrics );
             $classes[$class]['file']  = $files->item( 0 )->getAttribute( 'name' );
-            $classes[$class]['line']  = $element->getAttribute( 'startLine' );
+            $classes[$class]['line']  = $element->getAttribute( 'line' );
         }
 
         return $this->limitItemList( $classes, $count );
