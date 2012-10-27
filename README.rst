@@ -43,6 +43,10 @@ After that configure your webserver properly, and you should be done. You might
 want to adapt the database connection settings first, though -- see
 `Configuration`_ for details.
 
+.. warning:: This Software is not intended for public exposure. Making an
+    installation open to the public would be a serious security issue. The
+    "Calculator" analyzer allows to ``eval()`` request variables.
+
 Lighttpd Example
 ----------------
 
