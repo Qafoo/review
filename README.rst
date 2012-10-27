@@ -131,6 +131,16 @@ License
 This tool is under copyright of Qafoo GmbH. It has been licensed under AGPL v3.
 See the ``src/LICENSE`` file distributed with qaReview for details.
 
+TODO
+====
+
+* Make it possible to provide custom settings for the executed tools. Then also
+  something like PHPCS would make sense to include.
+
+* Make it possible to use the reports coming out of an existing build tool.
+  Maybe implement something like ``import`` as an aequivalent to ``analyze``.
+  This is not our primary use case, though.
+
 
 ..
    Local Variables:
