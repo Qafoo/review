@@ -94,7 +94,8 @@ class Review
                 $logFile = date( 'Ymd-His-' ) . $name . '.log';
                 file_put_contents(
                     $logFile,
-                    "Command {$e->command} failed with exit code {$e->exitCode}.\n" .
+                    "Command failed with exit code {$e->exitCode}:\n" .
+                    "{$e->command}\n" .
                     "\nSTDOUT:\n{$e->stdoutOutput}\n" .
                     "\nSTDERR:\n{$e->stderrOutput}\n"
                 );
