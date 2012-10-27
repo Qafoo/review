@@ -12,6 +12,8 @@ namespace Qafoo\Review;
 /**
  * Return highlighted code
  *
+ * @TODO: Make this extensible in a sensible way
+ *
  * @version $Revision$
  * @license APGLv3
  */
@@ -34,6 +36,8 @@ class CodeProcessorFactory
                 break;
 
             default:
+                // @TODO: Instead of throwing an exception we might want to go 
+                // with a dumb default…
                 throw new \OutOfBoundsException( "No code processor found for $file." );
         }
 
