@@ -29,6 +29,13 @@ class Source
     protected $gateway;
 
     /**
+     * Result dir
+     *
+     * @var string
+     */
+    protected $resultDir;
+
+    /**
      * Source dir
      *
      * @var string
@@ -45,13 +52,15 @@ class Source
     /**
      * Construct from analyzers
      *
+     * @param string $resultDir
      * @param string $source
      * @param AnnotationGateway $gateway
+     * @param CodeProcessorFactory $factory
      * @return void
      */
-    public function __construct( $source, AnnotationGateway $gateway, CodeProcessorFactory $factory )
+    public function __construct( $resultDir, $source, AnnotationGateway $gateway, CodeProcessorFactory $factory )
     {
-        $this->resultDir = dirname( $source );
+        $this->resultDir = $resultDir;
         $this->source    = file_get_contents( $source );
         $this->gateway   = $gateway;
         $this->factory   = $factory;

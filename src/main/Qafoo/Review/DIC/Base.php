@@ -88,6 +88,11 @@ class Base extends DIC
             return $dic->srcDir . '/results';
         };
 
+        $this->source = function ( $dic )
+        {
+            return $dic->resultDir . '/source';
+        };
+
         $this->configuration = function ( $dic )
         {
             return new Review\Configuration(
@@ -140,8 +145,25 @@ class Base extends DIC
         $this->sourceController = function ( $dic )
         {
             return new Review\Controller\Source(
-                $dic->resultDir . '/source',
+                $dic->resultDir,
+                $dic->source,
                 $dic->annotationGateway,
+                $dic->codeProcessorFactory
+            );
+        };
+
+        $this->pdependModel = function ( $dic )
+        {
+            return new Review\Analyzer\PDepend\Model(
+                $dic->source,
+                $dic->codeProcessorFactory
+            );
+        };
+
+        $this->calculatorModel = function ( $dic )
+        {
+            return new Review\Analyzer\Calculator\Model(
+                $dic->source,
                 $dic->codeProcessorFactory
             );
         };
@@ -149,8 +171,8 @@ class Base extends DIC
         $this->analyzers = function ( $dic )
         {
             return array(
-                'pdepend' => new Review\Analyzer\PDepend( $dic->resultDir, $dic->annotationGateway ),
-                'calc'    => new Review\Analyzer\Calculator( $dic->resultDir, $dic->annotationGateway ),
+                'pdepend' => new Review\Analyzer\PDepend( $dic->resultDir, $dic->annotationGateway, $this->pdependModel ),
+                'calc'    => new Review\Analyzer\Calculator( $dic->resultDir, $dic->annotationGateway, $this->calculatorModel ),
                 'phpmd'   => new Review\Analyzer\Phpmd( $dic->resultDir, $dic->annotationGateway ),
                 'diff'    => new Review\Analyzer\Diff( $dic->resultDir, $dic->annotationGateway ),
                 'uml'     => new Review\Analyzer\UML( $dic->resultDir, $dic->annotationGateway ),

@@ -21,10 +21,7 @@ class Model extends PDepend\Model
 {
     public function calculateTop( $formula, $count )
     {
-        $doc = new \DOMDocument();
-        $doc->load( $this->path );
-
-        $xpath   = new \DOMXPath( $doc );
+        $xpath   = new \DOMXPath( $this->document );
         $classes = array();
         foreach ( $xpath->query( '//class' ) as $element )
         {

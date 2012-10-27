@@ -97,5 +97,22 @@ abstract class CodeProcessor
      * @return array
      */
     abstract public function getIndex();
+
+    /**
+     * Get line for entity
+     *
+     * Get the line in the source code file,where the specified entity is
+     * located.
+     *
+     * By default only a name of the entity is required, this could, for
+     * example, be a function or class name. Optionally a type may be passed.
+     * The type can be something like "class", "function" or whatever makes
+     * sense in the given source file.
+     *
+     * @param string $name
+     * @param string $type
+     * @return int
+     */
+    abstract public function getLineForEntity( $name, $type = null );
 }
 

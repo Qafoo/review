@@ -37,16 +37,25 @@ class Calculator extends Analyzer implements Displayable
     protected $gateway;
 
     /**
+     * Model to handle summary.xml
+     *
+     * @var PDepend\Model
+     */
+    protected $model;
+
+    /**
      * Create from annotation gateway
      *
      * @param string $resultDir
      * @param AnnotationGateway $gateway
+     * @param Calculator\Model $model
      * @return void
      */
-    public function __construct( $resultDir, AnnotationGateway $gateway )
+    public function __construct( $resultDir, AnnotationGateway $gateway, Calculator\Model $model )
     {
         $this->resultDir = $resultDir;
         $this->gateway   = $gateway;
+        $this->model     = $model;
     }
 
     /**
@@ -112,15 +121,15 @@ class Calculator extends Analyzer implements Displayable
         }
 
         $formula = isset( $request->variables['formula'] ) ? $request->variables['formula'] : '$ce / ( $ca + $ce )';
-        $model       = new Calculator\Model( $this->resultDir . '/pdepend_summary.xml' );
-        $classes     = $model->calculateTop( $formula, 25 );
+        $this->model->load( $this->resultDir . '/pdepend_summary.xml' );
+        $classes = $this->model->calculateTop( $formula, 25 );
 
         return new Struct\Response(
             'calculator.twig',
             array(
                 'formula'      => $formula,
                 'classes'      => $classes,
-                'classMetrics' => $model->getClassMetricList(),
+                'classMetrics' => $this->model->getClassMetricList(),
             )
         );
     }

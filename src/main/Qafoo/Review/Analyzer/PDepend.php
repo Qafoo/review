@@ -10,6 +10,7 @@
 namespace Qafoo\Review\Analyzer;
 use Qafoo\Review\Analyzer;
 use Qafoo\Review\AnnotationGateway;
+use Qafoo\Review\CodeProcessorFactory;
 use Qafoo\Review\Struct;
 use Qafoo\Review\Displayable;
 use Qafoo\Review\Chart;
@@ -38,16 +39,25 @@ class PDepend extends Analyzer implements Displayable
     protected $gateway;
 
     /**
+     * Model to handle summary.xml
+     *
+     * @var PDepend\Model
+     */
+    protected $model;
+
+    /**
      * Create from annotation gateway
      *
      * @param string $resultDir
      * @param AnnotationGateway $gateway
+     * @param PDepend\Model $model
      * @return void
      */
-    public function __construct( $resultDir, AnnotationGateway $gateway )
+    public function __construct( $resultDir, AnnotationGateway $gateway, PDepend\Model $model )
     {
         $this->resultDir = $resultDir;
         $this->gateway   = $gateway;
+        $this->model     = $model;
     }
 
     /**
@@ -63,7 +73,7 @@ class PDepend extends Analyzer implements Displayable
         $process
             ->argument( '--jdepend-chart=' . $this->resultDir . '/pdepend_jdepend.svg' )
             ->argument( '--overview-pyramid=' . $this->resultDir . '/pdepend_pyramid.svg' )
-            ->argument( '--arbit-xml=' . $this->resultDir . '/pdepend_summary.xml' )
+            ->argument( '--summary-xml=' . $this->resultDir . '/pdepend_summary.xml' )
             ->argument( $path );
 
         $process->execute();
@@ -91,8 +101,8 @@ class PDepend extends Analyzer implements Displayable
         }
         $doc->save( $summaryXml );
 
-        $model = new PDepend\Model( $summaryXml );
-        foreach ( $model->getAnnotations() as $annotation )
+        $this->model->load( $summaryXml );
+        foreach ( $this->model->getAnnotations() as $annotation )
         {
             $this->gateway->create( $annotation );
         }
@@ -157,23 +167,23 @@ class PDepend extends Analyzer implements Displayable
         $classMetric  = isset( $request->variables['class'] ) ? $request->variables['class'] : 'cr';
         $methodMetric = isset( $request->variables['method'] ) ? $request->variables['method'] : 'ccn';
 
-        $model = new PDepend\Model( $this->resultDir . '/pdepend_summary.xml' );
+        $this->model->load( $this->resultDir . '/pdepend_summary.xml' );
 
-        $classCloud = $model->getClassesMetric( $classMetric );
-        $classTop   = $model->limitItemList( $classCloud['items'], 15 );
+        $classCloud = $this->model->getClassesMetric( $classMetric );
+        $classTop   = $this->model->limitItemList( $classCloud['items'], 15 );
 
-        $methodCloud = $model->getMethodsMetric( $methodMetric );
-        $methodTop   = $model->limitItemList( $methodCloud['items'], 15 );
+        $methodCloud = $this->model->getMethodsMetric( $methodMetric );
+        $methodTop   = $this->model->limitItemList( $methodCloud['items'], 15 );
 
         return new Struct\Response(
             'pdepend.twig',
             array(
                 'class'         => $classCloud,
                 'classTop'      => $classTop,
-                'classMetrics'  => $model->getClassMetricList(),
+                'classMetrics'  => $this->model->getClassMetricList(),
                 'method'        => $methodCloud,
                 'methodTop'     => $methodTop,
-                'methodMetrics' => $model->getMethodMetricList(),
+                'methodMetrics' => $this->model->getMethodMetricList(),
                 'pyramid'       => file_get_contents( $this->resultDir . '/pdepend_pyramid.svg' ),
                 'jdepend'       => file_get_contents( $this->resultDir . '/pdepend_jdepend.svg' ),
             )
@@ -188,9 +198,9 @@ class PDepend extends Analyzer implements Displayable
      */
     public function renderChart( RMF\Request $request )
     {
-        $model = new PDepend\Model( $this->resultDir . '/pdepend_summary.xml' );
+        $this->model->load( $this->resultDir . '/pdepend_summary.xml' );
         $method  = $request->variables['chart'] === 'class' ? 'getClassesMetric' : 'getMethodsMetric';
-        $metrics = $model->$method( $request->variables['metric'], pow( 2, 31 ) );
+        $metrics = $this->model->$method( $request->variables['metric'], pow( 2, 31 ) );
 
         $graph = new Chart\LineChart( $metrics['name'] );
         $graph->options->lineThickness = 0;

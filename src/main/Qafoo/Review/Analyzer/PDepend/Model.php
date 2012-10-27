@@ -8,7 +8,9 @@
  */
 
 namespace Qafoo\Review\Analyzer\PDepend;
+
 use Qafoo\Review\Struct;
+use Qafoo\Review\CodeProcessorFactory;
 
 /**
  * PDepend analyzer class
@@ -137,11 +139,25 @@ class Model
     );
 
     /**
-     * Path to PDepend XML file
+     * Path to source code
      *
      * @var string
      */
-    protected $path;
+    protected $source;
+
+    /**
+     * Code processor factory
+     *
+     * @var CodeProcessorFactory
+     */
+    protected $factory;
+
+    /**
+     * DOMDocument representing pdepend XML file
+     *
+     * @var DOMDocument
+     */
+    protected $document;
 
     /**
      * Construct from path to PDepend XML file
@@ -149,9 +165,22 @@ class Model
      * @param string $path
      * @return void
      */
-    public function __construct( $path )
+    public function __construct( $source, CodeProcessorFactory $factory )
     {
-        $this->path = $path;
+        $this->source  = file_get_contents( $source );
+        $this->factory = $factory;
+    }
+
+    /**
+     * Load summary.xml file
+     *
+     * @param string $path
+     * @return void
+     */
+    public function load( $path )
+    {
+        $this->document = new \DOMDocument();
+        $this->document->load( $path );
     }
 
     /**
@@ -161,9 +190,7 @@ class Model
      */
     public function getAnnotations()
     {
-        $doc = new \DOMDocument();
-        $doc->load( $this->path );
-        $xpath = new \DOMXPath( $doc );
+        $xpath = new \DOMXPath( $this->document );
 
         $annotations = array();
         foreach ( $xpath->query( '//class' ) as $classNode )
@@ -173,6 +200,8 @@ class Model
             {
                 continue;
             }
+            $file      = $files->item( 0 )->getAttribute( 'name' );
+            $processor = $this->factory->factory( $this->source . $file );
 
             $metrics = $this->getClassMetrics( $classNode );
             foreach ( $metrics as $metric => $value )
@@ -183,8 +212,8 @@ class Model
                      ( $value > $this->classTresholds['error'][$metric] ) )
                 {
                     $annotations[] = new Struct\Annotation(
-                        $files->item( 0 )->getAttribute( 'name' ),
-                        (int) $classNode->getAttribute( 'startLine' ),
+                        $file,
+                        $processor->getLineForEntity( $classNode->getAttribute( 'name' ), 'class' ),
                         null,
                         'pdepend',
                         $class,
@@ -205,8 +234,8 @@ class Model
                          ( $value > $this->methodThresholds['error'][$metric] ) )
                     {
                         $annotations[] = new Struct\Annotation(
-                            $files->item( 0 )->getAttribute( 'name' ),
-                            (int) $methodNode->getAttribute( 'startLine' ),
+                            $file,
+                            $processor->getLineForEntity( $methodNode->getAttribute( 'name' ), 'class' ),
                             null,
                             'pdepend',
                             $class,
@@ -272,10 +301,7 @@ class Model
      */
     public function getClassesMetric( $selected, $count = 50 )
     {
-        $doc = new \DOMDocument();
-        $doc->load( $this->path );
-
-        $xpath   = new \DOMXPath( $doc );
+        $xpath   = new \DOMXPath( $this->document );
         $classes = array();
         $max     = 0;
         foreach ( $xpath->query( '//class' ) as $element )
@@ -285,12 +311,14 @@ class Model
             {
                 continue;
             }
+            $file      = $files->item( 0 )->getAttribute( 'name' );
+            $processor = $this->factory->factory( $this->source . $file );
 
             $class   = $element->getAttribute( 'name' );
             $metrics = $this->getClassMetrics( $element );
             $classes[$class]['value'] = $metrics[$selected];
-            $classes[$class]['file']  = $files->item( 0 )->getAttribute( 'name' );
-            $classes[$class]['line']  = $element->getAttribute( 'startLine' );
+            $classes[$class]['file']  = $file;
+            $classes[$class]['line']  = $processor->getLineForEntity( $class, 'class' );
 
             $max = max( $max, $metrics[$selected] );
         }
@@ -325,10 +353,7 @@ class Model
      */
     public function getMethodsMetric( $selected, $count = 50 )
     {
-        $doc = new \DOMDocument();
-        $doc->load( $this->path );
-
-        $xpath   = new \DOMXPath( $doc );
+        $xpath   = new \DOMXPath( $this->document );
         $methods = array();
         $max     = 0;
         foreach ( $xpath->query( '//class' ) as $element )
@@ -339,14 +364,16 @@ class Model
             {
                 continue;
             }
+            $file      = $files->item( 0 )->getAttribute( 'name' );
+            $processor = $this->factory->factory( $this->source . $file );
 
             foreach ( $element->getElementsByTagName( 'method' ) as $methodElement )
             {
                 $method  = $className . '::' . $methodElement->getAttribute( 'name' );
                 $metrics = $this->getMethodMetrics( $methodElement );
                 $methods[$method]['value'] = $metrics[$selected];
-                $methods[$method]['file']  = $files->item( 0 )->getAttribute( 'name' );
-                $methods[$method]['line']  = $methodElement->getAttribute( 'startLine' );
+                $methods[$method]['file']  = $file;
+                $methods[$method]['line']  = $processor->getLineForEntity( $methodElement->getAttribute( 'name' ), 'function' );
 
                 $max = max( $max, $metrics[$selected] );
             }

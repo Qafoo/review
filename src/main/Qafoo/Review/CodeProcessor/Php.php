@@ -20,11 +20,11 @@ use Qafoo\Review\CodeProcessor;
 class Php extends CodeProcessor
 {
     /**
-     * Contents of highlighted file
+     * Path to file
      *
      * @var string
      */
-    protected $contents;
+    protected $file;
 
     /**
      * Mapping of colors to semantic styles
@@ -40,6 +40,31 @@ class Php extends CodeProcessor
     );
 
     /**
+     * Local line array cache
+     *
+     * @var array
+     */
+    private $lines;
+
+    /**
+     * Local index cache
+     *
+     * @var array
+     */
+    private $index;
+
+    /**
+     * PHP entity types nad regular expressions to find them.
+     *
+     * @var array
+     */
+    protected $entities = array(
+        'function'  => '(function\\s+(?P<name>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*))',
+        'class'     => '(^\\s*(?:abstract\\s+)?class\\s+(?P<name>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*))',
+        'interface' => '(interface\\s+(?P<name>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*))',
+    );
+
+    /**
      * Load file
      *
      * @param string $file
@@ -47,12 +72,27 @@ class Php extends CodeProcessor
      */
     public function load( $file )
     {
-        $this->content = highlight_file( $file, true );
+        $this->file = $file;
+    }
 
-        $this->content = $this->convertWhitespaces( $this->content );
-        $this->content = $this->removeBullshitMarkup( $this->content );
-        $this->content = $this->convertStyles( $this->content );
-        $this->content = $this->splitLines( $this->content );
+    /**
+     * Get lines from file
+     *
+     * @return array
+     */
+    protected function getLines()
+    {
+        if ( !$this->lines )
+        {
+            $content = highlight_file( $this->file, true );
+
+            $content = $this->convertWhitespaces( $content );
+            $content = $this->removeBullshitMarkup( $content );
+            $content = $this->convertStyles( $content );
+            $this->lines = $this->splitLines( $content );
+        }
+
+        return $this->lines;
     }
 
     /**
@@ -185,8 +225,10 @@ class Php extends CodeProcessor
      */
     public function getSourceData()
     {
+        $content = $this->getLines();
+
         $lines = array();
-        foreach ( $this->content as $nr => $line )
+        foreach ( $content as $nr => $line )
         {
             $annotations    = isset( $this->annotations[$nr] ) ? $this->annotations[$nr] : array();
             $lines[$nr + 1] = array(
@@ -229,39 +271,58 @@ class Php extends CodeProcessor
      */
     public function getIndex()
     {
-        $index = array();
-
-        foreach ( $this->content as $nr => $line )
+        if ( $this->index !== null )
         {
-            switch ( true )
+            return $this->index;
+        }
+
+        $this->index = array();
+
+        $content = $this->getLines();
+        foreach ( $content as $nr => $line )
+        {
+            foreach ( $this->entities as $name => $expression )
             {
-                case preg_match( '(function\\s+(?P<name>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*))', strip_tags( $line ), $match ):
-                    $index[] = array(
-                        'type' => 'function',
+                if ( preg_match( $expression, strip_tags( $line ), $match ) )
+                {
+                    $this->index[] = array(
+                        'type' => $name,
                         'line' => $nr + 1,
                         'name' => $match['name'],
                     );
-                    break;
-
-                case preg_match( '(^\\s*(?:abstract\\s+)?class\\s+(?P<name>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*))', strip_tags( $line ), $match ):
-                    $index[] = array(
-                        'type' => 'class',
-                        'line' => $nr + 1,
-                        'name' => $match['name'],
-                    );
-                    break;
-
-                case preg_match( '(interface\\s+(?P<name>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*))', strip_tags( $line ), $match ):
-                    $index[] = array(
-                        'type' => 'interface',
-                        'line' => $nr + 1,
-                        'name' => $match['name'],
-                    );
-                    break;
+                }
             }
         }
 
-        return $index;
+        return $this->index;
+    }
+
+    /**
+     * Get line for entity
+     *
+     * Get the line in the source code file,where the specified entity is
+     * located.
+     *
+     * By default only a name of the entity is required, this could, for
+     * example, be a function or class name. Optionally a type may be passed.
+     * The type can be something like "class", "function" or whatever makes
+     * sense in the given source file.
+     *
+     * @param string $name
+     * @param string $type
+     * @return int
+     */
+    public function getLineForEntity( $name, $type = null )
+    {
+        foreach ( $this->getIndex() as $values )
+        {
+            if ( $values['name'] === $name )
+            {
+                return $values['line'];
+            }
+        }
+
+        return 1;
     }
 }
 
