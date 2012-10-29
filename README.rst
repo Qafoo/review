@@ -35,7 +35,7 @@ To install Qafoo CRT, clone the repository and run the following commands::
 
     git submodule init
     git submodule update
-    edit build.properties # For correct database settings
+    create build.properties.local # For correct database settings, see Configuration
     ant -Dcommons.env=testing install
     ant install
 
