@@ -2,13 +2,13 @@
 Qafoo Code Review Tool (CRT)
 ============================
 
-This software is a tool to visualize metrics and metrics and source code. We
+This software is a tool to visualize metrics and source code. We
 use this software for Code Reviews together with our customers.
 
 Currently supports:
 
 - PDepend
-  - Calc (Metric calculator based on PDepend metrics)
+- Calc (Metric calculator based on PDepend metrics)
 - PHPMD
 - oxPHPMD (private tool)
 - PHPLint (private tool)
@@ -25,7 +25,7 @@ Requirements
 
 - Ant >= 1.8.0
 - PHP >= 5.3
-  - mysqli
+- mysqli
 - MySql >= 5.1
 
 Installation
@@ -43,9 +43,7 @@ After that configure your webserver properly, and you should be done. You might
 want to adapt the database connection settings first, though -- see
 `Configuration`_ for details.
 
-.. warning:: This Software is not intended for public exposure. Making an
-    installation open to the public would be a serious security issue. The
-    "Calculator" analyzer allows to ``eval()`` request variables.
+**Warning:** This Software is not intended for public exposure. Making an installation open to the public would be a serious security issue. The "Calculator" analyzer allows to ``eval()`` request variables.
 
 Lighttpd Example
 ----------------
