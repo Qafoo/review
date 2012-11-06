@@ -133,8 +133,6 @@ class Diff extends Analyzer implements Displayable
     /**
      * Process annotations from summary XML file
      *
-     * @param string $path
-     * @param string $diff
      * @return void
      */
     protected function processAnnotations()
@@ -218,7 +216,7 @@ class Diff extends Analyzer implements Displayable
         {
             if ( preg_match( '(^\\.|/\\.)', $file ) )
             {
-                // Ingore all dot files
+                // Ignore all dot files
                 continue;
             }
 
