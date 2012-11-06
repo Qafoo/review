@@ -82,7 +82,7 @@ class DIC
     {
         if ( !isset( $this->objects[$name] ) )
         {
-            throw new DIC\PropertyException( $name );
+            throw new \InvalidArgumentException( "No object with name $name." );
         }
 
         if ( isset( $this->alwaysShared[$name] ) &&
@@ -107,18 +107,18 @@ class DIC
     {
         if ( !isset( $this->objects[$name] ) )
         {
-            throw new DIC\PropertyException( $name );
+            throw new \InvalidArgumentException( "No object with name $name." );
         }
 
         if ( isset( $this->alwaysShared[$name] ) &&
              $this->alwaysShared[$name] )
         {
-            throw new DIC\RuntimeException( 'Cannot construct shared object with parameters.' );
+            throw new \RuntimeException( 'Cannot construct shared object with parameters.' );
         }
 
         if ( !is_callable( $this->objects[$name] ) )
         {
-            throw new DIC\RuntimeException( 'Cannot instantiate non-closure object with arguments.' );
+            throw new \RuntimeException( 'Cannot instantiate non-closure object with arguments.' );
         }
 
         return $this->objects[$name]( $this, $arguments );
