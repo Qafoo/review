@@ -23,6 +23,7 @@ class LineChart extends \ezcGraphLineChart
      * Construct pie chart and assign common setting to fit it to arbit layout
      * settings
      *
+     * @param string $title
      * @return void
      */
     public function __construct( $title )

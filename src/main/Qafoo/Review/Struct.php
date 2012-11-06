@@ -34,7 +34,7 @@ abstract class Struct
     }
 
     /**
-     * Disable read access to unknown prioperties
+     * Disable read access to unknown properties
      *
      * @param string $property
      * @return mixed
@@ -45,7 +45,7 @@ abstract class Struct
     }
 
     /**
-     * Disable set access to unknwon properties
+     * Disable set access to unknown properties
      *
      * @param string $property
      * @param mixed $value

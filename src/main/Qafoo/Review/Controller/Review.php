@@ -62,7 +62,7 @@ class Review
     }
 
     /**
-     * Add anaylzer
+     * Add analyzer
      *
      * @param string $id
      * @param Analyzer $analyzer

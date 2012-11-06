@@ -81,7 +81,7 @@ class Phplint extends Analyzer implements Displayable
         $doc->load( $summaryXml );
         $xpath = new \DOMXPath( $doc );
 
-        // Replace all pathes in summary.xml with relative pathes
+        // Replace all paths in summary.xml with relative paths
         foreach ( $xpath->query( '//file' ) as $fileNode )
         {
             $fileNode->setAttribute( 'name', str_replace( $path, '', $fileNode->getAttribute( 'name' ) ) );
