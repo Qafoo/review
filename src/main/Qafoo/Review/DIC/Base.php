@@ -184,6 +184,13 @@ class Base extends DIC
                 $dic->annotationGateway
             );
         };
+
+        $this->assetController = function ( $dic )
+        {
+            return new Review\Controller\Asset(
+                $dic->srcDir . '/htdocs/'
+            );
+        };
     }
 }
 

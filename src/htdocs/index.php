@@ -30,6 +30,9 @@ try
             '(^/source/?(?P<path>.*)$)' => array(
                 'GET'  => array( $dic->reviewController, 'showSource' ),
             ),
+            '(^/(?:images|styles|scripts)/)' => array(
+                'GET'  => array( $dic->assetController, 'show' ),
+            ),
         ) ),
         $dic->view
     );
