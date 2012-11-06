@@ -45,6 +45,11 @@ want to adapt the database connection settings first, though -- see
 
 **Warning:** This Software is not intended for public exposure. Making an installation open to the public would be a serious security issue. The "Calculator" analyzer allows to ``eval()`` request variables.
 
+If you are running PHP 5.4, you can also just use the internal webserver,
+like::
+
+    php -S localhost:8000 src/htdocs/index.php
+
 Lighttpd Example
 ----------------
 
