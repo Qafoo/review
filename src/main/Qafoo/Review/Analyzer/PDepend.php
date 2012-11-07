@@ -58,6 +58,7 @@ class PDepend extends Analyzer implements Displayable
      * @param string $resultDir
      * @param AnnotationGateway $gateway
      * @param PDepend\Model $model
+     * @param CodeProcessorFactory $factory
      * @return void
      */
     public function __construct( $resultDir, AnnotationGateway $gateway, PDepend\Model $model, CodeProcessorFactory $factory )
@@ -127,7 +128,7 @@ class PDepend extends Analyzer implements Displayable
             }
         }
 
-        // Replace all pathes in summary.xml with relative pathes
+        // Replace all paths in summary.xml with relative paths
         foreach ( $xpath->query( '//file' ) as $fileNode )
         {
             $fileNode->setAttribute( 'name', str_replace( $path, '', $fileNode->getAttribute( 'name' ) ) );

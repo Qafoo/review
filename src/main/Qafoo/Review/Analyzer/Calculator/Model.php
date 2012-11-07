@@ -69,7 +69,7 @@ class Model extends PDepend\Model
 
         if ( !isset( $result ) )
         {
-            throw new \RuntimeException( "Could not interprete formula: $formula" );
+            throw new \RuntimeException( "Could not interpret formula: $formula" );
         }
 
         return $result;

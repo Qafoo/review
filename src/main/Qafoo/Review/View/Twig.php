@@ -20,7 +20,7 @@ use Qafoo\RMF\Request;
 class Twig extends \Qafoo\RMF\View
 {
     /**
-     * Twig envoronment
+     * Twig environment
      *
      * @var \Twig_Environment
      */

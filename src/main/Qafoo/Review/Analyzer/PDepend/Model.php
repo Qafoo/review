@@ -32,7 +32,7 @@ class Model
         'cloc'   => 'Comment lines of code',
         'cr'     => 'Code rank',
         'csz'    => 'Class size',
-        'dit'    => 'Depth of inheritence tree',
+        'dit'    => 'Depth of inheritance tree',
         'eloc'   => 'Executable lines of code',
         'impl'   => 'Number of implemented interfaces',
         'loc'    => 'Lines of code',
@@ -270,6 +270,7 @@ class Model
      * Get class metric tag cloud data
      *
      * @param string $selected
+     * @param integer $count
      * @return void
      */
     public function getClassesMetric( $selected, $count = 50 )

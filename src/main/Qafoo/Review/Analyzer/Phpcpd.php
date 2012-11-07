@@ -90,7 +90,7 @@ class Phpcpd extends Analyzer implements Displayable
     {
         return new Struct\Summary(
             'PHP C&P Detector',
-            'PHP C&P Detector tries to find code dublication.'
+            'PHP C&P Detector tries to find code duplication.'
         );
     }
 
