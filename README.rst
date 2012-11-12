@@ -24,7 +24,7 @@ Requirements
 ============
 
 - Ant >= 1.8.0
-- PHP >= 5.4
+- PHP >= 5.3
 - mysqli
 - MySql >= 5.1
 
