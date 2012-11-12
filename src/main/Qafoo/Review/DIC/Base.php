@@ -165,8 +165,8 @@ class Base extends DIC
         $this->analyzers = function ( $dic )
         {
             return array(
-                'pdepend' => new Review\Analyzer\PDepend( $dic->resultDir, $dic->annotationGateway, $this->pdependModel, $this->codeProcessorFactory ),
-                'calc'    => new Review\Analyzer\Calculator( $dic->resultDir, $dic->annotationGateway, $this->calculatorModel ),
+                'pdepend' => new Review\Analyzer\PDepend( $dic->resultDir, $dic->annotationGateway, $dic->pdependModel, $dic->codeProcessorFactory ),
+                'calc'    => new Review\Analyzer\Calculator( $dic->resultDir, $dic->annotationGateway, $dic->calculatorModel ),
                 'phpmd'   => new Review\Analyzer\Phpmd( $dic->resultDir, $dic->annotationGateway ),
                 'diff'    => new Review\Analyzer\Diff( $dic->resultDir, $dic->annotationGateway ),
                 'uml'     => new Review\Analyzer\UML( $dic->resultDir, $dic->annotationGateway ),
@@ -180,7 +180,7 @@ class Base extends DIC
         {
             return new Review\Controller\Review(
                 $dic->sourceController,
-                $this->analyzers,
+                $dic->analyzers,
                 $dic->annotationGateway
             );
         };
