@@ -125,6 +125,7 @@ class Mysqli extends AnnotationGateway
 
         if ( count( $detailed ) )
         {
+            $connection = $this->connection;
             $result = $this->connection->query( sprintf( '
                 SELECT
                    `a_id`,
@@ -139,9 +140,9 @@ class Mysqli extends AnnotationGateway
                 WHERE
                     `a_type` IN ( %s )',
                 implode( ', ', array_map(
-                    function( $type )
+                    function( $type ) use ( $connection )
                     {
-                        return "'" . $this->connection->escape_string( $type ) . "'";
+                        return "'" . $connection->escape_string( $type ) . "'";
                     },
                     $detailed
                 ) )
