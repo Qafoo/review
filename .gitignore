@@ -3,3 +3,4 @@
 build
 build.properties.local
 composer.phar
+src/library
