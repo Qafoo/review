@@ -1,6 +1,6 @@
 [production]
 hostname = localhost
-username = 
+username = root
 password = 
 database = qareview
 
