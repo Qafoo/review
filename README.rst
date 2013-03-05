@@ -14,6 +14,7 @@ Currently supports:
 - PHPLint (private tool)
 - PHPCPD
 - UML
+- PHP analyzer (phpalizer binary in $PATH)
 - Diff (if a path to an old source version is provided)
 
 Add more analyzers, if required. For those extend the ``Analyzer`` base class
