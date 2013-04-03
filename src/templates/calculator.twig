@@ -3,47 +3,99 @@
 {% block content %}
 <h1>Calculator</h1>
 
-<div class="row">
-    <div class="span6">
-        <form method="GET">
-            <h2>Classes</h2>
-            <div class="alert alert-error">
-                <strong>Evil:</strong> We are using <code>eval()</code> to evaluate this formula. Be careful. Exploiting this does not count as hacking.
+<ul class="nav nav-tabs" id="calc-tabs">
+    <li class="active"><a href="#calc-classes" data-toggle="tab">Classes</a></li>
+    <li><a href="#calc-methods" data-toggle="tab">Methods</a></li>
+</ul>
+     
+<div class="tab-content">
+    <div class="tab-pane active" id="calc-classes">
+        <div class="row">
+            <div class="span6">
+                <form method="GET">
+                    <h2>Classes</h2>
+                    <div class="alert alert-error">
+                        <strong>Evil:</strong> We are using <code>eval()</code> to evaluate this formula. Be careful. Exploiting this does not count as hacking.
+                    </div>
+                    <div class="well form-search">
+                        <select size="1" onChange="$( 'input[name=formula]' ).val( $( this ).val() );">
+                            <option value="$ce / ( $ca + $ce )">Instability</option>
+                            <option value="( $ca / ( $ca + $ce ) ) * $wmc">Important Testable Class</option>
+                            <option value="floor( 1 / ( $ce + 1 ) ) * $wmc">Easy test Subjects</option>
+                        </select><br /><br />
+                        <input type="text" name="formula" class="input-xlarge" value="{{formula}}" />
+                        <button type="submit" class="btn">Show</button>
+                    </div>
+                </form>
             </div>
-            <div class="well form-search">
-                <select size="1" onChange="$( 'input[name=formula]' ).val( $( this ).val() );">
-                    <option value="$ce / ( $ca + $ce )">Instability</option>
-                    <option value="( $ca / ( $ca + $ce ) ) * $wmc">Important Testable Class</option>
-                    <option value="floor( 1 / ( $ce + 1 ) ) * $wmc">Easy test Subjects</option>
-                </select><br /><br />
-                <input type="text" name="formula" class="input-xlarge" value="{{formula}}" />
-                <button type="submit" class="btn">Show</button>
+            <div class="span6">
+                <dl>
+                    {% for id, metric in classMetrics %}
+                    <dt>${{id}}</dt><dd>{{metric}}</dd>
+                    {% endfor %}
+                </dl>
             </div>
-        </form>
-    </div>
-    <div class="span6">
-        <dl>
-            {% for id, metric in classMetrics %}
-            <dt>${{id}}</dt><dd>{{metric}}</dd>
+        </div>
+
+        <table class="table table-striped table-bordered table-condensed">
+            <tr>
+                <th>Class</th>
+                <th>{{formula}}</th>
+            </tr>
+            {% for item, metric in classes %}
+            <tr>
+                <td>
+                    <a class="class" href="/source/{{metric.file}}#line_{{metric.line}}" title="{{item}}: {{metric.value}}" data-file="{{metric.file}}">{{item}}</a
+                    ><a class="annotate" data-file="{{metric.file}}" data-line="{{metric.line}}" data-reason="{{cloud.name}}" href="#">+</a>
+                </td>
+                <td class="number">{{metric.value|number_format(2)}}</td>
+            </tr>
             {% endfor %}
-        </dl>
+        </table>
+    </div>
+
+    <div class="tab-pane" id="calc-methods">
+        <div class="row">
+            <div class="span6">
+                <form method="GET">
+                    <h2>Methods</h2>
+                    <div class="alert alert-error">
+                        <strong>Evil:</strong> We are using <code>eval()</code> to evaluate this formula. Be careful. Exploiting this does not count as hacking.
+                    </div>
+                    <div class="well form-search">
+                        <select size="1" onChange="$( 'input[name=formula]' ).val( $( this ).val() );">
+                            <option value="$ccn / log($npath, 2)">Method structure</option>
+                        </select><br /><br />
+                        <input type="text" name="formula" class="input-xlarge" value="{{formula}}" />
+                        <button type="submit" class="btn">Show</button>
+                    </div>
+                </form>
+            </div>
+            <div class="span6">
+                <dl>
+                    {% for id, metric in methodMetrics %}
+                    <dt>${{id}}</dt><dd>{{metric}}</dd>
+                    {% endfor %}
+                </dl>
+            </div>
+        </div>
+
+        <table class="table table-striped table-bordered table-condensed">
+            <tr>
+                <th>Method</th>
+                <th>{{formula}}</th>
+            </tr>
+            {% for item, metric in methods %}
+            <tr>
+                <td>
+                    <a class="class" href="/source/{{metric.file}}#line_{{metric.line}}" title="{{item}}: {{metric.value}}" data-file="{{metric.file}}">{{item}}</a
+                    ><a class="annotate" data-file="{{metric.file}}" data-line="{{metric.line}}" data-reason="{{cloud.name}}" href="#">+</a>
+                </td>
+                <td class="number">{{metric.value|number_format(2)}}</td>
+            </tr>
+            {% endfor %}
+        </table>
     </div>
 </div>
-
-<table class="table table-striped table-bordered table-condensed">
-    <tr>
-        <th>Class</th>
-        <th>{{formula}}</th>
-    </tr>
-    {% for item, metric in classes %}
-    <tr>
-        <td>
-            <a class="class" href="/source/{{metric.file}}#line_{{metric.line}}" title="{{item}}: {{metric.value}}" data-file="{{metric.file}}">{{item}}</a
-            ><a class="annotate" data-file="{{metric.file}}" data-line="{{metric.line}}" data-reason="{{cloud.name}}" href="#">+</a>
-        </td>
-        <td class="number">{{metric.value|number_format(2)}}</td>
-    </tr>
-    {% endfor %}
-</table>
 
 {% endblock %}

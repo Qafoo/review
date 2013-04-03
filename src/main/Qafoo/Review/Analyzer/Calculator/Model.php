@@ -28,7 +28,7 @@ class Model extends PDepend\Model
      * @param int $count
      * @return array
      */
-    public function calculateTop( $formula, $count )
+    public function calculateTopClasses( $formula, $count )
     {
         $xpath   = new \DOMXPath( $this->document );
         $classes = array();
@@ -48,6 +48,40 @@ class Model extends PDepend\Model
         }
 
         return $this->limitItemList( $classes, $count );
+    }
+
+    /**
+     * Calculate top results
+     *
+     * Calculate the top results, based on the provided formula
+     *
+     * @param string $formula
+     * @param int $count
+     * @return array
+     */
+    public function calculateTopMethods( $formula, $count )
+    {
+        $xpath   = new \DOMXPath( $this->document );
+        $methods = array();
+        foreach ( $xpath->query( '//class' ) as $class )
+        {
+            $files = $class->getElementsByTagName( 'file' );
+            if ( $files->length === 0 )
+            {
+                continue;
+            }
+
+            foreach ( $xpath->query( './/method', $class ) as $element )
+            {
+                $method  = $class->getAttribute( 'name' ) . '::' . $element->getAttribute( 'name' ) . '()';
+                $metrics = $this->getMethodMetrics( $element );
+                $methods[$method]['value'] = $value = $this->evaluate( $formula, $metrics );
+                $methods[$method]['file']  = $files->item( 0 )->getAttribute( 'name' );
+                $methods[$method]['line']  = $element->getAttribute( 'line' );
+            }
+        }
+
+        return $this->limitItemList( $methods, $count );
     }
 
     /**

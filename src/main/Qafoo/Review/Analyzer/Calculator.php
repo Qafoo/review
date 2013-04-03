@@ -122,14 +122,17 @@ class Calculator extends Analyzer implements Displayable
 
         $formula = isset( $request->variables['formula'] ) ? $request->variables['formula'] : '$ce / ( $ca + $ce )';
         $this->model->load( $this->resultDir . '/pdepend_summary.xml' );
-        $classes = $this->model->calculateTop( $formula, 25 );
+        $classes = $this->model->calculateTopClasses( $formula, 25 );
+        $methods = $this->model->calculateTopMethods( $formula, 25 );
 
         return new Struct\Response(
             'calculator.twig',
             array(
-                'formula'      => $formula,
-                'classes'      => $classes,
-                'classMetrics' => $this->model->getClassMetricList(),
+                'formula'       => $formula,
+                'classes'       => $classes,
+                'classMetrics'  => $this->model->getClassMetricList(),
+                'methods'       => $methods,
+                'methodMetrics' => $this->model->getMethodMetricList(),
             )
         );
     }
