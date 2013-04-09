@@ -49,7 +49,7 @@ want to adapt the database connection settings first, though -- see
 If you are running PHP 5.4, you can also just use the internal webserver,
 like::
 
-    php -S localhost:8000 src/htdocs/ src/htdocs/index.php
+    php -S localhost:8000 -t src/htdocs/ src/htdocs/index.php
 
 Lighttpd Example
 ----------------
