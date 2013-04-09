@@ -2,42 +2,250 @@
     "hash": "1b638dbda7d7a4136bbcdc5a113ca8c0",
     "packages": [
         {
-            "package": "Qafoo/RMF",
+            "name": "arbitracker/systemProcess",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Arbitracker/system-process.git",
+                "reference": "origin/master"
+            },
+            "type": "library"
+        },
+        {
+            "name": "pdepend/staticReflection",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/manuelpichler/staticReflection.git",
+                "reference": "origin/master"
+            },
+            "type": "library"
+        },
+        {
+            "name": "qafoo/rmf",
             "version": "dev-master",
-            "source-reference": "852d993d45952dbc86e2bfd78addad540bd85998",
-            "commit-date": "1342375436"
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Qafoo/REST-Micro-Framework.git",
+                "reference": "5f43983f15a8aa12be42ad6068675d4008bfb9ed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Qafoo/REST-Micro-Framework/zipball/5f43983f15a8aa12be42ad6068675d4008bfb9ed",
+                "reference": "5f43983f15a8aa12be42ad6068675d4008bfb9ed",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Qafoo\\RMF": "src/main/"
+                }
+            },
+            "description": "Very simple VC framework which makes it easy to build HTTP applications / REST webservices",
+            "support": {
+                "source": "https://github.com/Qafoo/REST-Micro-Framework/tree/master",
+                "issues": "https://github.com/Qafoo/REST-Micro-Framework/issues"
+            },
+            "time": "2012-12-07 13:33:01"
         },
         {
-            "package": "arbitracker/systemProcess",
-            "version": "0.1"
+            "name": "twig/twig",
+            "version": "1.6.0",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/fabpot/Twig.git",
+                "reference": "v1.6.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/fabpot/Twig/zipball/v1.6.0",
+                "reference": "v1.6.0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Twig_": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Armin Ronacher",
+                    "email": "armin.ronacher@active-4.com"
+                }
+            ],
+            "description": "Twig, the flexible, fast, and secure template language for PHP",
+            "homepage": "http://twig.sensiolabs.org",
+            "keywords": [
+                "templating"
+            ],
+            "time": "2012-02-03 23:34:52"
         },
         {
-            "package": "pdepend/staticReflection",
-            "version": "0.1"
+            "name": "twitter/bootstrap",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twitter/bootstrap/",
+                "reference": "origin/master"
+            },
+            "type": "library"
         },
         {
-            "package": "twig/twig",
-            "version": "1.6.0"
+            "name": "zetacomponents/base",
+            "version": "1.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zetacomponents/Base.git",
+                "reference": "1.8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/zetacomponents/Base/zipball/1.8",
+                "reference": "1.8",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "apache2"
+            ],
+            "authors": [
+                {
+                    "name": "Sergey Alexeev"
+                },
+                {
+                    "name": "Sebastian Bergmann"
+                },
+                {
+                    "name": "Jan Borsodi"
+                },
+                {
+                    "name": "Raymond Bosman"
+                },
+                {
+                    "name": "Frederik Holljen"
+                },
+                {
+                    "name": "Kore Nordmann"
+                },
+                {
+                    "name": "Derick Rethans"
+                },
+                {
+                    "name": "Vadym Savchuk"
+                },
+                {
+                    "name": "Tobias Schlitt"
+                },
+                {
+                    "name": "Alexandru Stanoi"
+                }
+            ],
+            "description": "The Base package provides the basic infrastructure that all packages rely on. Therefore every component relies on this package.",
+            "homepage": "https://github.com/zetacomponents",
+            "time": "2009-12-21 04:14:16"
         },
         {
-            "package": "twitter/bootstrap",
-            "version": "0.1"
-        },
-        {
-            "package": "zetacomponents/base",
-            "version": "1.8"
-        },
-        {
-            "package": "zetacomponents/graph",
-            "version": "1.5"
+            "name": "zetacomponents/graph",
+            "version": "1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zetacomponents/Graph.git",
+                "reference": "1.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/zetacomponents/Graph/zipball/1.5",
+                "reference": "1.5",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "apache2"
+            ],
+            "authors": [
+                {
+                    "name": "Sergey Alexeev"
+                },
+                {
+                    "name": "Sebastian Bergmann"
+                },
+                {
+                    "name": "Jan Borsodi"
+                },
+                {
+                    "name": "Raymond Bosman"
+                },
+                {
+                    "name": "Frederik Holljen"
+                },
+                {
+                    "name": "Kore Nordmann"
+                },
+                {
+                    "name": "Derick Rethans"
+                },
+                {
+                    "name": "Vadym Savchuk"
+                },
+                {
+                    "name": "Tobias Schlitt"
+                },
+                {
+                    "name": "Alexandru Stanoi"
+                },
+                {
+                    "name": "Lars Jankowski"
+                },
+                {
+                    "name": "Elger Thiele"
+                },
+                {
+                    "name": "Michael Maclean"
+                }
+            ],
+            "description": "A component for creating pie charts, line graphs and other kinds of diagrams.",
+            "homepage": "https://github.com/zetacomponents",
+            "time": "2009-12-21 04:26:17"
         }
     ],
-    "packages-dev": null,
+    "packages-dev": [
+
+    ],
     "aliases": [
 
     ],
     "minimum-stability": "stable",
     "stability-flags": {
         "qafoo/rmf": 20
-    }
+    },
+    "platform": [
+
+    ],
+    "platform-dev": [
+
+    ]
 }
