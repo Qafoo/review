@@ -212,7 +212,7 @@ class CodeSniffer extends Analyzer implements Displayable
         }
 
         return new Struct\Response(
-            'phpmd.twig',
+            'annotation_list.twig',
             array(
                 'annotations'  => $annotations,
             )
