@@ -214,6 +214,7 @@ class CodeSniffer extends Analyzer implements Displayable
         return new Struct\Response(
             'annotation_list.twig',
             array(
+                'analyzer' => 'PHP_CodeSniffer',
                 'annotations'  => $annotations,
             )
         );

@@ -181,6 +181,7 @@ class Phpmd extends Analyzer implements Displayable
         return new Struct\Response(
             'annotation_list.twig',
             array(
+                'analyzer' => 'PHPMD',
                 'annotations'  => $annotations,
             )
         );

@@ -1,7 +1,7 @@
 {% extends "overview.twig" %}
 
 {% block content %}
-<h1>PHPMD</h1>
+<h1>{{analyzer}}</h1>
 
 <ul class="unstyled">
 {% for file, fileAnnotations in annotations %}
