@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<ruleset name="Qafoo Code Review">
+    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
+    <rule ref="Generic.CodeAnalysis.EmptyStatement" />
+    <rule ref="Generic.CodeAnalysis.JumbledIncrementer" />
+    <rule ref="Generic.CodeAnalysis.UnconditionalIfStatement" />
+    <rule ref="Generic.Files.OneClassPerFile" />
+    <rule ref="Generic.Files.OneInterfacePerFile" />
+    <rule ref="Generic.Functions.CallTimePassByReference" />
+    <rule ref="Generic.Metrics.NestingLevel" />
+    <rule ref="Generic.PHP.DeprecatedFunctions" />
+    <rule ref="Generic.PHP.NoSilencedErrors" />
+    <rule ref="PSR1.Files.SideEffects" />
+    <rule ref="Squiz.PHP.CommentedOutCode" />
+    <rule ref="Squiz.PHP.DiscouragedFunctions" />
+    <rule ref="Squiz.PHP.Eval" />
+    <rule ref="Squiz.PHP.GlobalKeyword" />
+    <rule ref="Squiz.Scope.StaticThisUsage" />
+</ruleset>

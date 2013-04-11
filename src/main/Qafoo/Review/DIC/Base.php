@@ -174,6 +174,7 @@ class Base extends DIC
                 'phpcpd'      => new Review\Analyzer\Phpcpd( $dic->resultDir, $dic->annotationGateway ),
                 // 'oxid'    => new Review\Analyzer\OxPhpmd( $dic->resultDir, $dic->annotationGateway ),
                 'phpanalyzer' => new Review\Analyzer\PhpAnalyzer( $dic->resultDir, $dic->annotationGateway ),
+                'codesniffer' => new Review\Analyzer\CodeSniffer( $dic->resultDir, $dic->annotationGateway ),
             );
         };
 
