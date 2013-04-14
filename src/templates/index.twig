@@ -66,7 +66,9 @@
             $('.data-table').dataTable({
                 "sDom": "<'row'<'span9'l><'span3'f>r>t<'row'<'span3'i><'span9'p>>",
                 "sPaginationType": "bootstrap",
-                "aLengthMenu": [[10, 30, 50, 100, -1], [10, 30, 50, 100, "All"]]
+                "aLengthMenu": [[10, 30, 50, 100, -1], [10, 30, 50, 100, "All"]],
+                /* Sort by second column, descending. Usually this should be the metric. */
+                "aaSorting": [[1, 'desc']]
             });
         } );
     </script>
