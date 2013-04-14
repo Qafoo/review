@@ -1,15 +1,33 @@
 {
-    "hash": "1b638dbda7d7a4136bbcdc5a113ca8c0",
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "d8ff8fcb71824f5199f3499bf71862f1",
     "packages": [
         {
-            "name": "arbitracker/systemProcess",
-            "version": "0.1",
+            "name": "arbit/system-process",
+            "version": "1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Arbitracker/system-process.git",
-                "reference": "origin/master"
+                "reference": "1.0"
             },
-            "type": "library"
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Arbitracker/system-process/zipball/1.0",
+                "reference": "1.0",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "SystemProcess": "src/main/php/"
+                }
+            },
+            "notification-url": "http://packagist.org/downloads/",
+            "description": "System process execution library",
+            "time": "2013-03-31 12:42:56"
         },
         {
             "name": "pdepend/staticReflection",
@@ -71,7 +89,6 @@
                     "Twig_": "lib/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD"
             ],
@@ -122,7 +139,6 @@
                     "src"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "apache2"
             ],
@@ -182,7 +198,6 @@
                     "src"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "apache2"
             ],
@@ -240,7 +255,8 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "qafoo/rmf": 20
+        "qafoo/rmf": 20,
+        "arbit/system-process": 0
     },
     "platform": [
 
