@@ -2,10 +2,13 @@
 
 /* Controllers */
 
-angular.module('qaReview.controllers', []).
-    controller('MyCtrl1', [function() {
+angular.module('qaReview.controllers', [])
+    .controller('OverviewController', [function() {
 
     }])
-    .controller('MyCtrl2', [function() {
+    .controller('SourceController', [function() {
+
+    }])
+    .controller('MetricsController', [function() {
 
     }]);

@@ -6,11 +6,17 @@ angular.
     config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/', {
             templateUrl: 'templates/home.html',
-            controller: 'MyCtrl1'
+            controller: 'OverviewController'
         });
         $routeProvider.when('/source',{
-            templateUrl: 'templates/partial2.html',
-            controller: 'MyCtrl2'
+            templateUrl: 'templates/404.html',
+            controller: 'SourceController'
         });
-        $routeProvider.otherwise({redirectTo: '/'});
+        $routeProvider.when('/metrics',{
+            templateUrl: 'templates/metrics.html',
+            controller: 'MetricsController'
+        });
+        $routeProvider.otherwise({
+            templateUrl: 'templates/404.html'
+        });
     }]);
