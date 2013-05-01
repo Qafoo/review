@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="qaReview">
+<head>
+    <meta charset="utf-8">
+    <title>Qafoo Code Review Tool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="styles/bootstrap.css" rel="stylesheet">
+    <link href="styles/bootstrap-responsive.css" rel="stylesheet">
+    <link href="styles/app.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="/">Qafoo CRT</a>
+                    <div class="nav">
+                        <ul class="nav">
+                            <li><a href="#/"><i class="icon-home"></i> Home</a></li>
+                            <li><a href="#/source"><i class="icon-file"></i> Source</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="content" class="row">
+            <div class="span12" data-ng-view>
+                <div class="alert">
+                    <h1>Please extend from this template…</h1>
+                    <div>Angular seed app: v<span data-app-version></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span12 footer">
+                <hr />
+                &copy; <a href="http://qafoo.com/">Qafoo GmbH</a> 2012, Licensed under AGPLv3
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="scripts/vendor/angular/angular.js"></script>
+    <script type="text/javascript" src="scripts/app.js"></script>
+    <script type="text/javascript" src="scripts/services.js"></script>
+    <script type="text/javascript" src="scripts/controllers.js"></script>
+    <script type="text/javascript" src="scripts/filters.js"></script>
+    <script type="text/javascript" src="scripts/directives.js"></script>
+
+    <script type="text/javascript" src="/scripts/vendor/jquery/jquery-1.7.2.js"></script>
+    <!-- script type="text/javascript" src="/scripts/vendor/jquery/jquery-1.7.2.min.js"></script -->
+    <script type="text/javascript" src="/scripts/vendor/jquery/jquery.form.js"></script>
+
+    <script type="text/javascript" src="/scripts/vendor/bootstrap/bootstrap.js"></script>
+    <!-- script type="text/javascript" src="/scripts/vendor/bootstrap/bootstrap.min.js"></script -->
+
+</body>
+</html>
