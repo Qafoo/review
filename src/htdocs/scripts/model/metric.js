@@ -9,10 +9,10 @@ Metric.prototype.getTopClasses = function( metric, count ) {
             _.map(
                 this.values,
                 function ( value, className ) {
-                    return {
-                        class: className,
-                        value: value.metrics[metric]
-                    };
+                    value.value = value.metrics[metric];
+                    value.class = className;
+
+                    return value;
                 }
             ),
             function ( value ) {
