@@ -88,6 +88,7 @@ class PDepend extends Analyzer implements Displayable
         $process->execute();
 
         $this->processAnnotations( $path, $this->resultDir . '/pdepend_summary.xml' );
+        $this->convertToJson( $this->resultDir . '/pdepend_summary.xml' );
     }
 
     /**
@@ -141,6 +142,22 @@ class PDepend extends Analyzer implements Displayable
         {
             $this->gateway->create( $annotation );
         }
+    }
+
+    protected function convertToJson( $xmlFile )
+    {
+        $this->model->load( $xmlFile );
+
+        $pdepend = array(
+            'classMetrics' => $this->model->getClassMetricList(),
+            'methodMetrics' => $this->model->getMethodMetricList(),
+            'metrics' => $this->model->getAllMetrics(),
+        );
+
+        file_put_contents(
+            preg_replace( '(\.xml$)', '.json', $xmlFile ),
+            json_encode( $pdepend )
+        );
     }
 
     /**

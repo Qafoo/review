@@ -362,6 +362,36 @@ class Model
         );
     }
 
+    public function getAllMetrics()
+    {
+        $xpath   = new \DOMXPath( $this->document );
+        $classes = array();
+        foreach ( $xpath->query( '//class' ) as $element )
+        {
+            $files = $element->getElementsByTagName( 'file' );
+            if ( $files->length === 0 )
+            {
+                continue;
+            }
+            $file      = $files->item( 0 )->getAttribute( 'name' );
+
+            $class   = $element->getAttribute( 'name' );
+            $classes[$class]['metrics'] = $this->getClassMetrics( $element );
+            $classes[$class]['file']  = $file;
+            $classes[$class]['line']  = $element->getAttribute( 'line' );
+            $classes[$class]['methods'] = array();
+
+            foreach ( $element->getElementsByTagName( 'method' ) as $methodElement )
+            {
+                $method  = $methodElement->getAttribute( 'name' );
+                $classes[$class]['methods'][$method]['metrics'] = $this->getMethodMetrics( $methodElement );
+                $classes[$class]['methods'][$method]['line']  = $methodElement->getAttribute( 'line' );
+            }
+        }
+
+        return $classes;
+    }
+
     /**
      * Get list of available method metrics
      *
