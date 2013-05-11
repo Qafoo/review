@@ -149,6 +149,7 @@ class PDepend extends Analyzer implements Displayable
         $this->model->load( $xmlFile );
 
         $pdepend = array(
+            'packageMetrics' => $this->model->getPackageMetricList(),
             'classMetrics' => $this->model->getClassMetricList(),
             'methodMetrics' => $this->model->getMethodMetricList(),
             'metrics' => $this->model->getAllMetrics(),

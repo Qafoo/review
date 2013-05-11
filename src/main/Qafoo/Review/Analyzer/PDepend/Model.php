@@ -21,6 +21,20 @@ use Qafoo\Review\CodeProcessorFactory;
 class Model
 {
     /**
+     * List of package metrics provided by pdepend
+     *
+     * @var array
+     */
+    protected $packageMetrics = array(
+        'noc'    => 'Number of classes',
+        'nof'    => 'Number of files',
+        'noi'    => 'Number of interfaces',
+        'nom'    => 'Number of methods',
+        'cr'     => 'Code rank',
+        'rcr'    => 'Reverse code rank',
+    );
+
+    /**
      * List of class metrics provided by pdepend
      *
      * @var array
@@ -223,6 +237,28 @@ class Model
     }
 
     /**
+     * Get package metrics
+     *
+     * Return an array with the package metric values from a DOMElement from the
+     * summary XML file.
+     *
+     * @param \DOMElement $element
+     * @return array
+     */
+    protected function getPackageMetrics( \DOMElement $element )
+    {
+        foreach ( array_keys( $this->packageMetrics ) as $metric )
+        {
+            if ( $element->hasAttribute( $metric ) )
+            {
+                $metrics[$metric] = (float) $element->getAttribute( $metric );
+            }
+        }
+
+        return $metrics;
+    }
+
+    /**
      * Get class metrics
      *
      * Return an array with the class metric values from a DOMElement from the
@@ -308,6 +344,16 @@ class Model
     }
 
     /**
+     * Get list of available package metrics
+     *
+     * @return array
+     */
+    public function getPackageMetricList()
+    {
+        return $this->packageMetrics;
+    }
+
+    /**
      * Get list of available class metrics
      *
      * @return array
@@ -365,31 +411,39 @@ class Model
     public function getAllMetrics()
     {
         $xpath   = new \DOMXPath( $this->document );
-        $classes = array();
-        foreach ( $xpath->query( '//class' ) as $element )
+        $artifacts = array();
+        foreach ( $xpath->query( '//package' ) as $packageElement )
         {
-            $files = $element->getElementsByTagName( 'file' );
-            if ( $files->length === 0 )
-            {
-                continue;
-            }
-            $file      = $files->item( 0 )->getAttribute( 'name' );
+            $package = $packageElement->getAttribute( 'name' );
 
-            $class   = $element->getAttribute( 'name' );
-            $classes[$class]['metrics'] = $this->getClassMetrics( $element );
-            $classes[$class]['file']  = $file;
-            $classes[$class]['line']  = $element->getAttribute( 'line' );
-            $classes[$class]['methods'] = array();
+            $artifacts[$package]['metrics'] = $this->getPackageMetrics( $packageElement );
+            $artifacts[$package]['classes'] = array();
 
-            foreach ( $element->getElementsByTagName( 'method' ) as $methodElement )
+            foreach ( $packageElement->getElementsByTagName( 'class' ) as $classElement )
             {
-                $method  = $methodElement->getAttribute( 'name' );
-                $classes[$class]['methods'][$method]['metrics'] = $this->getMethodMetrics( $methodElement );
-                $classes[$class]['methods'][$method]['line']  = $methodElement->getAttribute( 'line' );
+                $files = $classElement->getElementsByTagName( 'file' );
+                if ( $files->length === 0 )
+                {
+                    continue;
+                }
+                $file      = $files->item( 0 )->getAttribute( 'name' );
+
+                $class   = $classElement->getAttribute( 'name' );
+                $artifacts[$package]['classes'][$class]['metrics'] = $this->getClassMetrics( $classElement );
+                $artifacts[$package]['classes'][$class]['file']  = $file;
+                $artifacts[$package]['classes'][$class]['line']  = $classElement->getAttribute( 'line' );
+                $artifacts[$package]['classes'][$class]['methods'] = array();
+
+                foreach ( $classElement->getElementsByTagName( 'method' ) as $methodElement )
+                {
+                    $method  = $methodElement->getAttribute( 'name' );
+                    $artifacts[$package]['classes'][$class]['methods'][$method]['metrics'] = $this->getMethodMetrics( $methodElement );
+                    $artifacts[$package]['classes'][$class]['methods'][$method]['line']  = $methodElement->getAttribute( 'line' );
+                }
             }
         }
 
-        return $classes;
+        return $artifacts;
     }
 
     /**
