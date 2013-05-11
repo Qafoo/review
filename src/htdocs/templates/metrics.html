@@ -1,6 +1,12 @@
 <h2>PDepend Metrics</h2>
-<ul class="tagcloud">
-    <li data-ng-repeat="artifact in artifacts.metrics" style="font-size: {{artifact.value / artifacts.top.value * 80 + 20 | number:2}}%;">
-        <a href="#/source/{{artifact.file}}#L{{artifact.line}}" title="{{metrics[metric]}}: {{artifact.value | number:2}}">{{artifact.name}}</a>
-    </li>
-</ul>
+
+<tabs>
+    <pane heading="Cloud">
+        <ul class="tagcloud">
+            <li data-ng-repeat="artifact in artifacts.metrics" style="font-size: {{artifact.value / artifacts.top.value * 80 + 20 | number:2}}%;">
+                <a href="#/source/{{artifact.file}}#L{{artifact.line}}" title="{{metrics[metric]}}: {{artifact.value | number:2}}">{{artifact.name}}</a>
+            </li>
+        </ul>
+    </pane>
+    <pane heading="Table">Table…</pane>
+</tabs>
