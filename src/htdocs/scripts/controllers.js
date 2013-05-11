@@ -9,4 +9,6 @@ angular.module('qaReview.controllers', [])
     .controller('SourceController', [function() {
 
     }])
-    .controller('MetricsController', Controller.Metric.Package );
+    .controller('Metrics/Package', Controller.Metric.Package )
+    .controller('Metrics/Class', Controller.Metric.Class )
+    .controller('Metrics/Method', Controller.Metric.Method );

@@ -8,10 +8,32 @@ Controller.Metric.Package = function ($scope, Metrics) {
 
         metrics = new Model.Metric(metrics);
 
-        $scope.packageMetrics = metrics.packageMetrics;
+        $scope.metric = metric;
+        $scope.artifacts = metrics.getPackages(metric);
+        $scope.metrics = metrics.packageMetrics;
+    });
+};
+
+Controller.Metric.Class = function ($scope, Metrics) {
+    Metrics.get( function( metrics ) {
+        var metric = "cr";
+
+        metrics = new Model.Metric(metrics);
 
         $scope.metric = metric;
-        $scope.artifacts = metrics.getTopPackages(metric);
-        $scope.metrics = metrics.packageMetrics;
+        $scope.artifacts = metrics.getClasses(metric);
+        $scope.metrics = metrics.classMetrics;
+    });
+};
+
+Controller.Metric.Method = function ($scope, Metrics) {
+    Metrics.get( function( metrics ) {
+        var metric = "ccn";
+
+        metrics = new Model.Metric(metrics);
+
+        $scope.metric = metric;
+        $scope.artifacts = metrics.getMethods(metric);
+        $scope.metrics = metrics.methodMetrics;
     });
 };

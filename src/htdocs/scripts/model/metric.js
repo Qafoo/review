@@ -7,21 +7,88 @@ Model.Metric = function (metrics) {
     this.values = metrics.metrics;
 };
 
-Model.Metric.prototype.getTopPackages = function( metric, count ) {
-    var metrics = _.sortBy(
+Model.Metric.prototype.getPackages = function( metric ) {
+    var metrics = _.map(
+            this.values,
+            function ( value, packageName ) {
+                value.value = value.metrics[metric];
+                value.name  = packageName;
+
+                return value;
+            }
+        ),
+        top = _.max(
+            metrics,
+            function ( value ) {
+                return value.value;
+            }
+        );
+
+    return {
+        metrics: metrics,
+        top: top
+    };
+};
+
+Model.Metric.prototype.getClasses = function( metric ) {
+
+    var metrics = _.flatten(
             _.map(
                 this.values,
-                function ( value, name ) {
-                    value.value = value.metrics[metric];
-                    value.name  = name;
+                function ( value, packageName ) {
+                    return _.map(
+                        value.classes,
+                        function ( value, className ) {
+                            value.value = value.metrics[metric];
+                            value.name  = packageName + "\\" + className;
 
-                    return value;
+                            return value;
+                        }
+                    );
                 }
             ),
+            true
+        ),
+        top = _.max(
+            metrics,
             function ( value ) {
-                return -value.value;
+                return value.value;
             }
-        ).slice( 0, count || 1024 ),
+        );
+
+    return {
+        metrics: metrics,
+        top: top
+    };
+};
+
+Model.Metric.prototype.getMethods = function( metric ) {
+
+    var metrics = _.flatten(
+            _.map(
+                this.values,
+                function ( value, packageName ) {
+                    return _.flatten(
+                        _.map(
+                            value.classes,
+                            function ( value, className ) {
+                                return _.map(
+                                    value.methods,
+                                    function ( value, methodName ) {
+                                        value.value = value.metrics[metric];
+                                        value.name  = packageName + "\\" + className + "::" + methodName + "()";
+
+                                        return value;
+                                    }
+                                );
+                            }
+                        ),
+                        true
+                    );
+                }
+            ),
+            true
+        ),
         top = _.max(
             metrics,
             function ( value ) {
