@@ -229,7 +229,7 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
     controller:'AccordionController',
     transclude: true,
     replace: false,
-    templateUrl: 'template/accordion/accordion.html'
+    templateUrl: 'templates/accordion/accordion.html'
   };
 })
 
@@ -240,7 +240,7 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
     restrict:'EA',
     transclude:true,              // It transcludes the contents of the directive into the template
     replace: true,                // The element containing the directive will be replaced with the template
-    templateUrl:'template/accordion/accordion-group.html',
+    templateUrl:'templates/accordion/accordion-group.html',
     scope:{ heading:'@' },        // Create an isolated scope and interpolate the heading attribute onto this scope
     controller: ['$scope', function($scope) {
       this.setHeading = function(element) {
@@ -323,7 +323,7 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
 angular.module("ui.bootstrap.alert", []).directive('alert', function () {
   return {
     restrict:'EA',
-    templateUrl:'template/alert/alert.html',
+    templateUrl:'templates/alert/alert.html',
     transclude:true,
     replace:true,
     scope: {
@@ -576,7 +576,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
     replace: true,
     controller: 'CarouselController',
     require: 'carousel',
-    templateUrl: 'template/carousel/carousel.html',
+    templateUrl: 'templates/carousel/carousel.html',
     scope: {
       interval: '=',
       noTransition: '='
@@ -589,7 +589,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
     restrict: 'EA',
     transclude: true,
     replace: true,
-    templateUrl: 'template/carousel/slide.html',
+    templateUrl: 'templates/carousel/slide.html',
     scope: {
       active: '='
     },
@@ -885,7 +885,7 @@ dialogModule.provider("$dialog", function(){
       // * `label`: the label of the button
       // * `cssClass`: additional css class(es) to apply to the button for styling
       messageBox: function(title, message, buttons){
-        return new Dialog({templateUrl: 'template/dialog/message.html', controller: 'MessageBoxController', resolve:
+        return new Dialog({templateUrl: 'templates/dialog/message.html', controller: 'MessageBoxController', resolve:
           {model: function() {
             return {
               title: title,
@@ -1014,7 +1014,7 @@ angular.module('ui.bootstrap.pagination', [])
       maxSize: '=',
       onSelectPage: '&'
     },
-    templateUrl: 'template/pagination/pagination.html',
+    templateUrl: 'templates/pagination/pagination.html',
     replace: true,
     link: function(scope, element, attrs) {
 
@@ -1461,7 +1461,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
     restrict: 'E',
     replace: true,
     scope: { content: '@', placement: '@', animation: '&', isOpen: '&' },
-    templateUrl: 'template/tooltip/tooltip-popup.html'
+    templateUrl: 'templates/tooltip/tooltip-popup.html'
   };
 })
 
@@ -1474,7 +1474,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
     restrict: 'E',
     replace: true,
     scope: { content: '@', placement: '@', animation: '&', isOpen: '&' },
-    templateUrl: 'template/tooltip/tooltip-html-unsafe-popup.html'
+    templateUrl: 'templates/tooltip/tooltip-html-unsafe-popup.html'
   };
 })
 
@@ -1496,7 +1496,7 @@ angular.module( 'ui.bootstrap.popover', [ 'ui.bootstrap.tooltip' ] )
     restrict: 'EA',
     replace: true,
     scope: { title: '@', content: '@', placement: '@', animation: '&', isOpen: '&' },
-    templateUrl: 'template/popover/popover.html'
+    templateUrl: 'templates/popover/popover.html'
   };
 })
 .directive( 'popover', [ '$compile', '$timeout', '$parse', '$window', '$tooltip', function ( $compile, $timeout, $parse, $window, $tooltip ) {
@@ -1559,7 +1559,7 @@ angular.module('ui.bootstrap.progressbar', ['ui.bootstrap.transition'])
             onFull: '&',
             onEmpty: '&'
         },
-        templateUrl: 'template/progressbar/progress.html',
+        templateUrl: 'templates/progressbar/progress.html',
         link: function(scope, element, attrs, controller) {
             scope.$watch('value', function(newValue, oldValue) {
                 controller.clearBars();
@@ -1597,7 +1597,7 @@ angular.module('ui.bootstrap.progressbar', ['ui.bootstrap.transition'])
             type: '=',
             animate: '='
         },
-        templateUrl: 'template/progressbar/bar.html',
+        templateUrl: 'templates/progressbar/bar.html',
         link: function(scope, element) {
             scope.$watch('width', function(value) {
                 if (scope.animate) {
@@ -1622,7 +1622,7 @@ angular.module('ui.bootstrap.rating', [])
     scope: {
       value: '='
     },
-    templateUrl: 'template/rating/rating.html',
+    templateUrl: 'templates/rating/rating.html',
     replace: true,
     link: function(scope, element, attrs) {
 
@@ -1696,7 +1696,7 @@ angular.module('ui.bootstrap.tabs', [])
     transclude: true,
     scope: {},
     controller: 'TabsController',
-    templateUrl: 'template/tabs/tabs.html',
+    templateUrl: 'templates/tabs/tabs.html',
     replace: true
   };
 })
@@ -1734,7 +1734,7 @@ angular.module('ui.bootstrap.tabs', [])
         tabsCtrl.removePane(scope);
       });
     },
-    templateUrl: 'template/tabs/pane.html',
+    templateUrl: 'templates/tabs/pane.html',
     replace: true
   };
 }]);
@@ -1944,7 +1944,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
         select:'&'
       },
       replace:true,
-      templateUrl:'template/typeahead/typeahead.html',
+      templateUrl:'templates/typeahead/typeahead.html',
       link:function (scope, element, attrs) {
 
         scope.isOpen = function () {
