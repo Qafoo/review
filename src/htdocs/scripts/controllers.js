@@ -11,10 +11,13 @@ angular.module('qaReview.controllers', [])
     }])
     .controller('MetricsController', function($scope, Metrics) {
         Metrics.get( function( metrics ) {
-            var metrics = new Metric(metrics),
-                values = metrics.getTopClasses("cr", 50);
+            var metric = "cr",
+                metrics = new Metric(metrics);
 
-            $scope.metrics = values.metrics;
-            $scope.top = values.top;
+            $scope.packageMetrics = metrics.packageMetrics;
+
+            $scope.metric = metric;
+            $scope.artifacts = metrics.getTopPackages(metric);
+            $scope.metrics = metrics.packageMetrics;
         });
     });
