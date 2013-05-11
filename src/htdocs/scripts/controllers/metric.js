@@ -2,6 +2,14 @@ var Controller = Controller || {};
 
 Controller.Metric = Controller.Metric || {};
 
+Controller.Metric.List = function ($scope) {
+    $scope.artifactList = {
+        "package": "Packages",
+        "class": "Classes",
+        "method": "Methods"
+    };
+};
+
 Controller.Metric.Package = function ($scope, Metrics) {
     Metrics.get( function( metrics ) {
         var metric = "cr";

@@ -2,7 +2,7 @@
 
 // Declare app level module which depends on filters, and services
 angular.
-    module('qaReview', ['qaReview.filters', 'qaReview.services', 'qaReview.directives', 'qaReview.controllers']).
+    module('qaReview', ['qaReview.filters', 'qaReview.services', 'qaReview.directives', 'qaReview.controllers', 'ui.bootstrap']).
     config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/', {
             templateUrl: 'templates/home.html',
@@ -20,7 +20,7 @@ angular.
             templateUrl: 'templates/metrics.html',
             controller: 'Metrics/Class'
         });
-        $routeProvider.when('/metrics',{
+        $routeProvider.when('/metrics/package',{
             templateUrl: 'templates/metrics.html',
             controller: 'Metrics/Package'
         });

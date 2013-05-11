@@ -24,12 +24,10 @@
                         <ul class="nav">
                             <li><a href="#/"><i class="icon-home"></i> Home</a></li>
                             <li><a href="#/source"><i class="icon-file"></i> Source</a></li>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Metrics</a>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="Metrics">
-                                    <li><a href="#/metrics">Packages</a>
-                                    <li><a href="#/metrics/class">Classes</a>
-                                    <li><a href="#/metrics/method">Methods</a>
+                            <li class="dropdown" data-ng-controller="Metrics/List">
+                                <a class="dropdown-toggle">Metrics</a>
+                                <ul class="dropdown-menu">
+                                    <li data-ng-repeat="(link, name) in artifactList"><a href="#/metrics/{{link}}">{{name}}</a>
                                 </ul>
                             </li>
                         </ul>
@@ -71,12 +69,7 @@
 
     <script type="text/javascript" src="/scripts/vendor/underscore/underscore.js"></script>
 
-    <script type="text/javascript" src="/scripts/vendor/jquery/jquery-1.7.2.js"></script>
-    <!-- script type="text/javascript" src="/scripts/vendor/jquery/jquery-1.7.2.min.js"></script -->
-    <script type="text/javascript" src="/scripts/vendor/jquery/jquery.form.js"></script>
-
-    <script type="text/javascript" src="/scripts/vendor/bootstrap/bootstrap.js"></script>
-    <!-- script type="text/javascript" src="/scripts/vendor/bootstrap/bootstrap.min.js"></script -->
+    <script type="text/javascript" src="/scripts/vendor/bootstrap/ui-bootstrap-0.3.0.js"></script>
 
 </body>
 </html>
