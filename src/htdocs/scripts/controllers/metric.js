@@ -20,13 +20,14 @@ Controller.Metric.Table = function( $scope, Metrics ) {
         function () {
             return Metrics.artifacts.metrics.length;
         },
-        function ( artifacts, oldArtifacts, scope ) {
-            scope.artifacts = Metrics.artifacts;
-            scope.noOfPages = scope.artifacts.metrics.length / count;
+        function ( newArtifacts, oldArtifacts, scope ) {
+            var artifacts = Metrics.artifacts.metrics;
+
+            scope.noOfPages = artifacts.length / count;
 
             scope.setPage = function ( pageNo ) {
                 scope.currentPage = pageNo;
-                scope.selection = scope.artifacts.metrics.slice(
+                scope.selection = artifacts.slice(
                     ( scope.currentPage - 1 ) * count,
                     count
                 );
