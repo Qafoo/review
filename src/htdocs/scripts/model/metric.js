@@ -5,6 +5,15 @@ Model.Metric = function (metrics) {
     this.classMetrics = metrics.classMetrics;
     this.methodMetrics = metrics.methodMetrics;
     this.values = metrics.metrics;
+    this.artifacts = null;
+};
+
+Model.Metric.prototype.setArtifacts = function( artifacts ) {
+    this.artifacts = artifacts;
+};
+
+Model.Metric.prototype.getArtifacts = function() {
+    return this.artifacts;
 };
 
 Model.Metric.prototype.getPackages = function( metric ) {
