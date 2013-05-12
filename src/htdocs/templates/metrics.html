@@ -18,7 +18,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr data-ng-repeat="artifact in artifacts.metrics">
+                    <tr data-ng-repeat="artifact in selection">
                         <td>
                             <a href="#/source/{{artifact.file}}#L{{artifact.line}}">{{artifact.name}}</a>
                         </td>
