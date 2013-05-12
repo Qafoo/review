@@ -14,54 +14,65 @@ Controller.Metric.List = function ($scope) {
 };
 
 Controller.Metric.Table = function( $scope, Metrics ) {
-    var count = 10; 
+    var count = 10,
+        refresh = function(scope) {
+            var artifacts = Metrics.artifacts.metrics;
+
+            scope.lastPage    = Math.ceil( artifacts.length / count );
+
+            scope.pages = [];
+            scope.pages.push({
+                number:    Math.max( 1, scope.currentPage - 1 ),
+                text:      "←",
+                active:    false,
+                disabled:  false
+            });
+            for ( var page = 1; page <= scope.lastPage; page++ ) {
+                scope.pages.push({
+                    number:    page,
+                    text:      page,
+                    active:    false,
+                    disabled:  false
+                });
+            }
+            scope.pages.push({
+                number:    Math.min( scope.lastPage, scope.currentPage + 1 ),
+                text:      "→",
+                active:    false,
+                disabled:  false
+            });
+
+            _.each( scope.pages, function( value ) {
+                value.active = value.number == scope.currentPage;
+            } );
+
+            scope.$parent.selection = artifacts.slice(
+                ( scope.currentPage - 1 ) * count,
+                ( scope.currentPage ) * count
+            );
+        };
+
+    $scope.currentPage = 1;
 
     $scope.$watch(
         function () {
             return Metrics.artifacts.metrics.length;
         },
         function ( newArtifacts, oldArtifacts, scope ) {
-            var artifacts = Metrics.artifacts.metrics;
-
-            scope.setPage = function ( pageNo ) {
-                scope.lastPage    = Math.ceil( artifacts.length / count );
-                scope.currentPage = pageNo;
-
-                scope.pages = [];
-                scope.pages.push({
-                    number:    Math.max( 1, scope.currentPage - 1 ),
-                    text:      "←",
-                    active:    false,
-                    disabled:  false
-                });
-                for ( var page = 1; page <= scope.lastPage; page++ ) {
-                    scope.pages.push({
-                        number:    page,
-                        text:      page,
-                        active:    false,
-                        disabled:  false
-                    });
-                }
-                scope.pages.push({
-                    number:    Math.min( scope.lastPage, scope.currentPage + 1 ),
-                    text:      "→",
-                    active:    false,
-                    disabled:  false
-                });
-
-                _.each( scope.pages, function( value ) {
-                    value.active = value.number == scope.currentPage;
-                } );
-
-                scope.$parent.selection = artifacts.slice(
-                    ( scope.currentPage - 1 ) * count,
-                    ( scope.currentPage ) * count
-                );
-            };
-
-            scope.setPage( 1 );
+            refresh( scope );
         }
     );
+
+    $scope.$watch(
+        "currentPage",
+        function ( newArtifacts, oldArtifacts, scope ) {
+            refresh( scope );
+        }
+    );
+
+    $scope.setPage = function ( pageNo ) {
+        $scope.currentPage = pageNo;
+    };
 };
 
 Controller.Metric.Package = function ($scope, Metrics) {
