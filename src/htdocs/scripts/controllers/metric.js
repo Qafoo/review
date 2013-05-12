@@ -58,14 +58,14 @@ Controller.Metric.Table = function( $scope, Metrics ) {
         function () {
             return Metrics.artifacts.metrics.length;
         },
-        function ( newArtifacts, oldArtifacts, scope ) {
+        function ( newValue, oldValue, scope ) {
             refresh( scope );
         }
     );
 
     $scope.$watch(
         "currentPage",
-        function ( newArtifacts, oldArtifacts, scope ) {
+        function ( newValue, oldValue, scope ) {
             refresh( scope );
         }
     );
