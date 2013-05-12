@@ -47,8 +47,7 @@ Controller.Metric.Table = function( $scope, Metrics ) {
             };
 
             scope.setPage( 1 );
-        },
-        true
+        }
     );
 };
 
