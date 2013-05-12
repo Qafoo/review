@@ -14,19 +14,28 @@ Controller.Metric.List = function ($scope) {
 };
 
 Controller.Metric.Table = function( $scope, Metrics ) {
-    $scope.watch(
-        "Metrics.artifacts",
-        function ( artifacts, oldArtifacts, $scope ) {
-            $scope.artifacts = artifacts;
-            $scope.noOfPages = $scope.artifacts.metrics.length / 10;
+    var count = 5; 
 
-            $scope.currentPage = 1;
-            $scope.maxSize = 5;
+    $scope.$watch(
+        function () {
+            return Metrics.artifacts.metrics.length;
+        },
+        function ( artifacts, oldArtifacts, scope ) {
+            scope.artifacts = Metrics.artifacts;
+            scope.noOfPages = scope.artifacts.metrics.length / count;
 
-            $scope.setPage = function (pageNo) {
-                $scope.currentPage = pageNo;
+            scope.setPage = function ( pageNo ) {
+                scope.currentPage = pageNo;
+                scope.selection = scope.artifacts.metrics.slice(
+                    ( scope.currentPage - 1 ) * count,
+                    count
+                );
             };
-        }
+
+            scope.setPage( 1 );
+            scope.maxSize = 5;
+        },
+        true
     );
 };
 
