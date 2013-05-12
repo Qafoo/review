@@ -14,7 +14,7 @@ Controller.Metric.List = function ($scope) {
 };
 
 Controller.Metric.Table = function( $scope, Metrics ) {
-    var count = 5; 
+    var count = 10; 
 
     $scope.$watch(
         function () {
@@ -23,18 +23,30 @@ Controller.Metric.Table = function( $scope, Metrics ) {
         function ( newArtifacts, oldArtifacts, scope ) {
             var artifacts = Metrics.artifacts.metrics;
 
-            scope.noOfPages = artifacts.length / count;
+            scope.pages = [];
+            for ( var page = 1; page < ( artifacts.length / count ); page++ ) {
+                scope.pages.push({
+                    number:    page,
+                    text:      page,
+                    active:    false,
+                    disabled:  false
+                });
+            }
 
             scope.setPage = function ( pageNo ) {
                 scope.currentPage = pageNo;
-                scope.selection = artifacts.slice(
+
+                _.each( scope.pages, function( value ) {
+                    value.active = value.number == scope.currentPage;
+                } );
+
+                scope.$parent.selection = artifacts.slice(
                     ( scope.currentPage - 1 ) * count,
-                    count
+                    ( scope.currentPage ) * count
                 );
             };
 
             scope.setPage( 1 );
-            scope.maxSize = 5;
         },
         true
     );
