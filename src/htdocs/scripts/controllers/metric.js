@@ -14,49 +14,54 @@ Controller.Metric.List = function ($scope) {
 };
 
 Controller.Metric.Table = function( $scope, Metrics ) {
-    var count = 10,
-        refresh = function(scope) {
-            var artifacts = Metrics.artifacts.metrics.sort( function ( a, b ) {
-                    return ( a[scope.sortingColumn] - b[scope.sortingColumn] ) *
-                        ( scope.ascending ? -1 : 1 );
-                } );
+    var count = 10;
 
-            scope.lastPage    = Math.ceil( artifacts.length / count );
+    var refresh = function(scope) {
+        var artifacts = Metrics.artifacts.metrics,
+            selection = artifacts.slice( 0 );
 
-            scope.pages = [];
+        scope.lastPage    = Math.ceil( artifacts.length / count );
+
+        scope.pages = [];
+        scope.pages.push({
+            number:    Math.max( 1, scope.currentPage - 1 ),
+            text:      "←",
+            active:    false,
+            disabled:  false
+        });
+        for ( var page = 1; page <= scope.lastPage; page++ ) {
             scope.pages.push({
-                number:    Math.max( 1, scope.currentPage - 1 ),
-                text:      "←",
+                number:    page,
+                text:      page,
                 active:    false,
                 disabled:  false
             });
-            for ( var page = 1; page <= scope.lastPage; page++ ) {
-                scope.pages.push({
-                    number:    page,
-                    text:      page,
-                    active:    false,
-                    disabled:  false
-                });
-            }
-            scope.pages.push({
-                number:    Math.min( scope.lastPage, scope.currentPage + 1 ),
-                text:      "→",
-                active:    false,
-                disabled:  false
-            });
+        }
+        scope.pages.push({
+            number:    Math.min( scope.lastPage, scope.currentPage + 1 ),
+            text:      "→",
+            active:    false,
+            disabled:  false
+        });
 
-            _.each( scope.pages, function( value ) {
-                value.active = value.number == scope.currentPage;
-            } );
+        _.each( scope.pages, function( value ) {
+            value.active = value.number == scope.currentPage;
+        } );
 
-            scope.$parent.selection = artifacts.slice(
-                ( scope.currentPage - 1 ) * count,
-                ( scope.currentPage ) * count
-            );
-        };
+        selection.sort( function ( a, b ) {
+            return ( ( a[scope.sortingColumn] == b[scope.sortingColumn] ) ? 0 :
+                    ( ( a[scope.sortingColumn] > b[scope.sortingColumn] ) ? 1 : -1 ) ) *
+                ( scope.ascending ? 1 : -1 );
+        } );
+
+        scope.selection =  selection.slice(
+            ( scope.currentPage - 1 ) * count,
+            ( scope.currentPage ) * count
+        );
+    };
 
     $scope.currentPage = 1;
-    $scope.sortingColumn = "name";
+    $scope.sortingColumn = "value";
     $scope.ascending = false;
 
     $scope.$watch(
