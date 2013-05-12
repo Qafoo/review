@@ -16,7 +16,10 @@ Controller.Metric.List = function ($scope) {
 Controller.Metric.Table = function( $scope, Metrics ) {
     var count = 10,
         refresh = function(scope) {
-            var artifacts = Metrics.artifacts.metrics;
+            var artifacts = Metrics.artifacts.metrics.sort( function ( a, b ) {
+                    return ( a[scope.sortingColumn] - b[scope.sortingColumn] ) *
+                        ( scope.ascending ? -1 : 1 );
+                } );
 
             scope.lastPage    = Math.ceil( artifacts.length / count );
 
@@ -53,6 +56,8 @@ Controller.Metric.Table = function( $scope, Metrics ) {
         };
 
     $scope.currentPage = 1;
+    $scope.sortingColumn = "name";
+    $scope.ascending = false;
 
     $scope.$watch(
         function () {
@@ -70,8 +75,20 @@ Controller.Metric.Table = function( $scope, Metrics ) {
         }
     );
 
+    $scope.$watch(
+        "sortingColumn + ascending",
+        function ( newValue, oldValue, scope ) {
+            refresh( scope );
+        }
+    );
+
     $scope.setPage = function ( pageNo ) {
         $scope.currentPage = pageNo;
+    };
+
+    $scope.setSorting = function ( column, ascending ) {
+        $scope.sortingColumn = column;
+        $scope.ascending = ascending;
     };
 };
 

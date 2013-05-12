@@ -13,8 +13,12 @@
             <table class="table table-condensed table-hover table-striped">
                 <thead>
                     <tr>
-                        <th width="80%">Name</th>
-                        <th>{{metrics[metric]}}</th>
+                        <th width="80%">
+                            <a ng-click="setSorting('name', !ascending)">Name</a>
+                        </th>
+                        <th width="80%">
+                            <a ng-click="setSorting('value', !ascending)">{{metrics[metric]}}</a>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
