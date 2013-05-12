@@ -6,14 +6,13 @@
 // In this case it is a simple value service.
 angular.module('qaReview.services', ['ngResource'])
     .factory('Metrics', function($http, $rootScope) {
-        var Metrics = function () {
-            this.artifacts = {
-                metrics: [],
-                top: {}
-            };
+        var Metrics = {};
+        Metrics.artifacts = {
+            metrics: [],
+            top: {}
         };
 
-        Metrics.prototype.get = function (success) {
+        Metrics.get = function (success) {
             $http
                 .get( "/results/pdepend_summary.json" )
                 .success( success )
@@ -22,15 +21,15 @@ angular.module('qaReview.services', ['ngResource'])
                 });
         };
 
-        Metrics.prototype.setArtifacts = function( artifacts ) {
+        Metrics.setArtifacts = function( artifacts ) {
             this.artifacts = artifacts;
         };
 
-        Metrics.prototype.getArtifacts = function() {
+        Metrics.getArtifacts = function() {
             return this.artifacts;
         };
 
-        return new Metrics();
+        return Metrics;
     });
 
 
