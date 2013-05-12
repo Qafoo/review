@@ -3,11 +3,14 @@ var Controller = Controller || {};
 Controller.Metric = Controller.Metric || {};
 
 Controller.Metric.List = function ($scope) {
-    $scope.artifactList = {
-        "package": "Packages",
-        "class": "Classes",
-        "method": "Methods"
-    };
+    $scope.artifactList = [
+        {"link": "package",
+         "name": "Packages"},
+        {"link": "class",
+         "name": "Classes"},
+        {"link": "method",
+         "name": "Methods"}
+    ];
 };
 
 Controller.Metric.Table = function( $scope, Metrics ) {

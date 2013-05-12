@@ -27,7 +27,7 @@
                             <li class="dropdown" data-ng-controller="Metrics/List">
                                 <a class="dropdown-toggle">Metrics</a>
                                 <ul class="dropdown-menu">
-                                    <li data-ng-repeat="(link, name) in artifactList"><a href="#/metrics/{{link}}">{{name}}</a>
+                                    <li data-ng-repeat="item in artifactList"><a href="#/metrics/{{item.link}}">{{item.name}}</a>
                                 </ul>
                             </li>
                         </ul>
