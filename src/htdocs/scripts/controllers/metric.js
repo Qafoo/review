@@ -23,18 +23,31 @@ Controller.Metric.Table = function( $scope, Metrics ) {
         function ( newArtifacts, oldArtifacts, scope ) {
             var artifacts = Metrics.artifacts.metrics;
 
-            scope.pages = [];
-            for ( var page = 1; page < ( artifacts.length / count ); page++ ) {
+            scope.setPage = function ( pageNo ) {
+                scope.lastPage    = Math.ceil( artifacts.length / count );
+                scope.currentPage = pageNo;
+
+                scope.pages = [];
                 scope.pages.push({
-                    number:    page,
-                    text:      page,
+                    number:    Math.max( 1, scope.currentPage - 1 ),
+                    text:      "←",
                     active:    false,
                     disabled:  false
                 });
-            }
-
-            scope.setPage = function ( pageNo ) {
-                scope.currentPage = pageNo;
+                for ( var page = 1; page <= scope.lastPage; page++ ) {
+                    scope.pages.push({
+                        number:    page,
+                        text:      page,
+                        active:    false,
+                        disabled:  false
+                    });
+                }
+                scope.pages.push({
+                    number:    Math.min( scope.lastPage, scope.currentPage + 1 ),
+                    text:      "→",
+                    active:    false,
+                    disabled:  false
+                });
 
                 _.each( scope.pages, function( value ) {
                     value.active = value.number == scope.currentPage;
