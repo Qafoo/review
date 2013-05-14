@@ -1,5 +1,9 @@
 <h2>PDepend Metrics</h2>
 
+<select>
+    <option ng-repeat="(id, name) in metrics" value="{{id}}" ng-selected="metric == id">{{name}}</option>
+</select>
+
 <tabs>
     <pane heading="Cloud">
         <ul class="tagcloud">
