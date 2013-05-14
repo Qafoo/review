@@ -12,17 +12,9 @@ angular.
             templateUrl: 'templates/404.html',
             controller: 'SourceController'
         });
-        $routeProvider.when('/metrics/method/:metric',{
+        $routeProvider.when('/metrics/:artifact/:metric',{
             templateUrl: 'templates/metrics.html',
-            controller: 'Metrics/Method'
-        });
-        $routeProvider.when('/metrics/class/:metric',{
-            templateUrl: 'templates/metrics.html',
-            controller: 'Metrics/Class'
-        });
-        $routeProvider.when('/metrics/package/:metric',{
-            templateUrl: 'templates/metrics.html',
-            controller: 'Metrics/Package'
+            controller: 'Metrics/Show'
         });
         $routeProvider.otherwise({
             templateUrl: 'templates/404.html'

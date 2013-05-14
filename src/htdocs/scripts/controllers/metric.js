@@ -103,40 +103,32 @@ Controller.Metric.Selector = function ($scope, $location) {
     };
 };
 
-Controller.Metric.Package = function ($scope, $routeParams, Metrics) {
+Controller.Metric.Show = function ($scope, $routeParams, Metrics) {
     Metrics.get( function( metrics ) {
         metrics = new Model.Metric(metrics);
 
-        $scope.artifact = "package";
+        $scope.artifact = $routeParams.artifact;
         $scope.metric = $routeParams.metric;
-        $scope.artifacts = metrics.getPackages($routeParams.metric);
-        $scope.metrics = metrics.packageMetrics;
 
-        Metrics.setArtifacts( $scope.artifacts );
-    });
-};
+        switch ( $scope.artifact ) {
+            case "package":
+                $scope.artifacts = metrics.getPackages($routeParams.metric);
+                $scope.metrics = metrics.packageMetrics;
+                break;
 
-Controller.Metric.Class = function ($scope, $routeParams, Metrics) {
-    Metrics.get( function( metrics ) {
-        metrics = new Model.Metric(metrics);
+            case "class":
+                $scope.artifacts = metrics.getClasses($routeParams.metric);
+                $scope.metrics = metrics.classMetrics;
+                break;
 
-        $scope.artifact = "class";
-        $scope.metric = $routeParams.metric;
-        $scope.artifacts = metrics.getClasses($routeParams.metric);
-        $scope.metrics = metrics.classMetrics;
+            case "method":
+                $scope.artifacts = metrics.getMethods($routeParams.metric);
+                $scope.metrics = metrics.methodMetrics;
+                break;
 
-        Metrics.setArtifacts( $scope.artifacts );
-    });
-};
-
-Controller.Metric.Method = function ($scope, $routeParams, Metrics) {
-    Metrics.get( function( metrics ) {
-        metrics = new Model.Metric(metrics);
-
-        $scope.artifact = "method";
-        $scope.metric = $routeParams.metric;
-        $scope.artifacts = metrics.getMethods($routeParams.metric);
-        $scope.metrics = metrics.methodMetrics;
+            default:
+                throw "Unknown artifact: " + $scope.artifact;
+        }
 
         Metrics.setArtifacts( $scope.artifacts );
     });
