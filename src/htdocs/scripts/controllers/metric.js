@@ -4,11 +4,11 @@ Controller.Metric = Controller.Metric || {};
 
 Controller.Metric.List = function ($scope) {
     $scope.artifactList = [
-        {"link": "package",
+        {"link": "package/cr",
          "name": "Packages"},
-        {"link": "class",
+        {"link": "class/cr",
          "name": "Classes"},
-        {"link": "method",
+        {"link": "method/ccn",
          "name": "Methods"}
     ];
 };
@@ -97,42 +97,45 @@ Controller.Metric.Table = function( $scope, Metrics ) {
     };
 };
 
-Controller.Metric.Package = function ($scope, Metrics) {
-    Metrics.get( function( metrics ) {
-        var metric = "cr";
+Controller.Metric.Selector = function ($scope, $location) {
+    $scope.change = function() {
+        $location.url( "/metrics/" + $scope.artifact + "/" + $scope.metric );
+    };
+};
 
+Controller.Metric.Package = function ($scope, $routeParams, Metrics) {
+    Metrics.get( function( metrics ) {
         metrics = new Model.Metric(metrics);
 
-        $scope.metric = metric;
-        $scope.artifacts = metrics.getPackages(metric);
+        $scope.artifact = "package";
+        $scope.metric = $routeParams.metric;
+        $scope.artifacts = metrics.getPackages($routeParams.metric);
         $scope.metrics = metrics.packageMetrics;
 
         Metrics.setArtifacts( $scope.artifacts );
     });
 };
 
-Controller.Metric.Class = function ($scope, Metrics) {
+Controller.Metric.Class = function ($scope, $routeParams, Metrics) {
     Metrics.get( function( metrics ) {
-        var metric = "cr";
-
         metrics = new Model.Metric(metrics);
 
-        $scope.metric = metric;
-        $scope.artifacts = metrics.getClasses(metric);
+        $scope.artifact = "class";
+        $scope.metric = $routeParams.metric;
+        $scope.artifacts = metrics.getClasses($routeParams.metric);
         $scope.metrics = metrics.classMetrics;
 
         Metrics.setArtifacts( $scope.artifacts );
     });
 };
 
-Controller.Metric.Method = function ($scope, Metrics) {
+Controller.Metric.Method = function ($scope, $routeParams, Metrics) {
     Metrics.get( function( metrics ) {
-        var metric = "ccn";
-
         metrics = new Model.Metric(metrics);
 
-        $scope.metric = metric;
-        $scope.artifacts = metrics.getMethods(metric);
+        $scope.artifact = "method";
+        $scope.metric = $routeParams.metric;
+        $scope.artifacts = metrics.getMethods($routeParams.metric);
         $scope.metrics = metrics.methodMetrics;
 
         Metrics.setArtifacts( $scope.artifacts );

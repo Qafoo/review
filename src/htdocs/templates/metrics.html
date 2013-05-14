@@ -1,8 +1,10 @@
 <h2>PDepend Metrics</h2>
 
-<select>
-    <option ng-repeat="(id, name) in metrics" value="{{id}}" ng-selected="metric == id">{{name}}</option>
-</select>
+<div ng-controller="Metrics/Selector">
+    <select ng-model="metric" ng-change="change()">
+        <option ng-repeat="(id, name) in metrics" value="{{id}}" ng-selected="metric == id">{{name}}</option>
+    </select>
+</div>
 
 <tabs>
     <pane heading="Cloud">
