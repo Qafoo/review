@@ -212,12 +212,12 @@ body {
   background-color: #ffffff;
 }
 a {
-  color: #0088cc;
+  color: #68bd78;
   text-decoration: none;
 }
 a:hover,
 a:focus {
-  color: #005580;
+  color: #2c562b;
   text-decoration: underline;
 }
 .img-polaroid {
@@ -4151,11 +4151,11 @@ input[type="submit"].btn.btn-mini {
 .btn-link {
   border-color: transparent;
   cursor: pointer;
-  color: #0088cc;
+  color: #68bd78;
 }
 .btn-link:hover,
 .btn-link:focus {
-  color: #005580;
+  color: #2c562b;
   text-decoration: underline;
   background-color: transparent;
 }
@@ -4429,7 +4429,7 @@ input[type="submit"].btn.btn-mini {
 .nav-list > .active > a:focus {
   color: #ffffff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
-  background-color: #0088cc;
+  background-color: #68bd78;
 }
 .nav-list [class^="icon-"],
 .nav-list [class*=" icon-"] {
@@ -4506,7 +4506,7 @@ input[type="submit"].btn.btn-mini {
 .nav-pills > .active > a:hover,
 .nav-pills > .active > a:focus {
   color: #ffffff;
-  background-color: #0088cc;
+  background-color: #68bd78;
 }
 .nav-stacked > li {
   float: none;
@@ -4532,14 +4532,14 @@ input[type="submit"].btn.btn-mini {
   margin-bottom: 1px;
 }
 .nav .dropdown-toggle .caret {
-  border-top-color: #0088cc;
-  border-bottom-color: #0088cc;
+  border-top-color: #68bd78;
+  border-bottom-color: #68bd78;
   margin-top: 6px;
 }
 .nav .dropdown-toggle:hover .caret,
 .nav .dropdown-toggle:focus .caret {
-  border-top-color: #005580;
-  border-bottom-color: #005580;
+  border-top-color: #2c562b;
+  border-bottom-color: #2c562b;
 }
 /* move down carets for tabs */
 .nav-tabs .dropdown-toggle .caret {
@@ -5559,7 +5559,7 @@ input[type="submit"].btn.btn-mini {
 }
 a.thumbnail:hover,
 a.thumbnail:focus {
-  border-color: #0088cc;
+  border-color: #68bd78;
 }
 .thumbnail > img {
   display: block;
