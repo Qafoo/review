@@ -27,7 +27,7 @@ class Model
      */
     protected $packageMetrics = array(
         'noc'    => 'Number of classes',
-        'nof'    => 'Number of files',
+        'nof'    => 'Number of functions',
         'noi'    => 'Number of interfaces',
         'nom'    => 'Number of methods',
         'cr'     => 'Code rank',
