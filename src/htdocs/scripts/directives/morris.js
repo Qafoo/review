@@ -2,30 +2,40 @@
     return {
         restrict: 'E',
         templateUrl: 'templates/morris/chart.html',
+        scope: {metrics: "=metrics"},
         replace: true,
         link: function(scope, element, attrs) {
-            var divDisplay = $( "#chart" ).css( "display" ),
-                divPosition = $( "#chart" ).css( "position" ),
-                divParent = $( "#chart" ).parent();
+            scope.$watch( "metrics", function( metrics ) {
+                var divDisplay = $( "#chart" ).css( "display" ),
+                    divPosition = $( "#chart" ).css( "position" ),
+                    divParent = $( "#chart" ).parent();
 
-            $( "#chart" )
-                .css( "display", "block" )
-                .css( "position", "absolute" )
-                .appendTo( $( "body" ) );
+                if ( !metrics ) {
+                    // if fetched lazy, this might still be undefined.
+                    return;
+                }
 
-            Morris.Donut({
-                element: 'chart',
-                data: [
-                    {label: "Download Sales", value: 12},
-                    {label: "In-Store Sales", value: 30},
-                    {label: "Mail-Order Sales", value: 20}
-                ]
-            });
+                $( "#chart" )
+                    .css( "display", "block" )
+                    .css( "position", "absolute" )
+                    .appendTo( $( "body" ) );
 
-            $( "#chart" )
-                .css( "display", divDisplay )
-                .css( "position", divPosition )
-                .appendTo( divParent );
+                Morris.Donut({
+                    element: 'chart',
+                    data: metrics,
+                    formatter: function ( value ) {
+                        return value.toFixed( 2 );
+                    }
+                }).on( "click", function ( index, element ) {
+                    console.log( index, element );
+                });
+
+                $( "#chart" )
+                    .css( "display", divDisplay )
+                    .css( "position", divPosition )
+                    .appendTo( divParent );
+            } );
+
         }
     };
 });
