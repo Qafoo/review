@@ -12,7 +12,7 @@ Model.Metric.prototype.getPackages = function( metric ) {
             this.values,
             function ( value, packageName ) {
                 value.value = value.metrics[metric];
-                value.name  = packageName;
+                value.label = packageName;
 
                 return value;
             }
@@ -40,7 +40,7 @@ Model.Metric.prototype.getClasses = function( metric ) {
                         value.classes,
                         function ( value, className ) {
                             value.value = value.metrics[metric];
-                            value.name  = packageName + "\\" + className;
+                            value.label = packageName + "\\" + className;
 
                             return value;
                         }
@@ -76,7 +76,7 @@ Model.Metric.prototype.getMethods = function( metric ) {
                                     value.methods,
                                     function ( value, methodName ) {
                                         value.value = value.metrics[metric];
-                                        value.name  = packageName + "\\" + className + "::" + methodName + "()";
+                                        value.label = packageName + "\\" + className + "::" + methodName + "()";
 
                                         return value;
                                     }
