@@ -81,6 +81,7 @@ class PDepend extends Analyzer implements Displayable
         $process->nonZeroExitCodeException = true;
         $process
             ->argument( '--jdepend-chart=' . $this->resultDir . '/pdepend_jdepend.svg' )
+            ->argument( '--coderank-mode=inheritance,property,method' )
             ->argument( '--overview-pyramid=' . $this->resultDir . '/pdepend_pyramid.svg' )
             ->argument( '--summary-xml=' . $this->resultDir . '/pdepend_summary.xml' )
             ->argument( $path );
