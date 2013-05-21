@@ -26,27 +26,22 @@
         </ul>
     </div>
     <div class="tab-pane" id="{{name}}-table">
-        <table class="table table-striped table-bordered table-condensed data-table">
-            <thead>
-                <tr>
-                    <th>Class</th>
-                    <th>{{cloud.name}}</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item, metric in top %}
-                <tr>
-                    <td>
-                        <a class="{{name}}" href="/source/{{metric.file}}#line_{{metric.line}}" title="{{item}}: {{metric.value}}" data-file="{{metric.file}}">{{item}}</a
-                        ><a class="annotate" data-file="{{metric.file}}" data-line="{{metric.line}}" data-reason="{{cloud.name}}" href="#">+</a>
-                    </td>
-                    <td class="number">{{metric.value|number_format(2)}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
+        <table class="table table-striped table-bordered table-condensed">
+            <tr>
+                <th>Class</th>
+                <th>{{cloud.name}}</th>
+            </tr>
+            {% for item, metric in top %}
+            <tr>
+                <td>
+                    <a class="{{name}}" href="/source/{{metric.file}}#line_{{metric.line}}" title="{{item}}: {{metric.value}}" data-file="{{metric.file}}">{{item}}</a
+                    ><a class="annotate" data-file="{{metric.file}}" data-line="{{metric.line}}" data-reason="{{cloud.name}}" href="#">+</a>
+                </td>
+                <td class="number">{{metric.value|number_format(2)}}</td>
+            </tr>
+            {% endfor %}
         </table>
     </div>
-
     <div class="tab-pane" id="{{name}}-chart">
         <object class="graph" type="image/svg+xml" data="/show/pdepend?chart={{name}}&amp;metric={{cloud.selected}}" width="600" height="350">
             You need an SVG enabled browser to see this.
