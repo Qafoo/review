@@ -53,25 +53,6 @@
     <script type="text/javascript" src="/scripts/vendor/jquery/jquery-1.7.2.js"></script>
     <!-- script type="text/javascript" src="/scripts/vendor/jquery/jquery-1.7.2.min.js"></script -->
     <script type="text/javascript" src="/scripts/vendor/jquery/jquery.form.js"></script>
-    <script type="text/javascript" src="/scripts/vendor/datatables/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="/scripts/vendor/datatables/jquery.dataTables.paging.min.js"></script>
-    
-    <script type="text/javascript">
-        // Does not seem to work :(
-        $.extend( $.fn.dataTableExt.oStdClasses, {
-            "sWrapper": "dataTables_wrapper form-inline"
-        } );
-
-        $(document).ready(function() {
-            $('.data-table').dataTable({
-                "sDom": "<'row'<'span9'l><'span3'f>r>t<'row'<'span3'i><'span9'p>>",
-                "sPaginationType": "bootstrap",
-                "aLengthMenu": [[10, 30, 50, 100, -1], [10, 30, 50, 100, "All"]],
-                /* Sort by second column, descending. Usually this should be the metric. */
-                "aaSorting": [[1, 'desc']]
-            });
-        } );
-    </script>
 
     <script type="text/javascript" src="/scripts/vendor/bootstrap/bootstrap.js"></script>
     <!-- script type="text/javascript" src="/scripts/vendor/bootstrap/bootstrap.min.js"></script -->

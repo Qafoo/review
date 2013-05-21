@@ -205,19 +205,19 @@ class PDepend extends Analyzer implements Displayable
         $this->model->load( $this->resultDir . '/pdepend_summary.xml' );
 
         $classCloud = $this->model->getClassesMetric( $classMetric );
-        $classTop   = $this->model->getClassesMetric( $classMetric, 1000 );
+        $classTop   = $this->model->limitItemList( $classCloud['items'], 15 );
 
         $methodCloud = $this->model->getMethodsMetric( $methodMetric );
-        $methodTop   = $this->model->getMethodsMetric( $methodMetric, 1000 );
+        $methodTop   = $this->model->limitItemList( $methodCloud['items'], 15 );
 
         return new Struct\Response(
             'pdepend.twig',
             array(
                 'class'         => $classCloud,
-                'classTop'      => $classTop['items'],
+                'classTop'      => $classTop,
                 'classMetrics'  => $this->model->getClassMetricList(),
                 'method'        => $methodCloud,
-                'methodTop'     => $methodTop['items'],
+                'methodTop'     => $methodTop,
                 'methodMetrics' => $this->model->getMethodMetricList(),
                 'pyramid'       => file_get_contents( $this->resultDir . '/pdepend_pyramid.svg' ),
                 'jdepend'       => file_get_contents( $this->resultDir . '/pdepend_jdepend.svg' ),
