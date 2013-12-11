@@ -5,6 +5,8 @@
     "jquery": "~2.0.3",
     "bootstrap": "~3.0.3",
     "angular-bootstrap": "~0.7.0",
-    "underscore": "~1.5.2"
+    "underscore": "~1.5.2",
+    "angular-resource": "~1.2.4",
+    "angular-route": "~1.2.4"
   }
 }
