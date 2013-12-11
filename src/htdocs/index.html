@@ -18,34 +18,41 @@
     <![endif]-->
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="navbar">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="brand" href="/">Qafoo CRT</a>
-                    <div class="nav">
-                        <ul class="nav">
-                            <li><a href="#/"><i class="icon-home"></i> Home</a></li>
-                            <li><a href="#/source"><i class="icon-file"></i> Source</a></li>
-                            <li class="dropdown" data-ng-controller="Metrics/List">
-                                <a class="dropdown-toggle">Metrics</a>
-                                <ul class="dropdown-menu">
-                                    <li data-ng-repeat="item in artifactList"><a href="#/metrics/{{item.link}}">{{item.name}}</a></li>
-                                </ul>
-                            </li>
+    <div class="container">
+        <div class="navbar navbar-default">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Brand</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="#/"><i class="icon-home"></i> Home</a></li>
+                    <li><a href="#/source"><i class="icon-file"></i> Source</a></li>
+                    <li class="dropdown" data-ng-controller="Metrics/List">
+                        <a class="dropdown-toggle">Metrics</a>
+                        <ul class="dropdown-menu">
+                            <li data-ng-repeat="item in artifactList"><a href="#/metrics/{{item.link}}">{{item.name}}</a></li>
                         </ul>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </div>
         </div>
-        <div id="content" class="row-fluid">
+
+        <div id="content" class="row">
             <div class="span12" data-ng-view>
                 <div class="alert">
                     <h1>Please extend from this template…</h1>
                 </div>
             </div>
         </div>
-        <div class="row-fluid">
+        <div class="row">
             <div class="span12 footer">
                 <hr />
                 &copy; <a href="http://qafoo.com/">Qafoo GmbH</a> 2012, Licensed under AGPLv3
@@ -53,27 +60,31 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="vendor/bootstrap/dist/js/bootstrap.js"></script>
-    <script type="text/javascript" src="vendor/angular/angular.min.js"></script>
-    <script type="text/javascript" src="vendor/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="vendor/angular-bootstrap/ui-bootstrap.min.js"></script>
-    <script type="text/javascript" src="vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <script type="text/javascript" src="vendor/underscore/underscore-min.js"></script>
+    <script type="text/javascript" src="/vendor/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/vendor/underscore/underscore-min.js"></script>
 
-    <script type="text/javascript" src="scripts/app.js"></script>
+    <script type="text/javascript" src="/vendor/bootstrap/dist/js/bootstrap.js"></script>
 
-    <script type="text/javascript" src="scripts/services.js"></script>
+    <script type="text/javascript" src="/vendor/angular/angular.js"></script>
+    <script type="text/javascript" src="/vendor/angular-resource/angular-resource.js"></script>
+    <script type="text/javascript" src="/vendor/angular-route/angular-route.js"></script>
 
-    <script type="text/javascript" src="scripts/controllers/metric.js"></script>
-    <script type="text/javascript" src="scripts/controllers.js"></script>
+    <script type="text/javascript" src="/vendor/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script type="text/javascript" src="/vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 
-    <script type="text/javascript" src="scripts/filters.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
 
-    <script type="text/javascript" src="scripts/directives.js"></script>
-    <script type="text/javascript" src="scripts/directives/morris.js"></script>
+    <script type="text/javascript" src="/scripts/services.js"></script>
 
-    <script type="text/javascript" src="scripts/model/metric.js"></script>
+    <script type="text/javascript" src="/scripts/controllers/metric.js"></script>
+    <script type="text/javascript" src="/scripts/controllers.js"></script>
+
+    <script type="text/javascript" src="/scripts/filters.js"></script>
+
+    <script type="text/javascript" src="/scripts/directives.js"></script>
+    <script type="text/javascript" src="/scripts/directives/morris.js"></script>
+
+    <script type="text/javascript" src="/scripts/model/metric.js"></script>
 
 </body>
 </html>
