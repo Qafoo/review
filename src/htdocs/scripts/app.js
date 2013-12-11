@@ -2,7 +2,7 @@
 
 // Declare app level module which depends on filters, and services
 angular.
-    module('qaReview', ['qaReview.filters', 'qaReview.services', 'qaReview.directives', 'qaReview.controllers', 'ui.bootstrap', 'morris']).
+    module('qaReview', ['ngRoute', 'qaReview.filters', 'qaReview.services', 'qaReview.directives', 'qaReview.controllers', 'ui.bootstrap', 'morris']).
     config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/', {
             templateUrl: 'templates/home.html',
