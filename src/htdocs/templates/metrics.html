@@ -6,15 +6,15 @@
     </select>
 </div>
 
-<tabs>
-    <pane heading="Cloud">
+<tabset>
+    <tab heading="Cloud">
         <ul class="tagcloud">
             <li data-ng-repeat="artifact in artifacts.metrics" style="font-size: {{artifact.value / artifacts.top.value * 80 + 20 | number:2}}%;">
                 <a href="#/source/{{artifact.file}}#L{{artifact.line}}" title="{{metrics[metric]}}: {{artifact.value | number:2}}">{{artifact.label}}</a>
             </li>
         </ul>
-    </pane>
-    <pane heading="Table">
+    </tab>
+    <tab heading="Table">
         <div ng-controller="Metrics/Table">
             <table class="table table-condensed table-hover table-striped">
                 <thead>
@@ -45,8 +45,5 @@
                 </ul>
             </div>
         </div>
-    </pane>
-    <pane heading="Chart">
-        <morris-donut metrics="artifacts.metrics">
-    </pane>
-</tabs>
+    </tab>
+</tabset>
