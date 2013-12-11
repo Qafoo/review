@@ -37,13 +37,11 @@
                 </tbody>
             </table>
 
-            <div class="pagination pagination-centered">
-                <ul>
-                    <li ng-repeat="page in pages" ng-class="{active: page.active, disabled: page.disabled}">
-                        <a ng-click="setPage(page.number)">{{page.text}}</a>
-                    </li>
-                </ul>
-            </div>
+            <ul class="pagination pagination-sm">
+                <li ng-repeat="page in pages" ng-class="{active: page.active, disabled: page.disabled}">
+                    <a ng-click="setPage(page.number)">{{page.text}}</a>
+                </li>
+            </ul>
         </div>
     </tab>
 </tabset>
