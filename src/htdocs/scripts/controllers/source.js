@@ -10,7 +10,7 @@ Controller.Source = function ($routeParams, $scope, Source, $http, $location, $s
             };
         }
 
-        $scope.source.path = $routeParams.path.split("/");
+        $scope.source.path = $routeParams.path.replace(/^\//, '').split("/");
 
         var findItem = function(tree, path) {
                 var item = path.shift();

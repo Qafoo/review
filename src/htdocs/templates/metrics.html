@@ -12,7 +12,7 @@
     <tab heading="Cloud">
         <ul class="tagcloud">
             <li data-ng-repeat="artifact in artifacts.metrics" style="font-size: {{artifact.value / artifacts.top.value * 80 + 20 | number:2}}%;">
-                <a href="#/source/{{artifact.file}}#L{{artifact.line}}" title="{{metrics[metric]}}: {{artifact.value | number:2}}">{{artifact.label}}</a>
+                <a href="#/source/?path={{artifact.file}}#L{{artifact.line}}" title="{{metrics[metric]}}: {{artifact.value | number:2}}">{{artifact.label}}</a>
             </li>
         </ul>
     </tab>
@@ -32,7 +32,7 @@
                 <tbody>
                     <tr data-ng-repeat="artifact in selection">
                         <td>
-                            <a href="#/source/{{artifact.file}}#L{{artifact.line}}">{{artifact.label}}</a>
+                            <a href="#/source/?path={{artifact.file}}#L{{artifact.line}}">{{artifact.label}}</a>
                         </td>
                         <td>{{artifact.value | number:2}}</td>
                     </tr>
