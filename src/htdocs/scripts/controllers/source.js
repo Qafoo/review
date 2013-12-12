@@ -1,19 +1,47 @@
 var Controller = Controller || {};
 
-Controller.Source = function ($scope, $http, $sce) {
-    $http.get('/results/source_tree.js').success(function(data) {
+Controller.Source = function ($routeParams, $scope, $http, $location, $sce) {
+    if (!$scope.source) {
         $scope.source = {
-            tree: data,
-            path: [data[0].name],
+            tree: null,
+            path: [],
             code: null
         };
-    });
+    }
+    $scope.source.path = $routeParams.path.split("/");
 
-    $scope.select = function(path, content) {
-        $scope.source.path = path;
+    if (!$scope.source.tree) {
+        // This should be moved into a Service or $rootScope,
+        // so that it is not reloaded on every selection
+        $http.get('/results/source_tree.js').success(function(data) {
+            $scope.source.tree = data;
+        });
+    }
 
-        if (content) {
-            $http.get('/results/' + content).success(function(data) {
+    $scope.$watchCollection('[source.path, source.tree]', function(source){
+        if (!$scope.source.path || !$scope.source.tree) {
+            return;
+        }
+
+        var findItem = function(tree, path) {
+                var item = path.shift();
+
+                for (var i = 0; i < tree.length; ++i) {
+                    if (tree[i].name === item) {
+                        if (tree[i].children.length > 0) {
+                            return findItem(tree[i].children, path);
+                        } else {
+                            return tree[i];
+                        }
+                    }
+                }
+
+                throw "Did not find item in tree.";
+            },
+            item = findItem($scope.source.tree, $scope.source.path.slice());
+
+        if (item.content) {
+            $http.get('/results/' + item.content).success(function(data) {
                 $scope.source.code = $sce.trustAsHtml(
                     prettyPrintOne(
                         data.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'),
@@ -23,6 +51,10 @@ Controller.Source = function ($scope, $http, $sce) {
                 )
             });
         }
+    });
+
+    $scope.select = function(path) {
+        $location.url( "/source?path=" + path.join("/") );
     };
 };
 
