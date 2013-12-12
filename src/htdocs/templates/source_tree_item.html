@@ -1,4 +1,4 @@
-<a ng-model="source.path" ng-click="source.path = subtree.path">
+<a ng-model="source.path" ng-click="select(subtree.path, subtree.content)">
     <span class="glyphicon"
         ng-class="{
             'glyphicon-folder-close': subtree.type == 'inode/directory' && source.path.indexOf(subtree.name) < 0,

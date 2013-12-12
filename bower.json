@@ -8,6 +8,6 @@
     "underscore": "~1.5.2",
     "angular-resource": "~1.2.4",
     "angular-route": "~1.2.4",
-    "highlightjs": "~7.5.0"
+    "google-code-prettify": "~1.0.1"
   }
 }

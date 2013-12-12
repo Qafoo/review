@@ -1,7 +1,13 @@
 <h1>Source Listing</h1>
 
-{{source.path}}
-
-<ul class="dirlisting">
-    <li class="selected" ng-repeat="subtree in source.tree" ng-include="'/templates/source_tree_item.html'"></li>
-</ul>
+<div class="row">
+    <div class="col-md-4">
+        <ul class="dirlisting">
+            <li class="selected" ng-repeat="subtree in source.tree" ng-include="'/templates/source_tree_item.html'"></li>
+        </ul>
+    </div>
+    <div class="col-md-8">
+        <h3>{{source.path.join("/&#8203;")}}</h3>
+        <pre><code id="sourceCode" ng-bind-html="source.code"></code></pre>
+    </div>
+</div>
