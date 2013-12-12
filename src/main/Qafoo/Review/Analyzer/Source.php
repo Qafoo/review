@@ -98,7 +98,7 @@ class Source extends Analyzer
             } else {
                 $newPath = $this->sourceDir . '/' . md5($item) . '.txt';
                 copy($item, $newPath);
-                $contents[$localName] = array(
+                $contents[] = array(
                     'name' => $localName,
                     'type' => mime_content_type($item),
                     'path' => $newLocalPath,
