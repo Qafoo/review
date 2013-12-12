@@ -9,8 +9,8 @@ angular.
             controller: 'OverviewController'
         });
         $routeProvider.when('/source',{
-            templateUrl: 'templates/404.html',
-            controller: 'SourceController'
+            templateUrl: 'templates/source.html',
+            controller: 'Source'
         });
         $routeProvider.when('/metrics/:artifact/:metric',{
             templateUrl: 'templates/metrics.html',

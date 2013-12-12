@@ -45,23 +45,27 @@ ul.tagcloud li {
 
 ul.dirlisting {
     list-style-type: none;
-    margin-left: 0px;
+    margin-left: 0;
+    padding-left: 0;
 }
 
 ul.dirlisting li > ul {
-    margin-left: 18px;
+    margin-left: 1.5em;
 }
 
 ul.dirlisting a {
     color: #666666;
 }
 
-.folder-close > ul.dirlisting {
+ul.dirlisting li > ul.dirlisting {
     display: none;
 }
 
-ul.dirlisting .folder-open > a,
-ul.dirlisting .file-open > a {
+ul.dirlisting li.selected > ul.dirlisting {
+    display: block;
+}
+
+ul.dirlisting .selected > a {
     font-weight: bold;
     color: #333333;
 }

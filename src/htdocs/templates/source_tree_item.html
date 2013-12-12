@@ -1,0 +1,17 @@
+<a ng-model="source.path" ng-click="source.path = subtree.path">
+    <span class="glyphicon"
+        ng-class="{
+            'glyphicon-folder-close': subtree.type == 'inode/directory' && source.path.indexOf(subtree.name) < 0,
+            'glyphicon-folder-open': subtree.type == 'inode/directory' && source.path.indexOf(subtree.name) >= 0,
+            'glyphicon-file': subtree.type != 'inode/directory'
+        }"></span>
+    {{subtree.name}}
+</a>
+
+<ul class="dirlisting">
+    <li
+        ng-repeat="subtree in subtree.children"
+        ng-class="{'selected': source.path.indexOf(subtree.name) >= 0}"
+        ng-include="'/templates/source_tree_item.html'">
+    </li>
+</ul>

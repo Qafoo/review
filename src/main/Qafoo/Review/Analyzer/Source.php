@@ -80,23 +80,30 @@ class Source extends Analyzer
      * @param string $path
      * @return array
      */
-    protected function scanPath($path)
+    protected function scanPath($path, $localPath = array())
     {
         $contents = array();
 
         foreach (glob($path . '/*') as $item) {
             $localName = basename($item);
+            $newLocalPath = array_merge($localPath, array($localName));
             if (is_dir($item)) {
-                $contents[$localName] = array(
+                $contents[] = array(
+                    'name' => $localName,
                     'type' => 'inode/directory',
-                    'contents' => $this->scanPath($item),
+                    'path' => $newLocalPath,
+                    'content' => null,
+                    'children' => $this->scanPath($item, $newLocalPath),
                 );
             } else {
                 $newPath = $this->sourceDir . '/' . md5($item) . '.txt';
                 copy($item, $newPath);
                 $contents[$localName] = array(
+                    'name' => $localName,
                     'type' => mime_content_type($item),
-                    'contents' => str_replace($this->resultDir, '', $newPath),
+                    'path' => $newLocalPath,
+                    'content' => str_replace($this->resultDir, '', $newPath),
+                    'children' => array(),
                 );
             }
         }
