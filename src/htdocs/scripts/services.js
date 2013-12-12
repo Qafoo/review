@@ -4,32 +4,46 @@
 
 // Demonstrate how to register services
 // In this case it is a simple value service.
-angular.module('qaReview.services', ['ngResource'])
-    .factory('Metrics', function($http, $rootScope) {
-        var Metrics = {};
-        Metrics.artifacts = {
-            metrics: [],
-            top: {}
-        };
+var services = angular.module('qaReview.services', ['ngResource']);
 
-        Metrics.get = function (success) {
-            $http
-                .get( "/results/pdepend_summary.json" )
-                .success( success )
-                .error( function( data, status, headers, config ) {
-                    alert( "Failed fetching JSON results." );
-                });
-        };
+services.factory('Metrics', function($http) {
+    var Metrics = {};
+    Metrics.artifacts = {
+        metrics: [],
+        top: {}
+    };
 
-        Metrics.setArtifacts = function( artifacts ) {
-            this.artifacts = artifacts;
-        };
+    Metrics.get = function (success) {
+        $http
+            .get( "/results/pdepend_summary.json" )
+            .success( success )
+            .error( function( data, status, headers, config ) {
+                alert( "Failed fetching JSON results." );
+            });
+    };
 
-        Metrics.getArtifacts = function() {
-            return this.artifacts;
-        };
+    Metrics.setArtifacts = function( artifacts ) {
+        this.artifacts = artifacts;
+    };
 
-        return Metrics;
-    });
+    Metrics.getArtifacts = function() {
+        return this.artifacts;
+    };
 
+    return Metrics;
+});
+
+services.factory('Source', function($http, $rootScope) {
+    var Source = {};
+    Source.get = function (success) {
+        $http
+            .get( "/results/source_tree.js" )
+            .success( success )
+            .error( function( data, status, headers, config ) {
+                alert( "Failed fetching JSON results." );
+            });
+    };
+
+    return Source;
+});
 

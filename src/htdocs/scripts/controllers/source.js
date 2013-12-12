@@ -1,27 +1,16 @@
 var Controller = Controller || {};
 
-Controller.Source = function ($routeParams, $scope, $http, $location, $sce) {
-    if (!$scope.source) {
-        $scope.source = {
-            tree: null,
-            path: [],
-            code: null
-        };
-    }
-    $scope.source.path = $routeParams.path.split("/");
-
-    if (!$scope.source.tree) {
-        // This should be moved into a Service or $rootScope,
-        // so that it is not reloaded on every selection
-        $http.get('/results/source_tree.js').success(function(data) {
-            $scope.source.tree = data;
-        });
-    }
-
-    $scope.$watchCollection('[source.path, source.tree]', function(source){
-        if (!$scope.source.path || !$scope.source.tree) {
-            return;
+Controller.Source = function ($routeParams, $scope, Source, $http, $location, $sce) {
+    Source.get( function( source ) {
+        if (!$scope.source) {
+            $scope.source = {
+                tree: source,
+                path: [],
+                code: null
+            };
         }
+
+        $scope.source.path = $routeParams.path.split("/");
 
         var findItem = function(tree, path) {
                 var item = path.shift();
@@ -51,7 +40,7 @@ Controller.Source = function ($routeParams, $scope, $http, $location, $sce) {
                 )
             });
         }
-    });
+    } );
 
     $scope.select = function(path) {
         $location.url( "/source?path=" + path.join("/") );
