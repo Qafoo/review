@@ -1,0 +1,40 @@
+/* Pretty printing styles. Used with prettify.js. */
+/* Solarized Light theme by Bart Bakker */
+
+pre.prettyprint, code.prettyprint {
+  background-color: #fdf6e3;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -o-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -khtml-border-radius: 8px;
+  border-radius: 8px;
+}
+
+pre.prettyprint {
+  width: 95%;
+  margin: 1em auto;
+  padding: 1em;
+  white-space: pre-wrap;
+  border: 1px solid #eee8d5;
+}
+
+.kwd { color: #268bd2; } /* keyword */
+.pln { color: #657b83; } /* plaintext */
+.pun { color: #839496; } /* punctuation */
+.typ { color: #b58900; } /* type */
+.com { color: #93a1a1; font-style: italic; } /* comment */
+.lit { color: #2aa198; } /* literal */
+.str { color: #2aa198; } /* string */
+.tag { color: #268bd2; } /* tag */
+.atn { color: #657b83; } /* attribute name */
+.atv { color: #2aa198; } /* attribute value */
+.opn { color: #839496; } /* Lisp open bracket */
+.clo { color: #839496; } /* Lisp close bracket */
+.dec { color: #839496; font-style: italic; } /* declaration */
+
+pre.prettyprint ol.linenums { color: #93a1a1; }
+pre.prettyprint { line-height: 18px; padding-left: 12px; }
+
+/* No alternate shading for lines */
+li.L1, li.L3, li.L5, li.L7, li.L9 { background: none }
