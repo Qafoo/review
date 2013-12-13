@@ -83,6 +83,7 @@ a.annotate {
 #sourceCode ol li.selected,
 #sourceCode ol li:hover {
     background-color: #eee8d5;
+    list-style-type: decimal;
 }
 
 .analyzer {
