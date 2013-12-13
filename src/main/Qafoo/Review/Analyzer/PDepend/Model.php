@@ -438,6 +438,7 @@ class Model
                 {
                     $method  = $methodElement->getAttribute( 'name' );
                     $artifacts[$package]['classes'][$class]['methods'][$method]['metrics'] = $this->getMethodMetrics( $methodElement );
+                    $artifacts[$package]['classes'][$class]['methods'][$method]['file']  = $file;
                     $artifacts[$package]['classes'][$class]['methods'][$method]['line']  = $methodElement->getAttribute( 'line' );
                 }
             }
