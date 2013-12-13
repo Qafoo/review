@@ -76,56 +76,13 @@ a.annotate {
     color: #000;
 }
 
-ol.source {
-    background-color: #fdf6e3;
-    border-radius: 4px;
-    border: 1px solid rgba( 0, 0, 0, .15 );
-    margin-left: 3em;
-}
-
-ol.source li {
-    min-height: 18px;
-}
-
-ol.source li.diff-added {
+#sourceCode ol li.diff-added {
    background-color: #dff0d8;
 }
 
-ol.source li:hover {
+#sourceCode ol li.selected,
+#sourceCode ol li:hover {
     background-color: #eee8d5;
-}
-
-ol.source li a {
-    display: block;
-    color: #000000;
-}
-
-ol.source li a:hover {
-    text-decoration: none;
-}
-
-ol.source li pre {
-    display: inline;
-
-    border: none;
-    padding: 0px;
-    margin: 1px 5px;
-
-    background-color: transparent;
-}
-
-ol.source li a.icon {
-    display: block;
-    margin-right: 2px;
-    float: right;
-}
-
-ol.source li a.comment {
-    display: none;
-}
-
-ol.source li:hover a.comment {
-    display: block;
 }
 
 .analyzer {
@@ -134,26 +91,6 @@ ol.source li:hover a.comment {
 
 div.modal {
     display: none;
-}
-
-.source .code {
-}
-
-.source .comment {
-    color: #666666;
-}
-
-.source .keyword {
-    color: #C09853;
-    font-weight: bold;
-}
-
-.source .html {
-    color: #000000;
-}
-
-.source .string {
-    color: #468847;
 }
 
 td.number {

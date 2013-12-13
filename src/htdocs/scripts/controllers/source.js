@@ -1,6 +1,6 @@
 var Controller = Controller || {};
 
-Controller.Source = function ($routeParams, $scope, Source, $http, $location, $sce) {
+Controller.Source = function ($routeParams, $scope, Source, $http, $location, $sce, $timeout) {
     Source.get( function( source ) {
         if (!$scope.source) {
             $scope.source = {
@@ -31,13 +31,26 @@ Controller.Source = function ($routeParams, $scope, Source, $http, $location, $s
 
         if (item.content) {
             $http.get('/results/' + item.content).success(function(data) {
-                $scope.source.code = $sce.trustAsHtml(
-                    prettyPrintOne(
+                var highlightedSource = prettyPrintOne(
                         data.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'),
                         undefined,
                         true
-                    )
-                )
+                    ),
+                    lineNum = 1;
+
+                // Add line number anchors
+                highlightedSource = $(highlightedSource).find("li").each(function(key, element) {
+                    $(element).attr("id", "L" + lineNum++);
+                }).end().get(0).outerHTML;
+
+                $scope.source.code = $sce.trustAsHtml(highlightedSource);
+
+                $timeout(function() {
+                    $('#' + $location.hash()).addClass("selected");
+                    $(window).scrollTop(
+                        $('#' + $location.hash()).offset().top - 30
+                    );
+                }, 0);
             });
         }
     } );
