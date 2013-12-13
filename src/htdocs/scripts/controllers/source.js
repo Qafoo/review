@@ -1,6 +1,6 @@
 var Controller = Controller || {};
 
-Controller.Source = function ($routeParams, $scope, Source, $http, $location, $sce, $timeout) {
+Controller.Source = function ($routeParams, $scope, Source, $http, $location, $sce, $timeout, $anchorScroll) {
     Source.get( function( source ) {
         if (!$scope.source) {
             $scope.source = {
@@ -47,9 +47,7 @@ Controller.Source = function ($routeParams, $scope, Source, $http, $location, $s
 
                 $timeout(function() {
                     $('#' + $location.hash()).addClass("selected");
-                    $(window).scrollTop(
-                        $('#' + $location.hash()).offset().top - 30
-                    );
+                    $anchorScroll();
                 }, 0);
             });
         }
