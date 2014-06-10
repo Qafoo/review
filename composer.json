@@ -34,7 +34,13 @@
         "pdepend/staticReflection": "0.1",
         "zetacomponents/base": "*",
         "zetacomponents/graph": "*",
-        "twig/twig": "1.6.0"
+        "twig/twig": "1.6.0",
+        "phpmd/phpmd": "@stable",
+        "pdepend/pdepend": "@stable",
+        "phploc/phploc": "@stable",
+        "squizlabs/php_codesniffer": "@stable",
+        "sebastian/phpcpd": "@stable",
+        "phpmd/oxmd": "@stable"
     },
     "autoload": {
         "psr-0": {
