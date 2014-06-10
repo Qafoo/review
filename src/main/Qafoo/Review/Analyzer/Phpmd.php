@@ -61,7 +61,7 @@ class Phpmd extends Analyzer implements Displayable
         $process
             ->argument( $path )
             ->argument( 'xml' )
-            ->argument( 'codesize,unusedcode,naming' )
+            ->argument( 'codesize,design' )
             ->argument( '--reportfile' )
             ->argument( $this->resultDir . '/phpmd.xml' );
 
