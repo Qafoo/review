@@ -57,7 +57,7 @@ class Phpmd extends Analyzer implements Displayable
      */
     public function analyze( $path )
     {
-        $process = new \SystemProcess\SystemProcess( 'phpmd' );
+        $process = new \SystemProcess\SystemProcess( __DIR__ . '/../../../../library/bin/' . 'phpmd' );
         $process
             ->argument( $path )
             ->argument( 'xml' )

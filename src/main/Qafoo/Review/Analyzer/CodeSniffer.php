@@ -65,9 +65,10 @@ class CodeSniffer extends Analyzer implements Displayable
      */
     public function analyze( $path )
     {
-        $process = new \SystemProcess\SystemProcess( 'phpcs' );
+        $process = new \SystemProcess\SystemProcess( __DIR__ . '/../../../../library/bin/' . 'phpcs' );
         $process
-            ->argument( '--standard=src/config/code_sniffer_rules.xml' )
+            ->argument( '--standard=' . __DIR__ . '/../../../../config/code_sniffer_rules.xml' )
+            ->argument( '--extensions=php' )
             ->argument( '--report=xml' )
             ->argument( '--report-file=' . $this->resultFile )
             ->argument( $path );

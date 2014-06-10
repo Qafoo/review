@@ -57,7 +57,7 @@ class Phplint extends Analyzer implements Displayable
      */
     public function analyze( $path )
     {
-        $process = new \SystemProcess\SystemProcess( 'phplint' );
+        $process = new \SystemProcess\SystemProcess( __DIR__ . '/../../../../library/bin/' . 'phplint' );
         $process
             ->argument( '--format=checkstyle' )
             ->argument( '--output=' . $this->resultDir . '/phplint.xml' )

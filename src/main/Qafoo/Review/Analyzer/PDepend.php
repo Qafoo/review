@@ -77,7 +77,7 @@ class PDepend extends Analyzer implements Displayable
      */
     public function analyze( $path )
     {
-        $process = new \SystemProcess\SystemProcess( 'pdepend' );
+        $process = new \SystemProcess\SystemProcess( __DIR__ . '/../../../../library/bin/' . 'pdepend' );
         $process->nonZeroExitCodeException = true;
         $process
             ->argument( '--jdepend-chart=' . $this->resultDir . '/pdepend_jdepend.svg' )

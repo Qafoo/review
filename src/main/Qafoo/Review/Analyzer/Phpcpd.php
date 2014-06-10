@@ -57,7 +57,7 @@ class Phpcpd extends Analyzer implements Displayable
      */
     public function analyze( $path )
     {
-        $process = new \SystemProcess\SystemProcess( 'phpcpd' );
+        $process = new \SystemProcess\SystemProcess( __DIR__ . '/../../../../library/bin/' . 'phpcpd' );
         $process
             ->argument( '--min-lines' )
             ->argument( 4 )
